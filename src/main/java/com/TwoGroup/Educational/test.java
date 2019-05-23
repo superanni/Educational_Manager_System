@@ -1,13 +1,17 @@
 package com.TwoGroup.Educational;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+/**
+ * 测试RestController连接
+ */
+@RestController
 public class test {
 
     @GetMapping("/test")
-    public String test(){
-        return "index";
+    public @ResponseBody String test(){
+        return "你好啊";
     }
 }
