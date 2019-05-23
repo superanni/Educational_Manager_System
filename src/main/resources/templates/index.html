@@ -13,6 +13,18 @@
       <link rel="stylesheet" href="css/style.css">
       <!-- endinject -->
       <link rel="shortcut icon" href="images/favicon.png" />
+      <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+      <script>
+        $(function(){
+            $("[name='nav-link']").on('click',function(e){
+                e.preventDefault();
+                var link=$(this).attr("href");
+                if(link!==""&&link!=null&&link!="#"){
+                    $('#content-change-main').load(link,function(){});
+                }
+            });
+        });
+      </script>
     </head>
     <body>
       <div class="container-scroller">
@@ -222,12 +234,12 @@
                 </a>
                 <div class="collapse" id="ui-Sys_manage">
                   <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="#">员工管理</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="#">角色管理</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="#">角色变更</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="#">权限管理</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="#">权限变更</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="#">数据字典</a></li>
+                    <li class="nav-item"> <a class="nav-link" name="nav-link" href="#">员工管理</a></li>
+                    <li class="nav-item"> <a class="nav-link" name="nav-link" href="#">角色管理</a></li>
+                    <li class="nav-item"> <a class="nav-link" name="nav-link" href="#">角色变更</a></li>
+                    <li class="nav-item"> <a class="nav-link" name="nav-link" href="#">权限管理</a></li>
+                    <li class="nav-item"> <a class="nav-link" name="nav-link" href="#">权限变更</a></li>
+                    <li class="nav-item"> <a class="nav-link" name="nav-link" href="#">数据字典</a></li>
                   </ul>
                 </div>
               </li>
@@ -329,7 +341,7 @@
 
           <!-- main-partial 右侧主体内容-->
           <div class="main-panel">
-            <div th:replace="bar::#content-main"></div>
+            <div name="content-change-main" th:replace="bar::#content-main"></div>
             <!-- content-wrapper ends -->
             <!-- partial:partials/_footer.html -->
             <div th:replace="bar::#content-footer"></div>
