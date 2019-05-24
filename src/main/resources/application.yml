@@ -3,7 +3,7 @@ server:
   tomcat:
     uri-encoding: UTF-8
   port: 8082
-  context-path: /test
+  context-path: /
 spring:
   datasource:
     username: root
