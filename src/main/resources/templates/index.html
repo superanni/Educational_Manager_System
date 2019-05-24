@@ -201,7 +201,8 @@
         <!-- partial 主体部分-->
         <div class="container-fluid page-body-wrapper">
           <!-- 左侧栏信息	partial:partials/_sidebar.html -->
-          <nav class="sidebar sidebar-offcanvas" id="sidebar" th:replace="bar::#sidebar"></nav>
+          <nav th:replace="bar::#sidebar">
+          </nav>
           <!-- main-partial 右侧主体内容-->
           <div class="main-panel">
             <div name="content-change-main" th:replace="bar::#content-main"></div>
