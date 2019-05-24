@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.education.mapper.DisciplineInfoMapper">
+
+    <!-- 开启二级缓存 -->
+    <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.education.entity.DisciplineInfo">
+        <id column="discipline_id" property="disciplineId" />
+        <result column="discipline_no" property="disciplineNo" />
+        <result column="discipline_name" property="disciplineName" />
+        <result column="discipline_tuition" property="disciplineTuition" />
+        <result column="discipline_bring" property="disciplineBring" />
+        <result column="discipline_type" property="disciplineType" />
+        <result column="discipline_desc" property="disciplineDesc" />
+        <result column="discipline_isuesd" property="disciplineIsuesd" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        discipline_id, discipline_no, discipline_name, discipline_tuition, discipline_bring, discipline_type, discipline_desc, discipline_isuesd
+    </sql>
+
+</mapper>
