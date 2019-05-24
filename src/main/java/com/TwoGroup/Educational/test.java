@@ -1,16 +1,17 @@
 package com.TwoGroup.Educational;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 测试RestController连接
  */
-@RestController
+@Controller
+@RequestMapping("/test")
 public class test {
-    @GetMapping("/hello")
-    public @ResponseBody String test(){
-        return "index";
+
+    @GetMapping("/{page}")
+    public String test(@PathVariable String page){
+        return "redirect:/"+page+".html";
     }
 }
