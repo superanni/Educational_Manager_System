@@ -12,6 +12,6 @@ public class test {
 
     @GetMapping("/test")
     public @ResponseBody String test(){
-        return "你好啊";
+        return "index";
     }
 }
