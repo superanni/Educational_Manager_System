@@ -1,6 +1,6 @@
-package com.TwoGroup.Educational.config;
+package com.TwoGroup.Educational.Config;
 
-import com.TwoGroup.Educational.component.XssHttpServletRequestWrapper;
+import com.TwoGroup.Educational.Component.XssHttpServletRequestWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
