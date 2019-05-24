@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.education.mapper.AttendanceInfoMapper">
+
+    <!-- 开启二级缓存 -->
+    <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.education.entity.AttendanceInfo">
+        <id column="attendance_id" property="attendanceId" />
+        <result column="student_id" property="studentId" />
+        <result column="staff_id" property="staffId" />
+        <result column="attendance_desc" property="attendanceDesc" />
+        <result column="attendance_state" property="attendanceState" />
+        <result column="attendance_time" property="attendanceTime" />
+        <result column="attendance_remark" property="attendanceRemark" />
+        <result column="attendance_xuenian" property="attendanceXuenian" />
+        <result column="attendance_xueqi" property="attendanceXueqi" />
+        <result column="attendance_month" property="attendanceMonth" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        attendance_id, student_id, staff_id, attendance_desc, attendance_state, attendance_time, attendance_remark, attendance_xuenian, attendance_xueqi, attendance_month
+    </sql>
+
+</mapper>
