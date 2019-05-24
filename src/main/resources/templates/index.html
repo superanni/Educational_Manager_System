@@ -13,7 +13,9 @@
       <link rel="stylesheet" href="css/style.css">
       <!-- endinject -->
       <link rel="shortcut icon" href="images/favicon.png" />
+    
       <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+    
       <script>
         $(function(){
             $("[name='nav-link']").on('click',function(e){
@@ -25,6 +27,7 @@
             });
         });
       </script>
+    
     </head>
     <body>
       <div class="container-scroller">
@@ -180,7 +183,7 @@
               </li>
               <!--用户注销-->
               <li class="nav-item nav-logout d-none d-lg-block">
-                <a class="nav-link" href="#">
+                <a class="nav-link" th:href="@{/test/login}">
                   <i class="mdi mdi-power"></i>
                   &nbsp;&nbsp;注销
                 </a>

@@ -1,4 +1,4 @@
-package com.TwoGroup.Educational.Config;
+package com.TwoGroup.Educational.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +21,7 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
             public void addViewControllers(ViewControllerRegistry registry) {
                 registry.addViewController("/").setViewName("index");
                 registry.addViewController("index.html").setViewName("index");
+	            registry.addViewController("login.html").setViewName("login");
             }
 
             //注册拦截器
