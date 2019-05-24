@@ -1,4 +1,4 @@
-package com.TwoGroup.Educational.config;
+package com.TwoGroup.Educational.Config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package com.TwoGroup.Educational.config;
+package com.TwoGroup.Educational.Config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;

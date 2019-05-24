@@ -1,5 +1,4 @@
 server:
-
   tomcat:
     uri-encoding: UTF-8
   port: 8082
@@ -50,5 +49,5 @@ logging:
   config: classpath:logback-boot.xml
 
 #mybatis:
-#  config-location: classpath:mybatis/mybatis-config.xml
+#  Config-location: classpath:mybatis/mybatis-Config.xml
 #  mapper-locations: classpath:mybatis/mapper/*.xml
