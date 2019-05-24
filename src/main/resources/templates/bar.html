@@ -5,6 +5,144 @@
 		<title>main</title>
 	</head>
 	<body>
+    <!--左侧栏-->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            <ul class="nav">
+                <!--用户头像框、用户名、职位称呼-->
+                <li class="nav-item nav-profile">
+                    <a href="#" class="nav-link">
+                        <div class="nav-profile-image">
+                            <img src="images/faces/face1.jpg" alt="profile">
+                            <span class="login-status online"></span> <!--change to offline or busy as needed-->
+                        </div>
+                        <div class="nav-profile-text d-flex flex-column">
+                            <span class="font-weight-bold mb-2">用户名称</span>
+                            <span class="text-secondary text-small">职位称呼</span>
+                        </div>
+                        <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+                    </a>
+                </li>
+                <!--系统首页-->
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">
+                        <span class="menu-title">系统首页</span>
+                        <i class="mdi mdi-home menu-icon"></i>
+                    </a>
+                </li>
+                <!--系统管理-->
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#ui-Sys_manage" aria-expanded="false" aria-controls="ui-basic">
+                        <span class="menu-title">系统管理</span>
+                        <i class="menu-arrow"></i>
+                        <i class="mdi mdi-settings-box menu-icon"></i>
+                    </a>
+                    <div class="collapse" id="ui-Sys_manage">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item"> <a class="nav-link" name="nav-link" href="#">员工管理</a></li>
+                            <li class="nav-item"> <a class="nav-link" name="nav-link" href="#">角色管理</a></li>
+                            <li class="nav-item"> <a class="nav-link" name="nav-link" href="#">角色变更</a></li>
+                            <li class="nav-item"> <a class="nav-link" name="nav-link" href="#">权限管理</a></li>
+                            <li class="nav-item"> <a class="nav-link" name="nav-link" href="#">权限变更</a></li>
+                            <li class="nav-item"> <a class="nav-link" name="nav-link" href="#">数据字典</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <!--通知管理-->
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#ui-Notify_manage" aria-expanded="false" aria-controls="ui-basic">
+                        <span class="menu-title">通知管理</span>
+                        <i class="menu-arrow"></i>
+                        <i class="mdi mdi-bell menu-icon"></i>
+                    </a>
+                    <div class="collapse" id="ui-Notify_manage">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item"> <a class="nav-link" href="#">模板管理</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="#">短信管理</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="#">邮件管理</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="#">通知管理</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <!--学生管理-->
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#ui-Stu_manage" aria-expanded="false" aria-controls="ui-basic">
+                        <span class="menu-title">学生管理</span>
+                        <i class="menu-arrow"></i>
+                        <i class="mdi mdi-human-child menu-icon"></i>
+                    </a>
+                    <div class="collapse" id="ui-Stu_manage">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item"> <a class="nav-link" href="#">班主任评价</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="#">期末成绩</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="#">周测成绩</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="#">考勤管理</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="#">缴费登记</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="#">学习经历</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="#">家庭成员</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="#">社会实践及科研训练</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="#">毕业论文及科研训练</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="#">学生信息</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <!--教务管理-->
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#ui-Educ_manage" aria-expanded="false" aria-controls="ui-basic">
+                        <span class="menu-title">教务管理</span>
+                        <i class="menu-arrow"></i>
+                        <i class="mdi mdi-buffer menu-icon"></i>
+                    </a>
+                    <div class="collapse" id="ui-Educ_manage">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item"> <a class="nav-link" href="#">课程管理</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="#">教室管理</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="#">课程表</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="#">教师管理</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="#">班级管理</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="#">班级事务</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="#">学生评教(月度)</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="#">学生评教(学期)</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="#">听课记录</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <!--教务活动-->
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#ui-Educ_active" aria-expanded="false" aria-controls="ui-basic">
+                        <span class="menu-title">教务活动</span>
+                        <i class="menu-arrow"></i>
+                        <i class="mdi mdi-football menu-icon"></i>
+                    </a>
+                    <div class="collapse" id="ui-Educ_active">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item"> <a class="nav-link" href="#">活动管理</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <!--数据分析与统计-->
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#ui-Data_count" aria-expanded="false" aria-controls="ui-basic">
+                        <span class="menu-title">数据分析与统计</span>
+                        <i class="menu-arrow"></i>
+                        <i class="mdi mdi-mixcloud menu-icon"></i>
+                    </a>
+                    <div class="collapse" id="ui-Data_count">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item"> <a class="nav-link" href="#">学生信息分析与统计</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="#">教师信息分析与统计</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <!--文件上传-->
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <span class="menu-title">文件上传</span>
+                        <i class="mdi mdi-note-plus-outline menu-icon"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    <!--主体内容-->
         <div class="content-wrapper" id="content-main">
             <div class="page-header">
                 <h3 class="page-title">
@@ -22,7 +160,7 @@
                     </ul>
                 </nav>
             </div>
-            <div class="row">
+            <!--<div class="row">
                 <div class="col-md-4 stretch-card grid-margin">
                     <div class="card bg-gradient-danger card-img-holder text-white">
                         <div class="card-body">
@@ -59,8 +197,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
+            </div>-->
+            <!--<div class="row">
                 <div class="col-md-7 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
@@ -81,8 +219,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
+            </div>-->
+            <!--<div class="row">
                 <div class="col-12 grid-margin">
                     <div class="card">
                         <div class="card-body">
@@ -187,20 +325,20 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
             <div class="row">
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Recent Updates</h4>
+                            <h4 class="card-title">项目小组</h4>
                             <div class="d-flex">
                                 <div class="d-flex align-items-center mr-4 text-muted font-weight-light">
                                     <i class="mdi mdi-account-outline icon-sm mr-2"></i>
-                                    <span>jack Menqu</span>
+                                    <span>黄彬朕&nbsp;&nbsp;符润东&nbsp;&nbsp;黄武斌&nbsp;&nbsp;刘赛松</span>
                                 </div>
                                 <div class="d-flex align-items-center text-muted font-weight-light">
                                     <i class="mdi mdi-clock icon-sm mr-2"></i>
-                                    <span>October 3rd, 2018</span>
+                                    <span>June 3rd, 2019</span>
                                 </div>
                             </div>
                             <div class="row mt-3">
@@ -214,7 +352,7 @@
                                 </div>
                             </div>
                             <div class="d-flex mt-5 align-items-top">
-                                <img src="images/faces/face3.jpg" class="img-sm rounded-circle mr-3" alt="image">
+                                <img src="images/HA.gif" class="img-sm rounded-circle mr-3" alt="image">
                                 <div class="mb-0 flex-grow">
                                     <h5 class="mr-2 mb-2">School Website - Authentication Module.</h5>
                                     <p class="mb-0 font-weight-light">It is a long established fact that a reader will be distracted by the readable
@@ -228,7 +366,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <!--<div class="row">
                 <div class="col-md-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
@@ -354,8 +492,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
         </div>
+    <!--尾部信息-->
         <footer class="footer" id="content-footer">
             <div class="d-sm-flex justify-content-center justify-content-sm-between">
                 <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2019 <a href="index.html">superanni.han</a>. All rights reserved. </span>
