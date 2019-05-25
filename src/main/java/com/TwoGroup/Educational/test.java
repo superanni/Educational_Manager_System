@@ -9,10 +9,16 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class test {
 
-    @GetMapping("developmentManage/{page}")
+
+	@GetMapping("developmentManage/{page}")
     public String test(@PathVariable String page){
         return "manager/developmentManage/"+page;
     }
+
+	@GetMapping("/{page}")
+	public String testlogin(@PathVariable String page) {
+		return page;
+	}
 
     @GetMapping("addOrUpdate/{page}")
     public String testModifyData(@PathVariable String page){
