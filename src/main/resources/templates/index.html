@@ -21,7 +21,7 @@
             $("[name='nav-link']").on('click',function(e){
                 e.preventDefault();
                 var link=$(this).attr("href");
-                if(link!==""&&link!=null&&link!="#"){
+                if(link!=""&&link!=null&&link!="#"){
                     $('#content-change-main').load(link,function(){});
                 }
             });
@@ -208,7 +208,9 @@
           </nav>
           <!-- main-partial 右侧主体内容-->
           <div class="main-panel">
-            <div name="content-change-main" th:replace="bar::#content-main"></div>
+            <div class="content-wrapper" id="content-change-main">
+                <div th:replace="bar::#content-main"></div>
+            </div>
             <!-- content-wrapper ends -->
             <!-- partial:partials/_footer.html -->
             <div th:replace="bar::#content-footer"></div>

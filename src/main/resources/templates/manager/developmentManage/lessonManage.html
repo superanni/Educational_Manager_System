@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>课程管理</title>
+</head>
+<body>
+<div>
+    <div class="page-header">
+        <!--查询课程、添加课程-->
+        <div class="navbar-menu-wrapper d-flex align-items-stretch">
+            <div class="search-field">
+                <form class="d-flex align-items-center h-100" action="#">
+                    <div class="input-group">
+                        <div>
+                            <i class="input-group-text border-0 mdi mdi-magnify"></i>
+                        </div>
+                        <input type="text" class="form-control bg-transparent border-0" placeholder="课程名称">
+                    </div>
+                    <button type="submit" class="btn btn-gradient-info btn-sm">查询</button>
+                    <button type="button" style="margin-left: 40px" name="addLesson" class="btn btn-gradient-primary btn-sm">添加课程信息</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 grid-margin">
+            <div class="card">
+                <div class="card-body">
+                    <p class="card-description">
+                        课程管理 <code>lessonManage</code>
+                    </p>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr align="center">
+                                <th>课程编号</th>
+                                <th>课程名称</th>
+                                <th>学时</th>
+                                <th>学分</th>
+                                <th>课程类型</th>
+                                <th>修改</th>
+                                <th>删除</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr align="center">
+                                <td>Jacob</td>
+                                <td>Photoshop</td>
+                                <td class="text-danger"> 28.76% <i class="mdi mdi-arrow-down"></i></td>
+                                <td><label class="badge badge-danger">Pending</label></td>
+                                <td><label class="badge badge-danger">Pending</label></td>
+                                <td><button type="button" class="btn btn-gradient-warning btn-sm">修改</button></td>
+                                <td><button type="button" class="btn btn-gradient-danger btn-sm">删除</button></td>
+                            </tr>
+                            <!--<tr>
+                                <td>Messsy</td>
+                                <td>Flash</td>
+                                <td class="text-danger"> 21.06% <i class="mdi mdi-arrow-down"></i></td>
+                                <td><label class="badge badge-warning">In progress</label></td>
+                            </tr>
+                            <tr>
+                                <td>John</td>
+                                <td>Premier</td>
+                                <td class="text-danger"> 35.00% <i class="mdi mdi-arrow-down"></i></td>
+                                <td><label class="badge badge-info">Fixed</label></td>
+                            </tr>
+                            <tr>
+                                <td>Peter</td>
+                                <td>After effects</td>
+                                <td class="text-success"> 82.00% <i class="mdi mdi-arrow-up"></i></td>
+                                <td><label class="badge badge-success">Completed</label></td>
+                            </tr>
+                            <tr>
+                                <td>Dave</td>
+                                <td>53275535</td>
+                                <td class="text-success"> 98.05% <i class="mdi mdi-arrow-up"></i></td>
+                                <td><label class="badge badge-warning">In progress</label></td>
+                            </tr>-->
+                            <tr>
+                                <td colspan="7" align="center">
+                                <span class="card-description">
+                                    共 <code>1</code>条数据
+                                </span>
+                                    <button type="button" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">上一页</button>
+                                    <button type="button" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">下一页</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function(){
+            $("[name='addLesson']").on('click',function(){
+                $('#content-change-main').load("addOrUpdate/addLesson",function(){});
+            });
+        });
+    </script>
+</div>
+</body>
+</html>
