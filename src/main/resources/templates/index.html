@@ -6,14 +6,17 @@
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <title>HA教务管理系统</title>
       <!-- plugins:css -->
-      <link rel="stylesheet" href="vendors/iconfonts/mdi/css/materialdesignicons.min.css">
-      <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
+      <link rel="stylesheet" th:href="@{/vendors/iconfonts/mdi/css/materialdesignicons.min.css}">
+      <link rel="stylesheet" th:href="@{/vendors/css/vendor.bundle.base.css}">
       <!-- endinject -->
       <!-- inject:css -->
-      <link rel="stylesheet" href="css/style.css">
+      <link rel="stylesheet" th:href="@{/css/style.css}">
+      <!--bootstrap js-->
+      <link rel="stylesheet" th:href="@{/js/bootstrap.min.js}">
       <!-- endinject -->
-      <link rel="shortcut icon" href="images/favicon.png" />
-    
+      <link rel="shortcut icon" th:href="@{/images/favicon.png}" />
+
+      <!--jquery-->
       <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
     
       <script>

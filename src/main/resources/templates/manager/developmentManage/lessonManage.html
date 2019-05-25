@@ -18,7 +18,7 @@
                         <input type="text" class="form-control bg-transparent border-0" placeholder="课程名称">
                     </div>
                     <button type="submit" class="btn btn-gradient-info btn-sm">查询</button>
-                    <button type="button" style="margin-left: 40px" name="addLesson" class="btn btn-gradient-primary btn-sm">添加课程信息</button>
+                    <button type="button" style="margin-left: 40px" name="updateOrSave" class="btn btn-gradient-primary btn-sm">添加课程信息</button>
                 </form>
             </div>
         </div>
@@ -93,13 +93,13 @@
             </div>
         </div>
     </div>
-    <script>
-        $(function(){
-            $("[name='addLesson']").on('click',function(){
-                $('#content-change-main').load("addOrUpdate/saveOrUpdateLesson",function(){});
-            });
-        });
-    </script>
 </div>
+<script>
+    $(function(){
+        $("[name='updateOrSave']").on('click',function(){
+            $('#content-change-main').load("addOrUpdate/saveOrUpdateLesson",function(){});
+        });
+    });
+</script>
 </body>
 </html>
