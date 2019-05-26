@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.TwoGroup.Educational.mapper.EvaluationXueqiMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.TwoGroup.Educational.entities.EvaluationXueqi">
+        <id column="evaluation_id" property="evaluationId" />
+        <result column="student_id" property="studentId" />
+        <result column="discipline_id" property="disciplineId" />
+        <result column="staff_id" property="staffId" />
+        <result column="class_id" property="classId" />
+        <result column="evaluation_xueqi" property="evaluationXueqi" />
+        <result column="evaluation_month" property="evaluationMonth" />
+        <result column="evaluation_major" property="evaluationMajor" />
+        <result column="evaluation_content" property="evaluationContent" />
+        <result column="evaluation_time" property="evaluationTime" />
+        <result column="evaluation_note" property="evaluationNote" />
+    </resultMap>
+
+</mapper>

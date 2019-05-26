@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.TwoGroup.Educational.mapper.NoticeInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.TwoGroup.Educational.entities.NoticeInfo">
+        <id column="notice_id" property="noticeId" />
+        <result column="staff_id" property="staffId" />
+        <result column="notice_title" property="noticeTitle" />
+        <result column="notice_content" property="noticeContent" />
+        <result column="notice_time" property="noticeTime" />
+        <result column="notice_filename" property="noticeFilename" />
+    </resultMap>
+
+</mapper>
