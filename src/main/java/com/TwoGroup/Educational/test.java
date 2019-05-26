@@ -1,17 +1,21 @@
 package com.TwoGroup.Educational;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 测试RestController连接
  */
-@RestController
+@Controller
 public class test {
 
-    @GetMapping("/test")
-    public @ResponseBody String test(){
-        return "index";
+    @GetMapping("developmentManage/{page}")
+    public String test(@PathVariable String page){
+        return "manager/developmentManage/"+page;
+    }
+
+    @GetMapping("addOrUpdate/{page}")
+    public String testModifyData(@PathVariable String page){
+        return "manager/developmentManage/saveOrUpdate/"+page;
     }
 }

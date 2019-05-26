@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.TwoGroup.Educational.mapper.MarketActiveMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.TwoGroup.Educational.entities.MarketActive">
+        <id column="active_id" property="activeId" />
+        <result column="staff_id" property="staffId" />
+        <result column="active_name" property="activeName" />
+        <result column="active_state" property="activeState" />
+        <result column="active_start" property="activeStart" />
+        <result column="active_end" property="activeEnd" />
+        <result column="active_type" property="activeType" />
+        <result column="active_coste_emtimate" property="activeCosteEmtimate" />
+        <result column="active_coste" property="activeCoste" />
+        <result column="active_refect_estimate" property="activeRefectEstimate" />
+        <result column="active_student" property="activeStudent" />
+        <result column="active_content" property="activeContent" />
+    </resultMap>
+
+</mapper>

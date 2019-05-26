@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.TwoGroup.Educational.mapper.CommunicateInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.TwoGroup.Educational.entities.CommunicateInfo">
+        <id column="communicate_id" property="communicateId" />
+        <result column="student_id" property="studentId" />
+        <result column="staff_id" property="staffId" />
+        <result column="communicate_time" property="communicateTime" />
+        <result column="communicate_content" property="communicateContent" />
+        <result column="communicate_xuenian" property="communicateXuenian" />
+        <result column="communicate_xueqi" property="communicateXueqi" />
+        <result column="leave_count" property="leaveCount" />
+        <result column="truancy_count" property="truancyCount" />
+        <result column="reward_punish" property="rewardPunish" />
+    </resultMap>
+
+</mapper>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.TwoGroup.Educational.mapper.StudentFamilyMemberMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.TwoGroup.Educational.entities.StudentFamilyMember">
+        <id column="student_family_id" property="studentFamilyId" />
+        <result column="student_id" property="studentId" />
+        <result column="staff_id" property="staffId" />
+        <result column="family_name" property="familyName" />
+        <result column="family_app" property="familyApp" />
+        <result column="family_age" property="familyAge" />
+        <result column="family_zzmm" property="familyZzmm" />
+        <result column="workplace" property="workplace" />
+        <result column="reg_time" property="regTime" />
+        <result column="family_note" property="familyNote" />
+    </resultMap>
+
+</mapper>

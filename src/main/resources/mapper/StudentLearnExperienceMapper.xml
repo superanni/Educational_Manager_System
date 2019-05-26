@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.TwoGroup.Educational.mapper.StudentLearnExperienceMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.TwoGroup.Educational.entities.StudentLearnExperience">
+        <id column="student_learn_id" property="studentLearnId" />
+        <result column="student_id" property="studentId" />
+        <result column="staff_id" property="staffId" />
+        <result column="learn_allyears" property="learnAllyears" />
+        <result column="learn_school" property="learnSchool" />
+        <result column="learn_position" property="learnPosition" />
+        <result column="reg_time" property="regTime" />
+        <result column="learn_note" property="learnNote" />
+    </resultMap>
+
+</mapper>

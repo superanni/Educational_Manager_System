@@ -6,25 +6,30 @@
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <title>HA教务管理系统</title>
       <!-- plugins:css -->
-      <link rel="stylesheet" href="vendors/iconfonts/mdi/css/materialdesignicons.min.css">
-      <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
+      <link rel="stylesheet" th:href="@{/vendors/iconfonts/mdi/css/materialdesignicons.min.css}">
+      <link rel="stylesheet" th:href="@{/vendors/css/vendor.bundle.base.css}">
       <!-- endinject -->
       <!-- inject:css -->
-      <link rel="stylesheet" href="css/style.css">
+      <link rel="stylesheet" th:href="@{/css/style.css}">
+      <!--bootstrap js-->
+      <link rel="stylesheet" th:href="@{/js/bootstrap.min.js}">
       <!-- endinject -->
-      <link rel="shortcut icon" href="images/favicon.png" />
+      <link rel="shortcut icon" th:href="@{/images/favicon.png}" />
+
+      <!--jquery-->
       <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
       <script>
         $(function(){
             $("[name='nav-link']").on('click',function(e){
                 e.preventDefault();
                 var link=$(this).attr("href");
-                if(link!==""&&link!=null&&link!="#"){
+                if(link!=""&&link!=null&&link!="#"){
                     $('#content-change-main').load(link,function(){});
                 }
             });
         });
       </script>
+    
     </head>
     <body>
       <div class="container-scroller">
@@ -55,7 +60,7 @@
                     <span class="availability-status online"></span>
                   </div>
                   <div class="nav-profile-text">
-                    <p class="mb-1 text-black">用户名称</p>
+                    <p class="mb-1 text-black">用户管理</p>
                   </div>
                 </a>
                 <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
@@ -180,16 +185,16 @@
               </li>
               <!--用户注销-->
               <li class="nav-item nav-logout d-none d-lg-block">
-                <a class="nav-link" href="#">
+	              <a class="nav-link" href="login">
                   <i class="mdi mdi-power"></i>
-                  &nbsp;&nbsp;用户注销
+                  &nbsp;&nbsp;注销
                 </a>
               </li>
               <!--返回顶部栏-->
               <li class="nav-item nav-settings d-none d-lg-block">
                 <a class="nav-link" href="#">
                   <i class="mdi mdi-format-line-spacing"></i>
-                    &nbsp;&nbsp;回到顶部
+                    &nbsp;&nbsp;顶部
                 </a>
               </li>
             </ul>
@@ -201,10 +206,13 @@
         <!-- partial 主体部分-->
         <div class="container-fluid page-body-wrapper">
           <!-- 左侧栏信息	partial:partials/_sidebar.html -->
-          <nav class="sidebar sidebar-offcanvas" id="sidebar" th:replace="bar::#sidebar"></nav>
+          <nav th:replace="bar::#sidebar">
+          </nav>
           <!-- main-partial 右侧主体内容-->
           <div class="main-panel">
-            <div name="content-change-main" th:replace="bar::#content-main"></div>
+            <div class="content-wrapper" id="content-change-main">
+                <div th:replace="bar::#content-main"></div>
+            </div>
             <!-- content-wrapper ends -->
             <!-- partial:partials/_footer.html -->
             <div th:replace="bar::#content-footer"></div>
