@@ -14,7 +14,7 @@ public class test {
         return "manager/developmentManage/"+page;
     }
 
-    @GetMapping("saveOrUpdate/{page}")
+    @GetMapping("addOrUpdate/{page}")
     public String testModifyData(@PathVariable String page){
         return "manager/developmentManage/saveOrUpdate/"+page;
     }
