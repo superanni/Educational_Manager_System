@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.TwoGroup.Educational.mapper.ClassTransactionInfoMapper">
+<mapper namespace="com.twoGroup.educational.mapper.ClassTransactionInfoMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.TwoGroup.Educational.entities.ClassTransactionInfo">
+    <resultMap id="BaseResultMap" type="com.twoGroup.educational.entities.ClassTransactionInfo">
         <id column="class_transaction_id" property="classTransactionId" />
         <result column="class_id" property="classId" />
         <result column="class_transaction_title" property="classTransactionTitle" />

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.TwoGroup.Educational.mapper.RoleAnthorityInfoMapper">
+<mapper namespace="com.twoGroup.educational.mapper.RoleAnthorityInfoMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.TwoGroup.Educational.entities.RoleAnthorityInfo">
+    <resultMap id="BaseResultMap" type="com.twoGroup.educational.entities.RoleAnthorityInfo">
         <id column="role_anthority_id" property="roleAnthorityId" />
         <result column="role_id" property="roleId" />
         <result column="anthorty_id" property="anthortyId" />

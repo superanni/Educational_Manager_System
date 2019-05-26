@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.TwoGroup.Educational.mapper.TemplateInfoMapper">
+<mapper namespace="com.twoGroup.educational.mapper.TemplateInfoMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.TwoGroup.Educational.entities.TemplateInfo">
+    <resultMap id="BaseResultMap" type="com.twoGroup.educational.entities.TemplateInfo">
         <id column="template_id" property="templateId" />
         <result column="template_title" property="templateTitle" />
         <result column="template_content" property="templateContent" />

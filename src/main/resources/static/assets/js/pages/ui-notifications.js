@@ -1,4 +1,4 @@
-// Notifications - Config
+// Notifications - config
 (function ($) {
 
 	'use strict';

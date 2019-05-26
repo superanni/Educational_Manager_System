@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.TwoGroup.Educational.mapper.DisciplineInfoMapper">
+<mapper namespace="com.twoGroup.educational.mapper.DisciplineInfoMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.TwoGroup.Educational.entities.DisciplineInfo">
+    <resultMap id="BaseResultMap" type="com.twoGroup.educational.entities.DisciplineInfo">
         <id column="discipline_id" property="disciplineId" />
         <result column="discipline_no" property="disciplineNo" />
         <result column="discipline_name" property="disciplineName" />

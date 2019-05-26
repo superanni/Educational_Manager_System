@@ -1,4 +1,4 @@
-// Data Tables - Config
+// Data Tables - config
 (function ($) {
 
 	'use strict';
