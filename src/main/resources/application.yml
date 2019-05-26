@@ -4,6 +4,10 @@ server:
   port: 8082
   context-path: /
 spring:
+  redis:
+    host: 192.168.1.107
+    port: 6379
+    password:
   datasource:
     username: root
     password:
@@ -49,5 +53,5 @@ logging:
   config: classpath:logback-boot.xml
 
 #mybatis:
-#  Config-location: classpath:mybatis/mybatis-Config.xml
+#  config-location: classpath:mybatis/mybatis-config.xml
 #  mapper-locations: classpath:mybatis/mapper/*.xml

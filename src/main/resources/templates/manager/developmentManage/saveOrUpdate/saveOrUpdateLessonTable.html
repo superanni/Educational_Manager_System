@@ -5,11 +5,21 @@
     <title>添加、修改课程表信息</title>
 </head>
 <body>
+<script>
+    $(function () {
+        $("[name='backToDisplay']").click(function () {
+            $('#content-change-main').load("developmentManage/lessonTable",function(){});
+        })
+    })
+</script>
     <div class="row">
         <div class="col-12 grid-margin">
             <div class="card">
                 <div class="card-body">
-                    <h3 class="card-title">Horizontal Two column</h3>
+                    <div class="modal-header">
+                        <h3 class="card-title">Horizontal Two column</h3>
+                        <button type="button" name="backToDisplay" class="btn btn-gradient-info btn-sm">返回</button>
+                    </div>
                     <form class="form-sample">
                         <p class="card-description">
                             课程表信息

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.TwoGroup.Educational.mapper.TrackRecordInfoMapper">
+<mapper namespace="com.twoGroup.educational.mapper.TrackRecordInfoMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.TwoGroup.Educational.entities.TrackRecordInfo">
+    <resultMap id="BaseResultMap" type="com.twoGroup.educational.entities.TrackRecordInfo">
         <id column="track_record_id" property="trackRecordId" />
         <result column="student_id" property="studentId" />
         <result column="track_record_title" property="trackRecordTitle" />

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加、修改听课记录信息</title>
+</head>
+<body>
+<script>
+    $(function () {
+        $("[name='backToDisplay']").click(function () {
+            $('#content-change-main').load("developmentManage/listenClassWriteDown",function(){});
+        })
+    })
+</script>
+    <div class="row">
+        <div class="col-12 grid-margin">
+            <div class="card">
+                <div class="card-body">
+                    <div class="modal-header">
+                        <h3 class="card-title">Horizontal Two column</h3>
+                        <button type="button" name="backToDisplay" class="btn btn-gradient-info btn-sm">返回</button>
+                    </div>
+                    <form class="form-sample">
+                        <p class="card-description">
+                            听课记录信息
+                        </p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">编号</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control form-control-sm" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">课程表名称</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control form-control-sm" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">星期一</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control form-control-sm" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">星期二</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control form-control-sm" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">星期三</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control form-control-sm"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">星期四</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control form-control-sm"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">星期五</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control form-control-sm"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">星期六</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control form-control-sm"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">星期天</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control form-control-sm"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" align="center">
+                                <button type="submit" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">保存</button>
+                                <button type="button" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

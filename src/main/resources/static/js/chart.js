@@ -1,7 +1,7 @@
 $(function() {
   /* ChartJS
    * -------
-   * Data and Config for chartjs
+   * Data and config for chartjs
    */
   'use strict';
   var data = {

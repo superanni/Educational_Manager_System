@@ -1,5 +1,5 @@
 /*!
- * Timepicker Component for Twitter Bootstrap
+ * Timepicker component for Twitter Bootstrap
  *
  * Copyright 2013 Joris de Wit
  *
