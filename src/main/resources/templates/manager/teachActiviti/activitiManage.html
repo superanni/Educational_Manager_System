@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>活动管理</title>
+</head>
+<body>
+<div>
+	<div class="page-header">
+		<!--查询活动、添加活动-->
+		<div class="navbar-menu-wrapper d-flex align-items-stretch">
+			<div class="search-field">
+				<form class="d-flex align-items-center h-100" action="#">
+					<div class="input-group">
+						<div style="margin-top: 5px">
+							<i class="input-group-text border-0 mdi mdi-magnify" style="height: 31px"></i>
+						</div>
+						<input type="text" class="form-control bg-transparent border-0" placeholder="活动名称">
+					</div>
+					<button type="submit" class="btn btn-gradient-info btn-sm">查询活动</button>
+					<button type="button" style="margin-left: 40px" name="updateOrSave" class="btn btn-gradient-primary btn-sm">添加活动</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12 grid-margin">
+			<div class="card">
+				<div class="card-body">
+					<p class="card-description">
+						活动管理 <code>activitiManage</code>
+					</p>
+					<div class="table-responsive">
+						<table class="table">
+							<thead>
+							<tr align="center">
+								<th>活动名称</th>
+								<th>负责人</th>
+								<th>开始时间</th>
+								<th>结束时间</th>
+								<th>活动状态</th>
+								<th>查看</th>
+								<th>删除</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr align="center">
+								<td>lol</td>
+								<td>刘赛松</td>
+								<td class="text-danger"> 28.76% <i class="mdi mdi-arrow-down"></i></td>
+								<td><label class="badge d">Pending</label></td>
+								<td><label class="badge badge-danger">Pending</label></td>
+								<td><button type="button" class="btn btn-gradient-warning btn-sm">查看</button></td>
+								<td><button type="button" class="btn btn-gradient-danger btn-sm">删除</button></td>
+							</tr>
+							<tr>
+								<td colspan="10" align="center">
+                                <span class="card-description">
+                                    共 <code>1</code>条数据
+                                </span>
+									<button type="button" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">上一页</button>
+									<button type="button" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">下一页</button>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$(function(){
+		$("[name='updateOrSave']").on('click',function(){
+			$('#content-change-main').load("saveOrUpdate/saveOrUpdateAcitiviti",function(){});
+		});
+	});
+</script>
+</body>
+</html>
