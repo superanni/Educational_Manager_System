@@ -9,6 +9,7 @@
         <result column="anthorty_name" property="anthortyName" />
         <result column="anthorty_desc" property="anthortyDesc" />
         <result column="anthorty_url" property="anthortyUrl" />
+	    <association property="anthortyDesc" resultMap="BaseResultMap"></association>
     </resultMap>
 
 </mapper>

@@ -23,4 +23,16 @@ public class test {
 	public String test2(@PathVariable String page){
 		return "manager/teachManager/"+page;
 	}
+
+	@GetMapping("/{page}")
+	public String test3(@PathVariable String page){
+		return page;
+	}
+
+	@GetMapping("dataAndStatistics/{page}")
+	public String test4(@PathVariable String page){
+		return "manager/dataAndStatistics/"+page;
+	}
+
+
 }
