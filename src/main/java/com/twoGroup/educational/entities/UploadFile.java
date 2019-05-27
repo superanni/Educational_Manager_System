@@ -12,7 +12,8 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ * 文件上传表 upload_file :UploadFile
+ staff_id 	员工编号	    关联staff_info 主键
  * </p>
  *
  * @author GroupTwo

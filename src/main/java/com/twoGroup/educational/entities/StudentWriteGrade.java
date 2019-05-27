@@ -12,7 +12,12 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ * 学生成绩表 student_write_grade :StudentWriteGrade
+ 学生成绩write_grade 由varchar改为double
+ student_id 学生编号 关联student_info主键
+ staff_id 员工编号  关联staff_info 主键
+ class_id 班级编号 关联class_info 主键
+ discipline_id 课程编号 关联19课程表discipline_info
  * </p>
  *
  * @author GroupTwo

@@ -13,7 +13,10 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ * 学生家庭成员信息表 student_family_member :StudentFamilyMember
+ 列政治面貌 family_zcmm 更新为family_zzmm
+ student_id 学生编号 关联student_info主键
+ staff_id 员工编号  关联staff_info 主键
  * </p>
  *
  * @author GroupTwo

@@ -11,7 +11,8 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ * 课程表信息 syllabus_info :SyllabusInfo
+ 基础表 无关联 无修改
  * </p>
  *
  * @author GroupTwo

@@ -12,7 +12,9 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ * 毕业论文和科研训练表   student_graduation_thesis :StudentGraduationThesis
+ student_id 学生编号 关联student_info主键
+ staff_id 员工编号  关联staff_info 主键
  * </p>
  *
  * @author GroupTwo
