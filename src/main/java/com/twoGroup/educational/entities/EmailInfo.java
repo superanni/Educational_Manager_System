@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.annotations.TableName;
 import java.io.Serializable;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * <p>
@@ -17,6 +18,7 @@ import lombok.Data;
  * @author GroupTwo
  * @since 2019-05-26
  */
+@Accessors(chain=true)
 @Data
 @TableName("email_info")
 public class EmailInfo implements Serializable {

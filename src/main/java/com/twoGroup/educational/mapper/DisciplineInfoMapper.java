@@ -12,5 +12,4 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * @since 2019-05-26
  */
 public interface DisciplineInfoMapper extends BaseMapper<DisciplineInfo> {
-
 }

@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -17,6 +18,7 @@ import java.io.Serializable;
  * @author GroupTwo
  * @since 2019-05-26
  */
+@Accessors(chain=true)
 @Data
 @TableName("notice_info")
 public class NoticeInfo implements Serializable {
@@ -38,16 +40,4 @@ public class NoticeInfo implements Serializable {
 
     @TableField(exist = false)
     private StaffInfo staffInfo;  //对应员工
-
-    @Override
-    public String toString() {
-        return "NoticeInfo{" +
-        "noticeId=" + noticeId +
-        ", staffId=" + staffId +
-        ", noticeTitle=" + noticeTitle +
-        ", noticeContent=" + noticeContent +
-        ", noticeTime=" + noticeTime +
-        ", noticeFilename=" + noticeFilename +
-        "}";
-    }
 }

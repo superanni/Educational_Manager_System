@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.enums.IdType;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
+import lombok.Data;
+import lombok.experimental.Accessors;
+
 import java.io.Serializable;
 
 /**
@@ -14,6 +17,8 @@ import java.io.Serializable;
  * @author GroupTwo
  * @since 2019-05-26
  */
+@Accessors(chain=true)
+@Data
 @TableName("anthorty_info")
 public class AnthortyInfo implements Serializable {
 
@@ -30,55 +35,4 @@ public class AnthortyInfo implements Serializable {
     @TableField("anthorty_url")
     private String anthortyUrl;
 
-
-    public Integer getAnthortyId() {
-        return anthortyId;
-    }
-
-    public void setAnthortyId(Integer anthortyId) {
-        this.anthortyId = anthortyId;
-    }
-
-    public Integer getAnthortyPid() {
-        return anthortyPid;
-    }
-
-    public void setAnthortyPid(Integer anthortyPid) {
-        this.anthortyPid = anthortyPid;
-    }
-
-    public String getAnthortyName() {
-        return anthortyName;
-    }
-
-    public void setAnthortyName(String anthortyName) {
-        this.anthortyName = anthortyName;
-    }
-
-    public String getAnthortyDesc() {
-        return anthortyDesc;
-    }
-
-    public void setAnthortyDesc(String anthortyDesc) {
-        this.anthortyDesc = anthortyDesc;
-    }
-
-    public String getAnthortyUrl() {
-        return anthortyUrl;
-    }
-
-    public void setAnthortyUrl(String anthortyUrl) {
-        this.anthortyUrl = anthortyUrl;
-    }
-
-    @Override
-    public String toString() {
-        return "AnthortyInfo{" +
-        "anthortyId=" + anthortyId +
-        ", anthortyPid=" + anthortyPid +
-        ", anthortyName=" + anthortyName +
-        ", anthortyDesc=" + anthortyDesc +
-        ", anthortyUrl=" + anthortyUrl +
-        "}";
-    }
 }

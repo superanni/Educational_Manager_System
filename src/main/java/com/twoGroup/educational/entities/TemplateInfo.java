@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.enums.IdType;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
+import lombok.Data;
+import lombok.experimental.Accessors;
+
 import java.io.Serializable;
 
 /**
@@ -14,6 +17,8 @@ import java.io.Serializable;
  * @author GroupTwo
  * @since 2019-05-26
  */
+@Accessors(chain=true)
+@Data
 @TableName("template_info")
 public class TemplateInfo implements Serializable {
 
@@ -28,46 +33,4 @@ public class TemplateInfo implements Serializable {
     @TableField("template_type")
     private String templateType;
 
-
-    public Integer getTemplateId() {
-        return templateId;
-    }
-
-    public void setTemplateId(Integer templateId) {
-        this.templateId = templateId;
-    }
-
-    public String getTemplateTitle() {
-        return templateTitle;
-    }
-
-    public void setTemplateTitle(String templateTitle) {
-        this.templateTitle = templateTitle;
-    }
-
-    public String getTemplateContent() {
-        return templateContent;
-    }
-
-    public void setTemplateContent(String templateContent) {
-        this.templateContent = templateContent;
-    }
-
-    public String getTemplateType() {
-        return templateType;
-    }
-
-    public void setTemplateType(String templateType) {
-        this.templateType = templateType;
-    }
-
-    @Override
-    public String toString() {
-        return "TemplateInfo{" +
-        "templateId=" + templateId +
-        ", templateTitle=" + templateTitle +
-        ", templateContent=" + templateContent +
-        ", templateType=" + templateType +
-        "}";
-    }
 }

@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.enums.IdType;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
+import lombok.Data;
+import lombok.experimental.Accessors;
+
 import java.io.Serializable;
 
 /**
@@ -14,6 +17,8 @@ import java.io.Serializable;
  * @author GroupTwo
  * @since 2019-05-26
  */
+@Accessors(chain=true)
+@Data
 @TableName("role_info")
 public class RoleInfo implements Serializable {
 
@@ -27,47 +32,4 @@ public class RoleInfo implements Serializable {
     private String roleDesc;
     @TableField("role_state")
     private Integer roleState;
-
-
-    public Integer getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
-    }
-
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
-
-    public String getRoleDesc() {
-        return roleDesc;
-    }
-
-    public void setRoleDesc(String roleDesc) {
-        this.roleDesc = roleDesc;
-    }
-
-    public Integer getRoleState() {
-        return roleState;
-    }
-
-    public void setRoleState(Integer roleState) {
-        this.roleState = roleState;
-    }
-
-    @Override
-    public String toString() {
-        return "RoleInfo{" +
-        "roleId=" + roleId +
-        ", roleName=" + roleName +
-        ", roleDesc=" + roleDesc +
-        ", roleState=" + roleState +
-        "}";
-    }
 }

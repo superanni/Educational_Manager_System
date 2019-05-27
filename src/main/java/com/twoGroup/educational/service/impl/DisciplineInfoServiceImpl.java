@@ -1,10 +1,14 @@
 package com.twoGroup.educational.service.impl;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.twoGroup.educational.entities.DisciplineInfo;
 import com.twoGroup.educational.mapper.DisciplineInfoMapper;
 import com.twoGroup.educational.service.DisciplineInfoService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>

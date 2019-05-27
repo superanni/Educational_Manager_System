@@ -1,5 +1,10 @@
 package com.twoGroup.educational;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.twoGroup.educational.entities.DisciplineInfo;
+import com.twoGroup.educational.service.DisciplineInfoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,30 +14,16 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class test {
 
-    @GetMapping("teachManager/{page}")
+    @Autowired
+    DisciplineInfoService disciplineInfoService;
+
+    @GetMapping("developmentManage/{page}")
     public String test(@PathVariable String page){
-        return "manager/teachManager/"+page;
+        return "manager/developmentManage/"+page;
     }
 
     @GetMapping("saveOrUpdate/{page}")
     public String testModifyData(@PathVariable String page){
-        return "manager/teachManager/saveOrUpdate/"+page;
+        return "manager/developmentManage/saveOrUpdate/"+page;
     }
-
-	@GetMapping("teachActiviti/{page}")
-	public String test2(@PathVariable String page){
-		return "manager/teachManager/"+page;
-	}
-
-	@GetMapping("/{page}")
-	public String test3(@PathVariable String page){
-		return page;
-	}
-
-	@GetMapping("dataAndStatistics/{page}")
-	public String test4(@PathVariable String page){
-		return "manager/dataAndStatistics/"+page;
-	}
-
-
 }

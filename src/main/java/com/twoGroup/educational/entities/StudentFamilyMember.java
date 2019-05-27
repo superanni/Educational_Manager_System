@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import sun.font.SunFontManager;
 
 import java.io.Serializable;
@@ -18,6 +19,7 @@ import java.io.Serializable;
  * @author GroupTwo
  * @since 2019-05-26
  */
+@Accessors(chain=true)
 @Data
 @TableName("student_family_member")
 public class StudentFamilyMember implements Serializable {

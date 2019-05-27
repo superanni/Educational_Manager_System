@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -17,6 +18,7 @@ import java.io.Serializable;
  * @author GroupTwo
  * @since 2019-05-26
  */
+@Accessors(chain=true)
 @Data
 @TableName("attendance_info")
 public class AttendanceInfo implements Serializable {
@@ -48,7 +50,5 @@ public class AttendanceInfo implements Serializable {
     private StaffInfo staffInfo;  //对应员工
     @TableField(exist = false)
     private StudentInfo studentInfo;  //对应学生
-
-
 
 }

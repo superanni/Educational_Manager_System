@@ -2,22 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>添加、修改教室信息</title>
+    <title>添加、修改班级事务</title>
 </head>
 <body>
+<script>
+    $(function () {
+        $("[name='backToDisplay']").click(function () {
+            $('#content-change-main').load("developmentManage/gradeclassTransaction",function(){});
+        })
+    })
+</script>
     <div class="row">
         <div class="col-12 grid-margin">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Horizontal Two column</h4>
+                    <div class="modal-header">
+                        <h3 class="card-title">Horizontal Two column</h3>
+                        <button type="button" name="backToDisplay" class="btn btn-gradient-info btn-sm">返回</button>
+                    </div>
                     <form class="form-sample">
                         <p class="card-description">
-                            教室信息
+                            班级事务
                         </p>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">编号</label>
+                                    <label class="col-sm-3 col-form-label">班级</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control form-control-sm" />
                                     </div>
@@ -25,7 +35,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">教室名称</label>
+                                    <label class="col-sm-3 col-form-label">主题</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control form-control-sm" />
                                     </div>
@@ -35,7 +45,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">容纳人数</label>
+                                    <label class="col-sm-3 col-form-label">组织人</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control form-control-sm" />
                                     </div>
@@ -43,7 +53,17 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">设备信息</label>
+                                    <label class="col-sm-3 col-form-label">活动日期</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control form-control-sm" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">组班级</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control form-control-sm" />
                                     </div>
@@ -51,11 +71,18 @@
                             </div>
                         </div>
                         <p class="card-description">
-                            备注
+                            主要内容
                         </p>
                         <div class="form-group">
-                            <label for="exampleTextarea1">备注</label>
-                            <textarea class="form-control" id="exampleTextarea1" rows="4"></textarea>
+                            <label>内容</label>
+                            <textarea class="form-control" rows="4"></textarea>
+                        </div>
+                        <p class="card-description">
+                            备注信息
+                        </p>
+                        <div class="form-group">
+                            <label>备注信息</label>
+                            <textarea class="form-control" rows="4"></textarea>
                         </div>
                         <div class="row">
                             <div class="col-md-12" align="center">

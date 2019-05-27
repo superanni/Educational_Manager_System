@@ -5,6 +5,9 @@ import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
+import lombok.Data;
+import lombok.experimental.Accessors;
+
 import java.io.Serializable;
 
 /**
@@ -15,6 +18,8 @@ import java.io.Serializable;
  * @author GroupTwo
  * @since 2019-05-26
  */
+@Accessors(chain=true)
+@Data
 @TableName("evaluation_xueqi")
 public class EvaluationXueqi implements Serializable {
 
@@ -43,109 +48,4 @@ public class EvaluationXueqi implements Serializable {
     @TableField("evaluation_note")
     private String evaluationNote;
 
-
-    public Integer getEvaluationId() {
-        return evaluationId;
-    }
-
-    public void setEvaluationId(Integer evaluationId) {
-        this.evaluationId = evaluationId;
-    }
-
-    public Integer getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(Integer studentId) {
-        this.studentId = studentId;
-    }
-
-    public Integer getDisciplineId() {
-        return disciplineId;
-    }
-
-    public void setDisciplineId(Integer disciplineId) {
-        this.disciplineId = disciplineId;
-    }
-
-    public Integer getStaffId() {
-        return staffId;
-    }
-
-    public void setStaffId(Integer staffId) {
-        this.staffId = staffId;
-    }
-
-    public Integer getClassId() {
-        return classId;
-    }
-
-    public void setClassId(Integer classId) {
-        this.classId = classId;
-    }
-
-    public String getEvaluationXueqi() {
-        return evaluationXueqi;
-    }
-
-    public void setEvaluationXueqi(String evaluationXueqi) {
-        this.evaluationXueqi = evaluationXueqi;
-    }
-
-    public String getEvaluationMonth() {
-        return evaluationMonth;
-    }
-
-    public void setEvaluationMonth(String evaluationMonth) {
-        this.evaluationMonth = evaluationMonth;
-    }
-
-    public String getEvaluationMajor() {
-        return evaluationMajor;
-    }
-
-    public void setEvaluationMajor(String evaluationMajor) {
-        this.evaluationMajor = evaluationMajor;
-    }
-
-    public String getEvaluationContent() {
-        return evaluationContent;
-    }
-
-    public void setEvaluationContent(String evaluationContent) {
-        this.evaluationContent = evaluationContent;
-    }
-
-    public Date getEvaluationTime() {
-        return evaluationTime;
-    }
-
-    public void setEvaluationTime(Date evaluationTime) {
-        this.evaluationTime = evaluationTime;
-    }
-
-    public String getEvaluationNote() {
-        return evaluationNote;
-    }
-
-    public void setEvaluationNote(String evaluationNote) {
-        this.evaluationNote = evaluationNote;
-    }
-
-    @Override
-    public String toString() {
-        return "EvaluationXueqi{" +
-        "evaluationId=" + evaluationId +
-        ", studentId=" + studentId +
-        ", disciplineId=" + disciplineId +
-        ", staffId=" + staffId +
-        ", classId=" + classId +
-        ", evaluationXueqi=" + evaluationXueqi +
-        ", evaluationMonth=" + evaluationMonth +
-        ", evaluationMajor=" + evaluationMajor +
-        ", evaluationContent=" + evaluationContent +
-        ", evaluationTime=" + evaluationTime +
-        ", evaluationNote=" + evaluationNote +
-        "}";
-    }
 }

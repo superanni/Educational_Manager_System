@@ -13,5 +13,4 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  */
 
 public interface AnthortyInfoMapper extends BaseMapper<AnthortyInfo> {
-
 }

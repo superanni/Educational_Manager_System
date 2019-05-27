@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -17,6 +18,7 @@ import java.io.Serializable;
  * @author GroupTwo
  * @since 2019-05-26
  */
+@Accessors(chain=true)
 @Data
 @TableName("student_graduation_thesis")
 public class StudentGraduationThesis implements Serializable {
@@ -60,23 +62,4 @@ public class StudentGraduationThesis implements Serializable {
     @TableField(exist = false)
     private StudentInfo studentInfo;  //对应学生
 
-
-
-
-    @Override
-    public String toString() {
-        return "StudentGraduationThesis{" +
-        "studentPaperId=" + studentPaperId +
-        ", studentId=" + studentId +
-        ", staffId=" + staffId +
-        ", paperTitle=" + paperTitle +
-        ", paperTeacher=" + paperTeacher +
-        ", paperStart=" + paperStart +
-        ", paperTime=" + paperTime +
-        ", paperScore=" + paperScore +
-        ", paperComments=" + paperComments +
-        ", regTime=" + regTime +
-        ", paperNote=" + paperNote +
-        "}";
-    }
 }

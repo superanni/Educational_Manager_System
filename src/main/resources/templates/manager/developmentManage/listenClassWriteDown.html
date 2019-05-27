@@ -2,63 +2,50 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>教师管理</title>
+    <title>听课记录</title>
 </head>
 <body>
 <div>
     <div class="page-header">
-        <!--查询教师、添加教师-->
+        <!--查询听课记录、添加听课记录-->
         <div class="navbar-menu-wrapper d-flex align-items-stretch">
             <div class="search-field">
                 <form class="d-flex align-items-center h-100" action="#">
                     <div class="input-group">
-                        <div class="input-group-prepend" style="margin-top: 5px">
-                            <div class="input-group-text" style="height: 31px">条件</div>
-                            <select class="form-control form-control-sm">
-                                <option value="">请选择</option>
-                                <option value="staffName">姓名</option>
-                                <option value="staffMobilePhone">移动电话</option>
-                                <option value="staffSex">性别</option>
-                                <option value="staffNativePlace">籍贯</option>
-                                <option value="staffEductionLevel">学历</option>
-                            </select>
+                        <div style="margin-top: 5px">
+                            <i class="input-group-text border-0 mdi mdi-magnify" style="height: 31px"></i>
                         </div>
-                        <input type="text" class="form-control bg-transparent border-0" placeholder="条件">
+                        <input type="text" class="form-control bg-transparent border-0" placeholder="教师姓名">
+                        <input type="text" class="form-control bg-transparent border-0" placeholder="所听课程">
                     </div>
                     <button type="submit" class="btn btn-gradient-info btn-sm">查询</button>
-                    <button type="button" style="margin-left: 40px" name="updateOrSave" class="btn btn-gradient-primary btn-sm">添加教师信息</button>
+                    <button type="button" style="margin-left: 40px" name="updateOrSave" class="btn btn-gradient-primary btn-sm">添加记录</button>
                 </form>
             </div>
         </div>
     </div>
-	
-	
     <div class="row">
         <div class="col-12 grid-margin">
             <div class="card">
                 <div class="card-body">
                     <p class="card-description">
-                        教师管理 <code>teacherManage</code>
+                        听课记录 <code>listenClassWriteDown</code>
                     </p>
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
                             <tr align="center">
-                                <th>姓名</th>
-                                <th>性别</th>
-                                <th>年龄</th>
-                                <th>移动电话</th>
-                                <th>电子邮箱</th>
-                                <th>入职时间</th>
-                                <th>教育水平</th>
+                                <th>教师姓名</th>
+                                <th>所听课程</th>
+                                <th>听课记录</th>
+                                <th>听课时间</th>
+                                <th>听课地点</th>
                                 <th>修改</th>
                                 <th>删除</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr align="center">
-                                <td>Jacob</td>
-                                <td>Photoshop</td>
                                 <td>Jacob</td>
                                 <td>Photoshop</td>
                                 <td class="text-danger"> 28.76% <i class="mdi mdi-arrow-down"></i></td>
@@ -68,7 +55,7 @@
                                 <td><button type="button" class="btn btn-gradient-danger btn-sm">删除</button></td>
                             </tr>
                             <tr>
-                                <td colspan="9" align="center">
+                                <td colspan="7" align="center">
                                 <span class="card-description">
                                     共 <code>1</code>条数据
                                 </span>
@@ -87,7 +74,7 @@
 <script>
     $(function(){
         $("[name='updateOrSave']").on('click',function(){
-            $('#content-change-main').load("saveOrUpdate/saveOrUpdateTeacher",function(){});
+            $('#content-change-main').load("saveOrUpdate/saveOrUpdateListenClassWriteDown",function(){});
         });
     });
 </script>

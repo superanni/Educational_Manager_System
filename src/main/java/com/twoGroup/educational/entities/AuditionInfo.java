@@ -5,6 +5,9 @@ import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
+import lombok.Data;
+import lombok.experimental.Accessors;
+
 import java.io.Serializable;
 
 /**
@@ -15,6 +18,8 @@ import java.io.Serializable;
  * @author GroupTwo
  * @since 2019-05-26
  */
+@Accessors(chain=true)
+@Data
 @TableName("audition_info")
 public class AuditionInfo implements Serializable {
 
@@ -33,64 +38,4 @@ public class AuditionInfo implements Serializable {
     @TableField("audition_desc")
     private String auditionDesc;
 
-
-    public Integer getAuditionId() {
-        return auditionId;
-    }
-
-    public void setAuditionId(Integer auditionId) {
-        this.auditionId = auditionId;
-    }
-
-    public Integer getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(Integer studentId) {
-        this.studentId = studentId;
-    }
-
-    public Date getAuditionTime() {
-        return auditionTime;
-    }
-
-    public void setAuditionTime(Date auditionTime) {
-        this.auditionTime = auditionTime;
-    }
-
-    public String getAuditionAddr() {
-        return auditionAddr;
-    }
-
-    public void setAuditionAddr(String auditionAddr) {
-        this.auditionAddr = auditionAddr;
-    }
-
-    public String getAuditionCourse() {
-        return auditionCourse;
-    }
-
-    public void setAuditionCourse(String auditionCourse) {
-        this.auditionCourse = auditionCourse;
-    }
-
-    public String getAuditionDesc() {
-        return auditionDesc;
-    }
-
-    public void setAuditionDesc(String auditionDesc) {
-        this.auditionDesc = auditionDesc;
-    }
-
-    @Override
-    public String toString() {
-        return "AuditionInfo{" +
-        "auditionId=" + auditionId +
-        ", studentId=" + studentId +
-        ", auditionTime=" + auditionTime +
-        ", auditionAddr=" + auditionAddr +
-        ", auditionCourse=" + auditionCourse +
-        ", auditionDesc=" + auditionDesc +
-        "}";
-    }
 }
