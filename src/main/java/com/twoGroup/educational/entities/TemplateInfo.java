@@ -11,7 +11,9 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ * 模板信息表 template_info :TemplateInfo
+
+ 基础表 无关联 无修改
  * </p>
  *
  * @author GroupTwo

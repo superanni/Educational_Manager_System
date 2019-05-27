@@ -12,7 +12,10 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ * 学生学习经历表 student_learn_experience :StudentLearnExperience
+ student_id 学生编号 关联student_info主键
+ staff_id 员工编号  关联staff_info 主键
+
  * </p>
  *
  * @author GroupTwo

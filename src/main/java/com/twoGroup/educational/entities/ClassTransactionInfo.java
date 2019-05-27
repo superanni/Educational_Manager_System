@@ -12,7 +12,9 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ * 班级事务信息表 class_transaction_info :ClassTransactionInfo
+ class_id 班级号 关联class_info表class_id
+
  * </p>
  *
  * @author GroupTwo

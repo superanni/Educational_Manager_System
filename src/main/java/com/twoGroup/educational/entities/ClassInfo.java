@@ -12,7 +12,11 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ * 班级信息表 class_info:ClassInfo
+ syllabus_id 课程编号 关联21课程表  syllabus_info 主键
+ classroom_id  教室编号 关联教室表classroom_info主键
+ staff_id 班导编号 关联员工表 staff_info 主键
+ discipline_id  课程编号 关联19课程表discipline_info 主键
  * </p>
  *
  * @author GroupTwo

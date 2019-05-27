@@ -10,8 +10,8 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 /**
- * <p>
- * 
+ * <p>数据字典信息表 data_dictionary
+ *  基础表 无关联 无修改
  * </p>
  *
  * @author GroupTwo

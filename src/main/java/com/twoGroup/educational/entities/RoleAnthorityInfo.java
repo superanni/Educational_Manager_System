@@ -11,7 +11,9 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ * 角色权限信息表 role_anthority_info :RoleAnthorityInfo
+ role_id 角色编号 关联 role_info 主键
+ anthorty_id 权限编号 关联 anthorty_info主键
  * </p>
  *
  * @author GroupTwo

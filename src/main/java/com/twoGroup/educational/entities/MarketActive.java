@@ -12,7 +12,8 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ * 教务活动信息表 market_active :MarketActive
+ staff_id 	 员工编号  关联staff_info 主键
  * </p>
  *
  * @author GroupTwo
