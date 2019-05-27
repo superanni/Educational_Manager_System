@@ -68,20 +68,4 @@ public class CommunicateInfo implements Serializable {
     private StudentInfo studentInfo;  //对应学生
 
 
-
-    @Override
-    public String toString() {
-        return "CommunicateInfo{" +
-        "communicateId=" + communicateId +
-        ", studentId=" + studentId +
-        ", staffId=" + staffId +
-        ", communicateTime=" + communicateTime +
-        ", communicateContent=" + communicateContent +
-        ", communicateXuenian=" + communicateXuenian +
-        ", communicateXueqi=" + communicateXueqi +
-        ", leaveCount=" + leaveCount +
-        ", truancyCount=" + truancyCount +
-        ", rewardPunish=" + rewardPunish +
-        "}";
-    }
 }

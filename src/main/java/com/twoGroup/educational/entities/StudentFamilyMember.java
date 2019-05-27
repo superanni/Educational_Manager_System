@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
 import lombok.Data;
+import sun.font.SunFontManager;
 
 import java.io.Serializable;
 
@@ -57,21 +58,4 @@ public class StudentFamilyMember implements Serializable {
     @TableField(exist = false)
     private StudentInfo studentInfo;  //对应学生
 
-
-
-    @Override
-    public String toString() {
-        return "StudentFamilyMember{" +
-        "studentFamilyId=" + studentFamilyId +
-        ", studentId=" + studentId +
-        ", staffId=" + staffId +
-        ", familyName=" + familyName +
-        ", familyApp=" + familyApp +
-        ", familyAge=" + familyAge +
-        ", familyZzmm=" + familyZzmm +
-        ", workplace=" + workplace +
-        ", regTime=" + regTime +
-        ", familyNote=" + familyNote +
-        "}";
-    }
 }

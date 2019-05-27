@@ -51,19 +51,4 @@ public class AttendanceInfo implements Serializable {
 
 
 
-    @Override
-    public String toString() {
-        return "AttendanceInfo{" +
-        "attendanceId=" + attendanceId +
-        ", studentId=" + studentId +
-        ", staffId=" + staffId +
-        ", attendanceDesc=" + attendanceDesc +
-        ", attendanceState=" + attendanceState +
-        ", attendanceTime=" + attendanceTime +
-        ", attendanceRemark=" + attendanceRemark +
-        ", attendanceXuenian=" + attendanceXuenian +
-        ", attendanceXueqi=" + attendanceXueqi +
-        ", attendanceMonth=" + attendanceMonth +
-        "}";
-    }
 }

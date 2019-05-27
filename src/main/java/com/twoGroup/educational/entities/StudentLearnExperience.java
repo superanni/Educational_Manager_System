@@ -60,19 +60,4 @@ public class StudentLearnExperience implements Serializable {
     @TableField(exist = false)
     private StudentInfo studentInfo;  //对应学生
 
-
-
-    @Override
-    public String toString() {
-        return "StudentLearnExperience{" +
-        "studentLearnId=" + studentLearnId +
-        ", studentId=" + studentId +
-        ", staffId=" + staffId +
-        ", learnAllyears=" + learnAllyears +
-        ", learnSchool=" + learnSchool +
-        ", learnPosition=" + learnPosition +
-        ", regTime=" + regTime +
-        ", learnNote=" + learnNote +
-        "}";
-    }
 }

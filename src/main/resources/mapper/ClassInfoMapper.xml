@@ -16,6 +16,63 @@
         <result column="class_state" property="classState" />
         <result column="class_desc" property="classDesc" />
         <result column="class_major" property="classMajor" />
+
+        <!--        syllabus_id 课程编号 关联21课程表  syllabus_info 主键-->
+        <association property="syllabusInfo" javaType="syllabusInfo">
+            <id column="syllabus_id" property="syllabusId" />
+            <result column="syllabus_yi" property="syllabusYi" />
+            <result column="syllabus_er" property="syllabusEr" />
+            <result column="syllabus_san" property="syllabusSan" />
+            <result column="syllabus_si" property="syllabusSi" />
+            <result column="syllabus_wu" property="syllabusWu" />
+            <result column="syllabus_liu" property="syllabusLiu" />
+            <result column="syllabus_qi" property="syllabusQi" />
+            <result column="is_uesd" property="isUesd" />
+            <result column="syllabus_name" property="syllabusName" />
+        </association>
+        <!--        classroom_id  教室编号 关联教室表classroom_info主键-->
+        <association property="classroomInfo" javaType="classroomInfo">
+            <id column="classroom_id" property="classroomId" />
+            <result column="classroom_name" property="classroomName" />
+            <result column="classroom_max" property="classroomMax" />
+            <result column="classroom_info" property="classroomInfo" />
+            <result column="classroom_remark" property="classroomRemark" />
+            <result column="classroom_mark" property="classroomMark" />
+        </association>
+        <!--        staff_id 班导编号 关联员工表 staff_info 主键-->
+        <association property="staffInfo" javaType="staffInfo">
+            <id column="staff_id" property="staffId" />
+            <result column="role_id" property="roleId" />
+            <result column="staff_name" property="staffName" />
+            <result column="staff_sex" property="staffSex" />
+            <result column="staff_age" property="staffAge" />
+            <result column="staff_native_place" property="staffNativePlace" />
+            <result column="staff_idcard" property="staffIdcard" />
+            <result column="staff_brithday" property="staffBrithday" />
+            <result column="staff_office_phone" property="staffOfficePhone" />
+            <result column="staff_mobile_phone" property="staffMobilePhone" />
+            <result column="staff_eamil" property="staffEamil" />
+            <result column="staff_addr" property="staffAddr" />
+            <result column="staff_qq" property="staffQq" />
+            <result column="staff_entry_time" property="staffEntryTime" />
+            <result column="staff_eduction_level" property="staffEductionLevel" />
+            <result column="staff_remark" property="staffRemark" />
+            <result column="staff_state" property="staffState" />
+            <result column="user_number" property="userNumber" />
+            <result column="user_passowrd" property="userPassowrd" />
+            <result column="staff_image" property="staffImage" />
+        </association>
+        <!--        discipline_id  课程编号 关联19课程表discipline_info 主键-->
+        <association property="disciplineInfo" javaType="disciplineInfo">
+            <id column="discipline_id" property="disciplineId" />
+            <result column="discipline_no" property="disciplineNo" />
+            <result column="discipline_name" property="disciplineName" />
+            <result column="discipline_tuition" property="disciplineTuition" />
+            <result column="discipline_bring" property="disciplineBring" />
+            <result column="discipline_type" property="disciplineType" />
+            <result column="discipline_desc" property="disciplineDesc" />
+            <result column="discipline_isuesd" property="disciplineIsuesd" />
+        </association>
     </resultMap>
 
 </mapper>

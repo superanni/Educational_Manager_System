@@ -118,48 +118,4 @@ public class StudentInfo implements Serializable {
     @TableField(exist = false)
     private ClassInfo classInfo;    //对应班级
 
-    @Override
-    public String toString() {
-        return "StudentInfo{" +
-        "studentId=" + studentId +
-        ", staffId=" + staffId +
-        ", classId=" + classId +
-        ", studentNo=" + studentNo +
-        ", studentName=" + studentName +
-        ", studentSex=" + studentSex +
-        ", studentName1=" + studentName1 +
-        ", studentNational=" + studentNational +
-        ", studentBirthday=" + studentBirthday +
-        ", studentHealth=" + studentHealth +
-        ", studentNative=" + studentNative +
-        ", studentIndate=" + studentIndate +
-        ", studentMarital=" + studentMarital +
-        ", studentAddress=" + studentAddress +
-        ", studentPost=" + studentPost +
-        ", familyTellphone=" + familyTellphone +
-        ", studentTellphone=" + studentTellphone +
-        ", studentQq=" + studentQq +
-        ", studentIsleague=" + studentIsleague +
-        ", studentJoinTime=" + studentJoinTime +
-        ", studentIdcard=" + studentIdcard +
-        ", studentBeforeSchool=" + studentBeforeSchool +
-        ", studentHobby=" + studentHobby +
-        ", studentSchool=" + studentSchool +
-        ", studentPro=" + studentPro +
-        ", studentEduSys=" + studentEduSys +
-        ", studentProCity=" + studentProCity +
-        ", studentType=" + studentType +
-        ", studentIspay=" + studentIspay +
-        ", studentDesc=" + studentDesc +
-        ", studentNumber=" + studentNumber +
-        ", studentPassword=" + studentPassword +
-        ", studentMark=" + studentMark +
-        ", studentHard=" + studentHard +
-        ", studentLoan=" + studentLoan +
-        ", studentState=" + studentState +
-        ", studentMuster=" + studentMuster +
-        ", studentProject=" + studentProject +
-        ", studentImage=" + studentImage +
-        "}";
-    }
 }

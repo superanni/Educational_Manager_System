@@ -53,20 +53,4 @@ public class StudentPayment implements Serializable {
 
 
 
-    @Override
-    public String toString() {
-        return "StudentPayment{" +
-        "paymentId=" + paymentId +
-        ", studentId=" + studentId +
-        ", staffId=" + staffId +
-        ", paymentSituation=" + paymentSituation +
-        ", paymentMethod=" + paymentMethod +
-        ", paymentTime=" + paymentTime +
-        ", discountAmount=" + discountAmount +
-        ", shouldAmount=" + shouldAmount +
-        ", realAmount=" + realAmount +
-        ", debtAmount=" + debtAmount +
-        ", paymentRemark=" + paymentRemark +
-        "}";
-    }
 }

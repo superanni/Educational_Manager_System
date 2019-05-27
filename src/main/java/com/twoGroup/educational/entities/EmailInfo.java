@@ -43,17 +43,4 @@ public class EmailInfo implements Serializable {
     @TableField(exist = false)
     private StaffInfo staffInfo;  //对应员工
 
-    @Override
-    public String toString() {
-        return "EmailInfo{" +
-        "emailId=" + emailId +
-        ", staffId=" + staffId +
-        ", emailTitle=" + emailTitle +
-        ", emailContent=" + emailContent +
-        ", emailTime=" + emailTime +
-        ", emailMan=" + emailMan +
-        ", emailAddr=" + emailAddr +
-        ", emailState=" + emailState +
-        "}";
-    }
 }

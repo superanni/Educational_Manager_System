@@ -37,14 +37,4 @@ public class UploadFile implements Serializable {
     @TableField(exist = false)
     private StaffInfo staffInfo;  //对应员工
 
-    @Override
-    public String toString() {
-        return "UploadFile{" +
-        "fileId=" + fileId +
-        ", staffId=" + staffId +
-        ", fileTitle=" + fileTitle +
-        ", fileName=" + fileName +
-        ", fileTime=" + fileTime +
-        "}";
-    }
 }

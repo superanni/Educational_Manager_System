@@ -42,16 +42,4 @@ public class MessafeInfo implements Serializable {
     private StaffInfo staffInfo;  //对应员工
 
 
-    @Override
-    public String toString() {
-        return "MessafeInfo{" +
-        "messafeId=" + messafeId +
-        ", staffId=" + staffId +
-        ", messafeContent=" + messafeContent +
-        ", messafeMan=" + messafeMan +
-        ", messafePhone=" + messafePhone +
-        ", messafeTime=" + messafeTime +
-        ", messafeState=" + messafeState +
-        "}";
-    }
 }

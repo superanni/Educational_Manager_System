@@ -11,6 +11,19 @@
         <result column="class_transaction_person" property="classTransactionPerson" />
         <result column="class_transaction_time" property="classTransactionTime" />
         <result column="class_transaction_remark" property="classTransactionRemark" />
+
+
+<!--        class_id 班级号 关联class_info表class_id-->
+        <association property="classInfo" javaType="classInfo">
+            <id column="discipline_id" property="disciplineId" />
+            <result column="discipline_no" property="disciplineNo" />
+            <result column="discipline_name" property="disciplineName" />
+            <result column="discipline_tuition" property="disciplineTuition" />
+            <result column="discipline_bring" property="disciplineBring" />
+            <result column="discipline_type" property="disciplineType" />
+            <result column="discipline_desc" property="disciplineDesc" />
+            <result column="discipline_isuesd" property="disciplineIsuesd" />
+        </association>
     </resultMap>
 
 </mapper>

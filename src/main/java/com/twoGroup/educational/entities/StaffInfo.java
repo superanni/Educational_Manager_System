@@ -59,7 +59,6 @@ public class StaffInfo implements Serializable {
      * 1 有效 员工
             0 无效
             2 教师
-            
      */
     @TableField("staff_state")
     private String staffState;
@@ -73,33 +72,4 @@ public class StaffInfo implements Serializable {
     @TableField(exist = false)
     private RoleInfo roleInfo;  //员工角色
 
-
-
-
-
-    @Override
-    public String toString() {
-        return "StaffInfo{" +
-        "staffId=" + staffId +
-        ", roleId=" + roleId +
-        ", staffName=" + staffName +
-        ", staffSex=" + staffSex +
-        ", staffAge=" + staffAge +
-        ", staffNativePlace=" + staffNativePlace +
-        ", staffIdcard=" + staffIdcard +
-        ", staffBrithday=" + staffBrithday +
-        ", staffOfficePhone=" + staffOfficePhone +
-        ", staffMobilePhone=" + staffMobilePhone +
-        ", staffEamil=" + staffEamil +
-        ", staffAddr=" + staffAddr +
-        ", staffQq=" + staffQq +
-        ", staffEntryTime=" + staffEntryTime +
-        ", staffEductionLevel=" + staffEductionLevel +
-        ", staffRemark=" + staffRemark +
-        ", staffState=" + staffState +
-        ", userNumber=" + userNumber +
-        ", userPassowrd=" + userPassowrd +
-        ", staffImage=" + staffImage +
-        "}";
-    }
 }

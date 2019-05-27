@@ -17,4 +17,5 @@ import org.springframework.stereotype.Service;
 @Service
 public class AnthortyInfoServiceImpl extends ServiceImpl<AnthortyInfoMapper, AnthortyInfo> implements AnthortyInfoService {
 
+
 }

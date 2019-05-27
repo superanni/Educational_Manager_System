@@ -61,20 +61,4 @@ public class StudentWriteGrade implements Serializable {
     @TableField(exist = false)
     private DisciplineInfo disciplineInfo;      //对应课程
 
-    @Override
-    public String toString() {
-        return "StudentWriteGrade{" +
-        "writeGradeId=" + writeGradeId +
-        ", studentId=" + studentId +
-        ", staffId=" + staffId +
-        ", classId=" + classId +
-        ", disciplineId=" + disciplineId +
-        ", writeGrade=" + writeGrade +
-        ", writeGradeTime=" + writeGradeTime +
-        ", writeGradeNote=" + writeGradeNote +
-        ", writeGradeXuenian=" + writeGradeXuenian +
-        ", writeGradeXueqi=" + writeGradeXueqi +
-        ", writeGradeType=" + writeGradeType +
-        "}";
-    }
 }

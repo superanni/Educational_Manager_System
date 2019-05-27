@@ -24,6 +24,18 @@
         <result column="user_number" property="userNumber" />
         <result column="user_passowrd" property="userPassowrd" />
         <result column="staff_image" property="staffImage" />
+
+<!--   失败:找不到对应得selectbyid
+     <association property="roleInfo" column="role_id" javaType="com.twoGroup.educational.entities.RoleInfo" select="com.twoGroup.educational.mapper.RoleInfoMapper.selectById"/>-->
+        <association property="roleInfo" javaType="roleInfo">
+            <id property="roleId" column="role_id"/>
+            <result column="role_name" property="roleName" />
+            <result column="role_desc" property="roleDesc" />
+            <result column="role_state" property="roleState" />
+        </association>
     </resultMap>
 
+    <select id="selectListVo" resultMap="BaseResultMap">
+        select * from staff_info s, role_info r where s.role_id=r.role_id
+    </select>
 </mapper>

@@ -42,16 +42,4 @@ public class ClassTransactionInfo implements Serializable {
     private ClassInfo classInfo ;   //所属班级
 
 
-    @Override
-    public String toString() {
-        return "ClassTransactionInfo{" +
-        "classTransactionId=" + classTransactionId +
-        ", classId=" + classId +
-        ", classTransactionTitle=" + classTransactionTitle +
-        ", classTransactionContent=" + classTransactionContent +
-        ", classTransactionPerson=" + classTransactionPerson +
-        ", classTransactionTime=" + classTransactionTime +
-        ", classTransactionRemark=" + classTransactionRemark +
-        "}";
-    }
 }

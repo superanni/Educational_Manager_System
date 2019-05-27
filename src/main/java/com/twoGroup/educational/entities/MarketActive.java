@@ -53,21 +53,4 @@ public class MarketActive implements Serializable {
 
 
 
-    @Override
-    public String toString() {
-        return "MarketActive{" +
-        "activeId=" + activeId +
-        ", staffId=" + staffId +
-        ", activeName=" + activeName +
-        ", activeState=" + activeState +
-        ", activeStart=" + activeStart +
-        ", activeEnd=" + activeEnd +
-        ", activeType=" + activeType +
-        ", activeCosteEmtimate=" + activeCosteEmtimate +
-        ", activeCoste=" + activeCoste +
-        ", activeRefectEstimate=" + activeRefectEstimate +
-        ", activeStudent=" + activeStudent +
-        ", activeContent=" + activeContent +
-        "}";
-    }
 }

@@ -15,6 +15,102 @@
         <result column="write_grade_xuenian" property="writeGradeXuenian" />
         <result column="write_grade_xueqi" property="writeGradeXueqi" />
         <result column="write_grade_type" property="writeGradeType" />
+
+
+<!--        staff_id 员工编号  关联staff_info 主键-->
+        <association property="staffInfo" javaType="staffInfo">
+            <id column="staff_id" property="staffId" />
+            <result column="role_id" property="roleId" />
+            <result column="staff_name" property="staffName" />
+            <result column="staff_sex" property="staffSex" />
+            <result column="staff_age" property="staffAge" />
+            <result column="staff_native_place" property="staffNativePlace" />
+            <result column="staff_idcard" property="staffIdcard" />
+            <result column="staff_brithday" property="staffBrithday" />
+            <result column="staff_office_phone" property="staffOfficePhone" />
+            <result column="staff_mobile_phone" property="staffMobilePhone" />
+            <result column="staff_eamil" property="staffEamil" />
+            <result column="staff_addr" property="staffAddr" />
+            <result column="staff_qq" property="staffQq" />
+            <result column="staff_entry_time" property="staffEntryTime" />
+            <result column="staff_eduction_level" property="staffEductionLevel" />
+            <result column="staff_remark" property="staffRemark" />
+            <result column="staff_state" property="staffState" />
+            <result column="user_number" property="userNumber" />
+            <result column="user_passowrd" property="userPassowrd" />
+            <result column="staff_image" property="staffImage" />
+        </association>
+
+<!--        student_id 学生编号 关联student_info主键-->
+        <association property="studentInfo" javaType="studentInfo">
+            <id column="student_id" property="studentId" />
+            <result column="staff_id" property="staffId" />
+            <result column="class_id" property="classId" />
+            <result column="student_no" property="studentNo" />
+            <result column="student_name" property="studentName" />
+            <result column="student_sex" property="studentSex" />
+            <result column="student_name1" property="studentName1" />
+            <result column="student_national" property="studentNational" />
+            <result column="student_birthday" property="studentBirthday" />
+            <result column="student_health" property="studentHealth" />
+            <result column="student_native" property="studentNative" />
+            <result column="student_indate" property="studentIndate" />
+            <result column="student_marital" property="studentMarital" />
+            <result column="student_address" property="studentAddress" />
+            <result column="student_post" property="studentPost" />
+            <result column="family_tellphone" property="familyTellphone" />
+            <result column="student_tellphone" property="studentTellphone" />
+            <result column="student_qq" property="studentQq" />
+            <result column="student_isleague" property="studentIsleague" />
+            <result column="student_join_time" property="studentJoinTime" />
+            <result column="student_idcard" property="studentIdcard" />
+            <result column="student_before_school" property="studentBeforeSchool" />
+            <result column="student_hobby" property="studentHobby" />
+            <result column="student_school" property="studentSchool" />
+            <result column="student_pro" property="studentPro" />
+            <result column="student_edu_sys" property="studentEduSys" />
+            <result column="student_pro_city" property="studentProCity" />
+            <result column="student_type" property="studentType" />
+            <result column="student_ispay" property="studentIspay" />
+            <result column="student_desc" property="studentDesc" />
+            <result column="student_number" property="studentNumber" />
+            <result column="student_password" property="studentPassword" />
+            <result column="student_mark" property="studentMark" />
+            <result column="student_hard" property="studentHard" />
+            <result column="student_loan" property="studentLoan" />
+            <result column="student_state" property="studentState" />
+            <result column="student_muster" property="studentMuster" />
+            <result column="student_project" property="studentProject" />
+            <result column="student_image" property="studentImage" />
+        </association>
+
+<!--        class_id 班级编号 关联class_info 主键-->
+        <association property="classInfo" javaType="classInfo">
+            <id column="class_id" property="classId" />
+            <result column="syllabus_id" property="syllabusId" />
+            <result column="classroom_id" property="classroomId" />
+            <result column="staff_id" property="staffId" />
+            <result column="class_name" property="className" />
+            <result column="class_number" property="classNumber" />
+            <result column="class_start_time" property="classStartTime" />
+            <result column="class_end_time" property="classEndTime" />
+            <result column="class_isuesd" property="classIsuesd" />
+            <result column="class_state" property="classState" />
+            <result column="class_desc" property="classDesc" />
+            <result column="class_major" property="classMajor" />
+        </association>
+
+<!--        discipline_id 课程编号 关联19课程表discipline_info-->
+        <association property="disciplineInfo" javaType="disciplineInfo">
+            <id column="discipline_id" property="disciplineId" />
+            <result column="discipline_no" property="disciplineNo" />
+            <result column="discipline_name" property="disciplineName" />
+            <result column="discipline_tuition" property="disciplineTuition" />
+            <result column="discipline_bring" property="disciplineBring" />
+            <result column="discipline_type" property="disciplineType" />
+            <result column="discipline_desc" property="disciplineDesc" />
+            <result column="discipline_isuesd" property="disciplineIsuesd" />
+        </association>
     </resultMap>
 
 </mapper>

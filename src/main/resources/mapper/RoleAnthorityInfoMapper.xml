@@ -7,6 +7,24 @@
         <id column="role_anthority_id" property="roleAnthorityId" />
         <result column="role_id" property="roleId" />
         <result column="anthorty_id" property="anthortyId" />
+
+<!--        role_id 角色编号 关联 role_info 主键-->
+        <association property="roleInfo" javaType="roleInfo" >
+            <id column="role_id" property="roleId" />
+            <result column="role_name" property="roleName" />
+            <result column="role_desc" property="roleDesc" />
+            <result column="role_state" property="roleState" />
+        </association>
+
+<!--        anthorty_id 权限编号 关联 anthorty_info主键-->
+        <association property="anthortyInfo" javaType="anthortyInfo">
+            <id column="anthorty_id" property="anthortyId" />
+            <result column="anthorty_pid" property="anthortyPid" />
+            <result column="anthorty_name" property="anthortyName" />
+            <result column="anthorty_desc" property="anthortyDesc" />
+            <result column="anthorty_url" property="anthortyUrl" />
+        </association>
+
     </resultMap>
 
 </mapper>

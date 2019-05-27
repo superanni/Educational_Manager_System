@@ -57,21 +57,4 @@ public class ClassInfo implements Serializable {
     @TableField(exist = false)
     private DisciplineInfo disciplineInfo;      //课程
 
-    @Override
-    public String toString() {
-        return "ClassInfo{" +
-        "classId=" + classId +
-        ", syllabusId=" + syllabusId +
-        ", classroomId=" + classroomId +
-        ", staffId=" + staffId +
-        ", className=" + className +
-        ", classNumber=" + classNumber +
-        ", classStartTime=" + classStartTime +
-        ", classEndTime=" + classEndTime +
-        ", classIsuesd=" + classIsuesd +
-        ", classState=" + classState +
-        ", classDesc=" + classDesc +
-        ", classMajor=" + classMajor +
-        "}";
-    }
 }

@@ -32,14 +32,6 @@ public class RoleAnthorityInfo implements Serializable {
     @TableField(exist = false)
     private RoleInfo roleInfo;  //对应角色
     @TableField(exist = false)
-    private StaffInfo staffInfo;  //对应员工
+    private AnthortyInfo anthortyInfo;  //对应权限
 
-    @Override
-    public String toString() {
-        return "RoleAnthorityInfo{" +
-        "roleAnthorityId=" + roleAnthorityId +
-        ", roleId=" + roleId +
-        ", anthortyId=" + anthortyId +
-        "}";
-    }
 }

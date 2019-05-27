@@ -1,8 +1,8 @@
 package com.twoGroup.educational.service.impl;
 
-import com.twoGroup.educational.entities.NoticeInfo;
 import com.twoGroup.educational.mapper.NoticeInfoMapper;
 import com.twoGroup.educational.service.NoticeInfoService;
+import com.twoGroup.educational.entities.NoticeInfo;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
