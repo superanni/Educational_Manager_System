@@ -12,7 +12,11 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ * 学生评教表（学期）evaluation_info :EvaluationInfo
+ student_id学生编号 关联student_info 主键
+ discipline_id关联19 课程表discipline_info主键
+ staff_id 教师编号 关联staff_info 主键
+ class_if 班级编号 关联class_info主键
  * </p>
  *
  * @author GroupTwo

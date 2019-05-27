@@ -1,126 +1,177 @@
-<html>
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8" />
-	<title>学生分析图表</title>
-	<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-	<script src="http://code.highcharts.com/highcharts.js"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>首页</title>
+	
+	<script th:src="@{js/highcharts.js}" type="text/javascript"></script>
+	<script th:src="@{js/jquery.highchartTable.js}" type="text/javascript"></script>
+	<script language="javascript">
+		$(document).ready(function() {
+			$('table.highchart').highchartTable();
+		});
+	</script>
 </head>
 <body>
-<div id="container" style="width: 500px; height: 350px; margin: 0 0"></div>
 
-<div id="container2" style="width: 500px; height: 350px; margin: 0 auto"></div>
+<div align="center">
+	<div class="alert alert-warning"
+	     style="margin: 0px; padding: 5px; width: 100%;">
+		<button type="button" class="close" data-dismiss="alert">
+			<span aria-hidden="true">&times;</span>
+		</button>
+<div style="padding:0px; margin:0px;">
+	<ul class="breadcrumb" style=" padding:0px; padding-left:20px;" >
+		<li >数据分析与统计</li>
+		<li>学生信息分析与统计</li>
+	</ul>
+</div>
 
-<script language="JavaScript">
-	$(document).ready(function() {
-		var chart = {
-			type: 'column'
-		};
-		var title = {
-			text: '根据学生专业来分析'
-		};
-		var subtitle = {
-			text: '学生专业分布'
-		};
-		var xAxis = {
-			categories: ['计算机技术','软件技术','java软件开发','软件技术虚拟vr','软件前端开发','网络运营策划','软件测试','通讯与运维'],
-			crosshair: true
-		};
-		var yAxis = {
-			min: 0,
-			title: {
-				text: ''
-			}
-		};
-		var tooltip = {
-			headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-			pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-			'<td style="padding:0"><b>{point.y:.1f} 名</b></td></tr>',
-			footerFormat: '</table>',
-			shared: true,
-			useHTML: true
-		};
-		var plotOptions = {
-			column: {
-				pointPadding: 0.2,
-				borderWidth: 0
-			}
-		};
-		var credits = {
-			enabled: false
-		};
-		var series= [{
-			name: '男生',
-			data: [49, 71, 106, 129, 144, 176, 135, 148]
-		}, {
-			name: '女生',
-			data: [83, 78, 98, 93, 106, 84, 105, 104]
-		}];
-		var json = {};
-		json.chart = chart;
-		json.title = title;
-		json.subtitle = subtitle;
-		json.tooltip = tooltip;
-		json.xAxis = xAxis;
-		json.yAxis = yAxis;
-		json.series = series;
-		json.plotOptions = plotOptions;
-		json.credits = credits;
-		$('#container').highcharts(json);
-
-
-		//地区图
-		var title = {
-			text: 'Highcharts Treemap'
-		};
-
-		var colorAxis = {
-			minColor: '#FFFFFF',
-			maxColor: Highcharts.getOptions().colors[0]
-		};
-
-		var series= [{
-			type: "treemap",
-			layoutAlgorithm: 'squarified',
-			data: [{
-				name: 'A',
-				value: 6,
-				colorValue: 1
-			}, {
-				name: 'B',
-				value: 6,
-				colorValue: 2
-			}, {
-				name: 'C',
-				value: 4,
-				colorValue: 3
-			}, {
-				name: 'D',
-				value: 3,
-				colorValue: 4
-			}, {
-				name: 'E',
-				value: 2,
-				colorValue: 5
-			}, {
-				name: 'F',
-				value: 2,
-				colorValue: 6
-			}, {
-				name: 'G',
-				value: 1,
-				colorValue: 7
-			}]
-		}];
-
-		var json = {};
-		json.title = title;
-		json.colorAxis = colorAxis;
-		json.series = series;
-
-		$('#container2').highcharts(json);
-	});
-
-</script>
-
+<div  style="padding:1px; margin:0px;"  >
+	
+	<div class="row" >
+		
+		<div class="col-sm-8">
+			<div class="panel panel-default" >
+				<div class="panel-heading" style=" padding:3px;height:30px;"  >
+					<span class="glyphicon glyphicon-refresh"></span>学生来源城市分布图
+				</div>
+				<div class="panel-body">
+					<table class="highchart" style="display:none; "
+					       data-graph-container-before="1"  data-graph-height="250" data-graph-type="area" >
+						<thead>
+						<tr>
+							<th>数量</th>
+							<th>城市</th>
+						</tr>
+						</thead>
+						<tbody>
+						<!--<c:forEach items="${reportInfo.getStudentNativeList }"  var="studentNative">-->
+						<tr >
+								<td> 22</td>
+								<td> 33</td>
+						</tr>
+						<tr >
+							<td> 12</td>
+							<td> 23</td>
+						</tr>
+						<tr >
+							<td> 12</td>
+							<td> 33</td>
+						</tr>
+						<!--</c:forEach>-->
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="panel panel-default" >
+				<div class="panel-heading" style=" padding:3px;height:30px;"  >
+					<span class="glyphicon glyphicon-refresh"></span>学生性别分布图
+				</div>
+				<div class="panel-body">
+					<table class="highchart" style="display:none; "
+					       data-graph-container-before="1"  data-graph-height="250" data-graph-type="pie" >
+						
+						<thead>
+						<tr>
+							<th>模块</th>
+							<th>数量</th>
+						</tr>
+						</thead>
+						<tbody>
+						<!--<c:forEach items="${reportInfo.getStudentSexList }"  var="studentSex">-->
+							<tr >
+								<td>
+									<!--${studentSex.student_sex=='男'?'男':'' }-->
+									<!--${studentSex.student_sex=='女'?'女':'' }-->
+									男
+								</td>
+								<td >622</td>
+							</tr>
+						<tr >
+							<td>
+								女
+							</td>
+							<td >122</td>
+						</tr>
+						
+						<!--</c:forEach>-->
+						
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<!-- 加入其它信息 -->
+	<div class="row" >
+		<div class="col-sm-8">
+			<div class="panel panel-default" >
+				<div class="panel-heading" style=" padding:3px;height:30px;"  >
+					<span class="glyphicon glyphicon-refresh"></span>学生专业分布
+				</div>
+				<div class="panel-body">
+					<table class="highchart" style="display:none; "
+					       data-graph-container-before="1"  data-graph-height="250" data-graph-type="column" >
+						
+						<thead>
+						<tr>
+							<th >专业</th>
+							<th >人数 </th>
+						</tr>
+						</thead>
+						<tbody>
+						<!--<c:forEach items="${reportInfo.getStudentProList }"  var="pro">-->
+							<tr >
+								<td>计算机</td>
+								<td >11</td>
+							</tr>
+						<tr >
+							<td>软件开发</td>
+							<td >11</td>
+						</tr>
+						<!--</c:forEach>-->
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="panel panel-default">
+				<div class="panel-heading"  style=" padding:3px;height:30px;"  >
+					<span class="glyphicon glyphicon-refresh"></span>学生专业数量
+				</div>
+				<table class="table table-bordered">
+					<thead>
+					<tr>
+						<th bgcolor="#f08080">专业</th>
+						<th bgcolor="#00bfff">人数</th>
+					</tr>
+					</thead>
+					<tbody>
+					<!--<c:forEach items="${reportInfo.getStudentProList }"  var="pro">-->
+					<tr bgcolor="#5f9ea0">
+						<td>计算机</td>
+						<td>23</td>
+					</tr>
+					<tr bgcolor="#5f9ea0">
+						<td>软件开发</td>
+						<td>13</td>
+					</tr>
+					<!--</c:forEach>-->
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	
+</div>
+	</div>
+</div>
 </body>
 </html>

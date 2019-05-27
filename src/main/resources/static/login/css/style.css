@@ -1,6 +1,6 @@
 *{margin:0;padding:0;list-style-type:none;}
 a,img{border:0;}
-body{font:12px/180% Arial, Helvetica, sans-serif, "ÐÂËÎÌå";}
+body{font:12px/180% Arial, Helvetica, sans-serif, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";}
 h2.slider-title{font-size:35px;line-height:100px;font-family:'Roboto Condensed', sans-serif;background:#fefefe;color:#333;height:100px;font-weight:normal;margin:0;text-align:center;}
 /* sliderkit */
 .sliderkit{display:none;position:relative;overflow:hidden;text-align:left;width:100%!important;height:358px;overflow:hidden;}
@@ -79,9 +79,14 @@ a.prev strong{display:block;position:absolute;left:65px;top:-18px;z-index:100;bo
 .description p{margin-top:0;color:#fff;font-size:16px;line-height:22px;white-space:normal;font-family:'Roboto Condensed', sans-serif;}
 .description p{text-shadow:#333 1px 1px 2px;}
 .description a{color:#3ec7f1;}
-.description a:hover{text-decoration:underline;}
+.description a:hover{text-decoration:none;}
 
 .sliderkit-panels{list-style-type:none;}
 .sliderkit-panels li{padding:0;width:100%;margin:0;float:left;display:none;height:100%;}
 
 .sliderkit-panels-wrapper{height:358px;position:relative;}
+
+
+
+
+

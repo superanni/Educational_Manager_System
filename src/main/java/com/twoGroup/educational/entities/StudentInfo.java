@@ -11,7 +11,11 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ * 学生信息表 student_info :StudentInfo
+ staff_id 员工编号 关联staff_info 主键
+ class_id 班级编号 关联class_info 主键
+ isPay字段重复删去一行
+ student_class字段无意义 删去 该表剩余39列
  * </p>
  *
  * @author GroupTwo

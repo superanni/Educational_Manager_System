@@ -11,7 +11,8 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ *  权限信息表 anthorty_info-AnthortyInfo
+ *  基础表 无关联 无修改
  * </p>
  *
  * @author GroupTwo

@@ -11,7 +11,8 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ * 课程信息表 discipline_info :DisciplineInfo
+ 基础表 无关联 无修改
  * </p>
  *
  * @author GroupTwo
