@@ -26,4 +26,13 @@ public class test {
     public String testModifyData(@PathVariable String page){
         return "manager/developmentManage/saveOrUpdate/"+page;
     }
+
+    @RequestMapping("/front")
+    public  String frontTest(){
+        System.out.println("get in front***********************");
+        return  "frontDesk/index";
+    }
+
+
+
 }
