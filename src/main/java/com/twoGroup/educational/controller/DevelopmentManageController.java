@@ -20,8 +20,8 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("developmentManage")
-public class developmentManageController {
-    private Logger logger=LoggerFactory.getLogger(developmentManageController.class);
+public class DevelopmentManageController {
+    private Logger logger=LoggerFactory.getLogger(DevelopmentManageController.class);
 
     @Autowired
     /*课程信息业务接口*/
