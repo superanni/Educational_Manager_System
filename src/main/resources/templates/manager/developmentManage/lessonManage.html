@@ -12,13 +12,13 @@
         var vm=new Vue({
             el:"#showLessonInfo",
             data:{
+              lessonName:'456',
               currentPage:1,
               total:'',
               totalPage:'',
-              list:[
-
-              ]
+              list:[]
             },
+            /*方法执行前*/
             created(){
                 this.getAllList();
             },
@@ -36,31 +36,27 @@
                 /*查询课程信息*/
                 getAllList(){
                     this.$http.get("developmentManage/info/listLessonManage/"+this.currentPage).then(result => {
-                        var result=result.body;
-                        if(result.status === 0){
-                            this.list = result.list;
-                            this.total = result.total;
-                            this.currentPage = result.currentPage;
-                            this.totalPage = result.totalPage;
-                        }else{
-                            alert("获取数据失败");
-                        }
+                        this.common(result);
                     })
                 },
                 /*根据课程名称查询课程信息*/
-                /*showLessonInfo(){
-                    this.$http.get("developmentManage/info/showLessonInfo").then(result => {
-                        var result=result.body;
-                        if(result.status === 0){
-                            this.list = result.list;
-                            this.total = result.total;
-                            this.currentPage = result.currentPage;
-                            this.totalPage = result.totalPage;
-                        }else{
-                            alert("获取数据失败");
-                        }
+                showLessonInfo(){
+                    this.$http.post("developmentManage/info/showLessonInfo",{lessonName:this.lessonName}).then(result => {
+                        this.common(result);
                     })
-                }*/
+                },
+                /*通用的数据绑定*/
+                common(result){
+                    var result=result.body;
+                    if(result.status === 0){
+                        this.list = result.list;
+                        this.total = result.total;
+                        this.currentPage = result.currentPage;
+                        this.totalPage = result.totalPage;
+                    }else{
+                        alert("获取数据失败");
+                    }
+                }
             }
         })
     </script>
@@ -76,9 +72,9 @@
                         <div style="margin-top: 5px">
                             <i class="input-group-text border-0 mdi mdi-magnify" style="height: 31px"></i>
                         </div>
-                        <input type="text" class="form-control bg-transparent border-0" placeholder="课程名称">
+                        <input type="text" class="form-control bg-transparent border-0" v-model="lessonName" placeholder="课程名称">
                     </div>
-                    <button type="submit" class="btn btn-gradient-info btn-sm">模糊查询</button>
+                    <button type="button" @click="showLessonInfo()" class="btn btn-gradient-info btn-sm">模糊查询</button>
                     <button type="button" style="margin-left: 40px" name="updateOrSave" class="btn btn-gradient-primary btn-sm">添加课程信息</button>
                 </form>
             </div>

@@ -8,6 +8,7 @@ import java.util.Map;
 
 public class DataTransUtil {
 
+    /*封装数据*/
     public void dataUtil(Map map,List list){
         PageInfo pageInfo=new PageInfo(list);
         map.put("status",0);

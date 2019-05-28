@@ -72,10 +72,15 @@ public class DevelopmentManageController {
      * 课程管理
      * 根据课程名称模糊查询课程信息
      */
-    /*@GetMapping("info/showLessonInfo")
-    public @ResponseBody String showLessonInfo(Map map){
-
-    }*/
+    @PostMapping("info/showLessonInfo")
+    public @ResponseBody String showLessonInfo(Map map,String lessonName){
+        if (lessonName==null){
+            listLessonManage(map,1);
+        }else {
+            System.out.println(lessonName);
+        }
+        return JSON.toJSONString(map);
+    }
 
 
 
