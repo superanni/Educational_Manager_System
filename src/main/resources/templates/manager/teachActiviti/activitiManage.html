@@ -12,8 +12,15 @@
 			<div class="search-field">
 				<form class="d-flex align-items-center h-100" action="#">
 					<div class="input-group">
-						<div style="margin-top: 5px">
-							<i class="input-group-text border-0 mdi mdi-magnify" style="height: 31px"></i>
+						<div class="input-group-prepend" style="margin-top: 5px">
+							<div class="input-group-text" style="height:31px">活动状态</div>
+							<select class="form-control form-control-sm">
+								<option value="">请选择</option>
+								<option value="staffName">策划</option>
+								<option value="staffMobilePhone">推迟</option>
+								<option value="staffSex">进行</option>
+								<option value="staffNativePlace">结束</option>
+							</select>
 						</div>
 						<input type="text" class="form-control bg-transparent border-0" placeholder="活动名称">
 					</div>
@@ -34,6 +41,7 @@
 						<table class="table">
 							<thead>
 							<tr align="center">
+								<th>多选</th>
 								<th>活动名称</th>
 								<th>负责人</th>
 								<th>开始时间</th>
@@ -45,12 +53,13 @@
 							</thead>
 							<tbody>
 							<tr align="center">
-								<td>lol</td>
+								<td><input type="checkbox"/></td>
+								<td><i class="mdi mdi-arrow-down text-info">lol</i></td>
 								<td>刘赛松</td>
-								<td class="text-danger"> 28.76% <i class="mdi mdi-arrow-down"></i></td>
-								<td><label class="badge d">Pending</label></td>
-								<td><label class="badge badge-danger">Pending</label></td>
-								<td><button type="button" class="btn btn-gradient-warning btn-sm">查看</button></td>
+								<td class="text-danger">2018-5-6</td>
+								<td class="text-danger">2018-5-6</td>
+								<td class="text-info">进行</td>
+								<td><button type="button" class="btn btn-gradient-warning btn-sm">修改</button></td>
 								<td><button type="button" class="btn btn-gradient-danger btn-sm">删除</button></td>
 							</tr>
 							<tr>
@@ -73,7 +82,7 @@
 <script>
 	$(function(){
 		$("[name='updateOrSave']").on('click',function(){
-			$('#content-change-main').load("saveOrUpdate/saveOrUpdateAcitiviti",function(){});
+			$('#content-change-main').load("saveOrUpdate2/saveOrUpdateAcitiviti",function(){});
 		});
 	});
 </script>
