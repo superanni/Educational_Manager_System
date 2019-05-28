@@ -9,10 +9,11 @@
         //全局启用 emulateJSON 渲染
         Vue.http.options.emulateJSON = true;
 
-        var vm=new Vue({
+        var vm = new Vue({
             el:"#showLessonInfo",
+            //在页面加载的时候就被created()添加了数据
             data:{
-              lessonName:'456',
+              disciplineName:'',
               currentPage:1,
               total:'',
               totalPage:'',
@@ -27,24 +28,37 @@
                 changePage(data){
                     if(data === "pre"){
                         this.currentPage-=1;
-                        this.getAllList();
+                        if(this.disciplineName.trim() === '')
+                            this.getAllList();
+                        this.showLessonInfo(this.currentPage);
                     }else if(data === "next"){
                         this.currentPage+=1;
-                        this.getAllList();
+                        if(this.disciplineName.trim() === '')
+                            this.getAllList();
+                        this.showLessonInfo(this.currentPage);
                     }
                 },
+
                 /*查询课程信息*/
                 getAllList(){
                     this.$http.get("developmentManage/info/listLessonManage/"+this.currentPage).then(result => {
                         this.common(result);
                     })
                 },
+
                 /*根据课程名称查询课程信息*/
-                showLessonInfo(){
-                    this.$http.post("developmentManage/info/showLessonInfo",{lessonName:this.lessonName}).then(result => {
+                showLessonInfo(currentPage){
+                    this.$http.post("developmentManage/info/listLessonManageLike",{disciplineName:this.disciplineName , currentPage:currentPage}).then(result => {
                         this.common(result);
                     })
                 },
+
+                //删除课程信息
+                del(id){
+                    this.$http.delete("developmentManage/info/deleteDiscipline/"+id).then(result => {
+                    })
+                },
+
                 /*通用的数据绑定*/
                 common(result){
                     var result=result.body;
@@ -72,20 +86,23 @@
                         <div style="margin-top: 5px">
                             <i class="input-group-text border-0 mdi mdi-magnify" style="height: 31px"></i>
                         </div>
-                        <input type="text" class="form-control bg-transparent border-0" v-model="lessonName" placeholder="课程名称">
+                        <input type="text" class="form-control bg-transparent border-0" v-model="disciplineName" placeholder="课程名称">
                     </div>
-                    <button type="button" @click="showLessonInfo()" class="btn btn-gradient-info btn-sm">模糊查询</button>
+                    <button type="button" @click="showLessonInfo(1)" class="btn btn-gradient-info btn-sm">模糊查询</button>
+                    <button type="reset" style="margin-left: 40px" class="btn btn-gradient-info btn-sm">重置</button>
                     <button type="button" style="margin-left: 40px" name="updateOrSave" class="btn btn-gradient-primary btn-sm">添加课程信息</button>
                 </form>
             </div>
         </div>
     </div>
+
+
     <div class="row">
         <div class="col-12 grid-margin">
             <div class="card">
                 <div class="card-body">
                     <p class="card-description">
-                        课程管理 <code>lessonManage</code>
+                        教务管理 / 课程管理 <code>lessonManage</code>
                     </p>
                     <div class="table-responsive">
                         <table class="table">
@@ -101,15 +118,17 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="item in list" align="center">
+                            <tr v-for="item in list" align="center" :key="item.disciplineId">
                                 <td>{{item.disciplineNo}}</td>
                                 <td>{{item.disciplineName}}</td>
                                 <td>{{item.disciplineBring}}</td>
                                 <td>{{item.disciplineTuition}}</td>
                                 <td>{{item.disciplineType}}</td>
                                 <td><button type="button" class="btn btn-gradient-warning btn-sm">修改</button></td>
-                                <td><button type="button" class="btn btn-gradient-danger btn-sm">删除</button></td>
+                                <td><button type="button" class="btn btn-gradient-danger btn-sm" @click="del(item.disciplineId)">删除</button></td>
                             </tr>
+
+
                             <tr>
                                 <td colspan="7" align="center">
                                     <span class="card-description">
@@ -125,6 +144,7 @@
                                     </span>
                                 </td>
                             </tr>
+
                             </tbody>
                         </table>
                     </div>
