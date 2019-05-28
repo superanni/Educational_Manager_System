@@ -12,7 +12,8 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ *  学生评教表 evaluation_xueqi :EvaluationXueqi
+ *  基础表 无关联 无修改
  * </p>
  *
  * @author GroupTwo

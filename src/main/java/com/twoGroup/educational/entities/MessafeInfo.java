@@ -12,7 +12,9 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ * 短信信息表 messafe_info :MessafeInfo
+
+ staff_id 员工编号  关联staff_info 主键
  * </p>
  *
  * @author GroupTwo

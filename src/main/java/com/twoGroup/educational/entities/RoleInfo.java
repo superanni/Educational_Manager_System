@@ -11,7 +11,8 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ *  角色信息表  role_info  :RoleInfo
+ 基础表 无关联 无修改
  * </p>
  *
  * @author GroupTwo

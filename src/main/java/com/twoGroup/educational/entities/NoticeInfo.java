@@ -12,7 +12,9 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ *  公告信息表 notice_info :NoticeInfo
+
+ staff_id 员工编号  关联staff_info 主键
  * </p>
  *
  * @author GroupTwo

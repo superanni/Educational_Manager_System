@@ -9,10 +9,12 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-
 /**
  * <p>
- * 
+ * 学生社会实践及技能培训表 student_practice_skills :StudentPracticeSkills
+ student_id 学生编号 关联student_info主键
+ staff_id 员工编号  关联staff_info staff_id
+
  * </p>
  *
  * @author GroupTwo

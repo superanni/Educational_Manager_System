@@ -12,7 +12,8 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *  邮件信息表 email_info :EmailInfo
+ *  staff_id 员工编号  关联staff_info 主键
  * </p>
  *
  * @author GroupTwo

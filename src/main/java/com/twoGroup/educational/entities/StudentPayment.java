@@ -12,7 +12,10 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ * 学生缴费信息表student_payment :StudentPayment
+ 缴费方式 由int改为varchar 具体值可为银行卡 支付宝 微信之类
+ student_id 学生编号 关联student_info主键
+ staff_id 员工编号  关联staff_info 主键
  * </p>
  *
  * @author GroupTwo

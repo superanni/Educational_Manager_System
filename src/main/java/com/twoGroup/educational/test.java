@@ -14,16 +14,38 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class test {
 
-    @Autowired
-    DisciplineInfoService disciplineInfoService;
+	@Autowired
+	DisciplineInfoService disciplineInfoService;
 
-    @GetMapping("developmentManage/{page}")
-    public String test(@PathVariable String page){
-        return "manager/developmentManage/"+page;
-    }
+	@GetMapping("developmentManage/{page}")
+	public String test(@PathVariable String page) {
+		return "manager/developmentManage/" + page;
+	}
 
-    @GetMapping("saveOrUpdate/{page}")
-    public String testModifyData(@PathVariable String page){
-        return "manager/developmentManage/saveOrUpdate/"+page;
-    }
+	@GetMapping("saveOrUpdate/{page}")
+	public String testModifyData(@PathVariable String page) {
+		return "manager/developmentManage/saveOrUpdate/" + page;
+	}
+
+
+	@GetMapping("/{page}")
+	public String test1(@PathVariable String page) {
+		return page;
+	}
+
+	@GetMapping("dataAndStatistics/{page}")
+	public String test2(@PathVariable String page) {
+		return "manager/dataAndStatistics/" + page;
+	}
+
+	@GetMapping("fileUpload/{page}")
+	public String test3(@PathVariable String page) {
+		return "manager/fileUpload/" + page;
+	}
+
+	@RequestMapping("/front")
+	public String  frontDesk(){
+		System.out.println("get in frontDesk");
+		return  "frontDesk/index";
+	}
 }
