@@ -42,4 +42,10 @@ public class test {
 	public String test3(@PathVariable String page) {
 		return "manager/fileUpload/" + page;
 	}
+
+	@RequestMapping("/front")
+	public String  frontDesk(){
+		System.out.println("get in frontDesk");
+		return  "frontDesk/index";
+	}
 }
