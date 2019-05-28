@@ -23,6 +23,7 @@
                 this.getAllList();
             },
             methods:{
+                /*分页处理*/
                 changePage(data){
                     if(data === "pre"){
                         this.currentPage-=1;
@@ -32,8 +33,9 @@
                         this.getAllList();
                     }
                 },
+                /*查询课程信息*/
                 getAllList(){
-                    this.$http.get("developmentManage/info/lessonManage/"+this.currentPage).then(result => {
+                    this.$http.get("developmentManage/info/listLessonManage/"+this.currentPage).then(result => {
                         var result=result.body;
                         if(result.status === 0){
                             this.list = result.list;
@@ -44,13 +46,27 @@
                             alert("获取数据失败");
                         }
                     })
-                }
+                },
+                /*根据课程名称查询课程信息*/
+                /*showLessonInfo(){
+                    this.$http.get("developmentManage/info/showLessonInfo").then(result => {
+                        var result=result.body;
+                        if(result.status === 0){
+                            this.list = result.list;
+                            this.total = result.total;
+                            this.currentPage = result.currentPage;
+                            this.totalPage = result.totalPage;
+                        }else{
+                            alert("获取数据失败");
+                        }
+                    })
+                }*/
             }
         })
     </script>
 </head>
 <body>
-<div>
+<div  id="showLessonInfo">
 	<div class="page-header">
         <!--查询课程、添加课程-->
         <div class="navbar-menu-wrapper d-flex align-items-stretch">
@@ -62,7 +78,7 @@
                         </div>
                         <input type="text" class="form-control bg-transparent border-0" placeholder="课程名称">
                     </div>
-                    <button type="submit" class="btn btn-gradient-info btn-sm">查询</button>
+                    <button type="submit" class="btn btn-gradient-info btn-sm">模糊查询</button>
                     <button type="button" style="margin-left: 40px" name="updateOrSave" class="btn btn-gradient-primary btn-sm">添加课程信息</button>
                 </form>
             </div>
@@ -75,7 +91,7 @@
                     <p class="card-description">
                         课程管理 <code>lessonManage</code>
                     </p>
-                    <div class="table-responsive" id="showLessonInfo">
+                    <div class="table-responsive">
                         <table class="table">
                             <thead>
                             <tr align="center">
@@ -108,6 +124,9 @@
                                     </span>
                                     <button type="button" v-if="currentPage>1" style="margin-left: 40px" @click="changePage('pre')" class="btn btn-gradient-success btn-sm">上一页</button>
                                     <button type="button" v-if="currentPage<totalPage" style="margin-left: 40px" @click="changePage('next')" class="btn btn-gradient-success btn-sm">下一页</button>
+                                    <span style="margin-left: 40px" class="card-description">
+                                        共 <code>{{totalPage}}</code>页
+                                    </span>
                                 </td>
                             </tr>
                             </tbody>
