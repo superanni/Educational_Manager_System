@@ -17,10 +17,10 @@ public class test {
 	@Autowired
 	DisciplineInfoService disciplineInfoService;
 
-	@GetMapping("developmentManage/{page}")
+	/*@GetMapping("developmentManage/{page}")
 	public String test(@PathVariable String page) {
 		return "manager/developmentManage/" + page;
-	}
+	}*/
 
 	@GetMapping("saveOrUpdate/{page}")
 	public String testModifyData(@PathVariable String page) {
@@ -48,4 +48,12 @@ public class test {
 		System.out.println("get in frontDesk");
 		return  "frontDesk/index";
 	}
+
+	@RequestMapping("/frontStuInfo")
+	public String  frontStuInfo(){
+		System.out.println("get in frontStuInfo");
+		return  "frontDesk/front_stu_info";
+	}
+
+
 }
