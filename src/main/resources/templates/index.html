@@ -15,6 +15,9 @@
       <link rel="shortcut icon" th:href="@{/images/HA.gif}" />
       <!--jquery-->
       <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+      <!--vue-->
+      <script th:src="@{/js/vue.min.js}"></script>
+      <script th:src="@{/js/vue-resource.min.js}"></script>
       <script>
         $(function(){
             $("[name='nav-link']").on('click',function(e){
@@ -206,6 +209,7 @@
           </nav>
           <!-- main-partial 右侧主体内容-->
           <div class="main-panel">
+
             <div class="content-wrapper" id="content-change-main">
                 <div th:replace="bar::#content-main"></div>
             </div>

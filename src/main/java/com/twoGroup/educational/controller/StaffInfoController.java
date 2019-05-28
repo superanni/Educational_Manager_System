@@ -31,19 +31,12 @@ public class StaffInfoController {
     @GetMapping("/test")
     public String test(){
         List<StaffInfo> lis = service.selectListVo();
-        for (StaffInfo li : lis) {
-            System.out.println("StaffInfo = " + li);
-        }
         return lis.toString();
     }
     @GetMapping("/test2")
     public String test2(){
         PageHelper.startPage(0,1);
         List<StaffInfo> lis = service.selectList(null);
-        for (StaffInfo li : lis) {
-            System.out.println("StaffInfo = " + li);
-        }
-
         return lis.toString();
     }
 }
