@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 
 /**
  * <p>
- *  前端控制器
+ *  前端控制器 ：权限管理
  * </p>
  *
  * @author GroupTwo
