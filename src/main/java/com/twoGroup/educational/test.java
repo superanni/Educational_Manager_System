@@ -17,15 +17,21 @@ public class test {
 	@Autowired
 	DisciplineInfoService disciplineInfoService;
 
-	@GetMapping("developmentManage/{page}")
-	public String test(@PathVariable String page) {
-		return "manager/developmentManage/" + page;
-	}
-
 	@GetMapping("saveOrUpdate/{page}")
 	public String testModifyData(@PathVariable String page) {
 		return "manager/developmentManage/saveOrUpdate/" + page;
 	}
+
+	@GetMapping("saveOrUpdate1/{page}")
+	public String testModifyData1(@PathVariable String page) {
+		return "manager/fileUpload/saveOrUpdate/" + page;
+	}
+
+	@GetMapping("saveOrUpdate2/{page}")
+	public String testModifyData2(@PathVariable String page) {
+		return "manager/teachActiviti/saveOrUpdate/" + page;
+	}
+
 
 
 	@GetMapping("/{page}")
@@ -42,4 +48,16 @@ public class test {
 	public String test3(@PathVariable String page) {
 		return "manager/fileUpload/" + page;
 	}
+
+	@GetMapping("teachActiviti/{page}")
+	public String test4(@PathVariable String page) {
+		return "manager/teachActiviti/" + page;
+	}
+
+
+	@GetMapping("frontDesk/{page}")
+	public String test5(@PathVariable String page) {
+		return "frontDesk/" + page;
+	}
+
 }
