@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>模板管理</title>
+	<script>
+		//全局配置根域名
+		Vue.http.options.root="";
+		//全局启用 emulateJSON 渲染
+		Vue.http.options.emulateJSON = true;
+
+		var vm=new Vue({
+			el:"#templateManage",
+			data:{
+				templateName:'你想要查找的关键字...',
+				currentPage:1,
+				total:'',
+				totalPage:'',
+				list:[]
+			},
+			/*方法执行前*/
+			created(){
+				this.getAllList();
+			},
+			methods:{
+				/*分页处理*/
+				changePage(data){
+					if(data === "pre"){
+						this.currentPage-=1;
+						this.getAllList();
+					}else if(data === "next"){
+						this.currentPage+=1;
+						this.getAllList();
+					}
+				},
+				/*查询模板信息*/
+				getAllList(){
+					this.$http.get("InforManager/tamplateCurrentList/"+this.currentPage).then(result => {
+						this.common(result);
+					})
+				},
+				/*根据课程名称查询课程信息*/
+				/*showTemplateInfo(){
+					this.$http.post("InfoManage/tamplateCurrentList/",{templateName:this.templateName}).then(result => {
+						this.common(result);
+					})
+				},*/
+				/*deleteTemplateInfo(id){
+					this.$http.delete("InfoManage/templateDelete",{templateId:id}).then(result=>{
+						var result =result.body;
+						alert(result)
+						// if(result == "success" ){
+							this.getAllList();
+						// }
+					})
+				},*/
+				/*通用的数据绑定*/
+				common(result){
+					var result=result.body;
+					if(result.status === 0){
+						this.list = result.list;
+						this.total = result.total;
+						this.currentPage = result.currentPage;
+						this.totalPage = result.totalPage;
+					}else{
+						alert("获取数据失败");
+					}
+				}
+			}
+		})
+	</script>
+</head>
+<body>
+<div  id="templateManage">
+	<div class="page-header">
+		<!--查询活动、添加活动-->
+		<div class="navbar-menu-wrapper d-flex align-items-stretch">
+			<div class="search-field">
+				<form class="d-flex align-items-center h-100" action="#">
+					<div class="input-group">
+						<div style="margin-top: 5px">
+							<i class="input-group-text border-0 mdi mdi-magnify" style="height: 31px"></i>
+						</div>
+						<input v-model="templateName" type="text" class="form-control bg-transparent border-0" placeholder="模板名称">
+					</div>
+					<button type="submit" class="btn btn-gradient-info btn-sm">查询模板</button>
+					<button type="button" style="margin-left: 40px" name="updateOrSave" class="btn btn-gradient-primary btn-sm">添加模板</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12 grid-margin">
+			<div class="card">
+				<div class="card-body">
+					<p class="card-description">
+						模板管理 <code>templateManage</code>
+					</p>
+					<div class="table-responsive">
+						<table class="table">
+							<thead>
+							<tr align="center">
+								<!--<th><div class="form-check form-check-success">
+									<label class="form-check-label">
+
+										<i class="input-helper"></i></label>
+								</div></th>-->
+								<th>标题</th>
+								<th>内容</th>
+								<th>类别</th>
+								<th>修改</th>
+								<th>删除</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr align="center" v-for="item in list">
+								<!--<td><input type="checkbox" checked=""></td>-->
+								<td >{{item.templateTitle}}</td>
+								<td class="text-info">{{item.templateContent}}</td>
+								<td class="text-danger">{{item.templateType}}</td>
+								<td><button type="button" class="btn btn-gradient-warning btn-sm">修改</button></td>
+								<td><button type="button" class="btn btn-gradient-danger btn-sm" @click="deleteTemplateInfo({{item.template.templateId}})">删除</button></td>
+							</tr>
+							<tr>
+								<td colspan="10" align="center">
+                               <span class="card-description">
+                                        共 <code>{{total}}</code>条数据
+                                    </span>
+									<span style="margin-left: 40px" class="card-description">
+                                        第 <code>{{currentPage}}</code>页
+                                    </span>
+									<button type="button" v-if="currentPage>1" style="margin-left: 40px" @click="changePage('pre')" class="btn btn-gradient-success btn-sm">上一页</button>
+									<button type="button" v-if="currentPage<totalPage" style="margin-left: 40px" @click="changePage('next')" class="btn btn-gradient-success btn-sm">下一页</button>
+									<span style="margin-left: 40px" class="card-description">
+                                        共 <code>{{totalPage}}</code>页
+                                    </span>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$(function(){
+		$("[name='updateOrSave']").on('click',function(){
+			$('#content-change-main').load("saveOrUpdate4/saveOrUpdateTemplate",function(){});
+		});
+	});
+</script>
+</body>
+</html>
