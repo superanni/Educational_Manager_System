@@ -30,16 +30,18 @@
                         this.currentPage-=1;
                         if(this.disciplineName.trim() === '')
                             this.getAllList();
-                        this.showLessonInfo(this.currentPage);
+                        else
+                            this.showLessonInfo(this.currentPage);
                     }else if(data === "next"){
                         this.currentPage+=1;
                         if(this.disciplineName.trim() === '')
                             this.getAllList();
-                        this.showLessonInfo(this.currentPage);
+                        else
+                            this.showLessonInfo(this.currentPage);
                     }
                 },
 
-                /*查询课程信息*/
+                /*查询所有课程信息*/
                 getAllList(){
                     this.$http.get("developmentManage/info/listLessonManage/"+this.currentPage).then(result => {
                         this.common(result);
@@ -48,6 +50,7 @@
 
                 /*根据课程名称查询课程信息*/
                 showLessonInfo(currentPage){
+                    this.disciplineName=$("[name='disciplineName']").val();
                     this.$http.post("developmentManage/info/listLessonManageLike",{disciplineName:this.disciplineName , currentPage:currentPage}).then(result => {
                         this.common(result);
                     })
@@ -56,6 +59,13 @@
                 //删除课程信息
                 del(id){
                     this.$http.delete("developmentManage/info/deleteDiscipline/"+id).then(result => {
+                        var result=result.body;
+                        if (result==true){
+                            toastr.success("删除成功");
+                            this.getAllList();
+                        } else{
+                            toastr.warning("删除失败");
+                        }
                     })
                 },
 
@@ -86,10 +96,9 @@
                         <div style="margin-top: 5px">
                             <i class="input-group-text border-0 mdi mdi-magnify" style="height: 31px"></i>
                         </div>
-                        <input type="text" class="form-control bg-transparent border-0" v-model="disciplineName" placeholder="课程名称">
+                        <input type="text" name="disciplineName" class="form-control bg-transparent border-0" placeholder="课程名称">
                     </div>
                     <button type="button" @click="showLessonInfo(1)" class="btn btn-gradient-info btn-sm">模糊查询</button>
-                    <button type="reset" style="margin-left: 40px" class="btn btn-gradient-info btn-sm">重置</button>
                     <button type="button" style="margin-left: 40px" name="updateOrSave" class="btn btn-gradient-primary btn-sm">添加课程信息</button>
                 </form>
             </div>

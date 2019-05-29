@@ -14,10 +14,13 @@
       <!-- endinject -->
       <link rel="shortcut icon" th:href="@{/images/HA.gif}" />
       <!--jquery-->
-      <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+      <script th:src="@{/js/jquery.min.js}"></script>
       <!--vue-->
       <script th:src="@{/js/vue.min.js}"></script>
       <script th:src="@{/js/vue-resource.min.js}"></script>
+      <!--jquery toastr提示框插件-->
+      <link rel="stylesheet" th:href="@{/css/toastr.min.css}" />
+      <script th:src="@{/js/toastr.min.js}"></script>
       <script>
         $(function(){
             $("[name='nav-link']").on('click',function(e){
@@ -36,7 +39,7 @@
         <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <!--HA教务管理系统-->
           <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-            <span><img src="images/HA.gif" width="60px" height="34px"/></span><img style="margin-top: 10px;" src="images/logo.gif" height="120px"/>
+            <span><img src="images/HA.gif" width="60px" height="34px"/></span><img style="margin-top: 10px;" src="images/logo.gif" height="140px"/>
           </div>
           <!--功能查找框-->
           <div class="navbar-menu-wrapper d-flex align-items-stretch">

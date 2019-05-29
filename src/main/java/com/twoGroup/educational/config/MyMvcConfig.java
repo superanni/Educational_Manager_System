@@ -2,6 +2,7 @@ package com.twoGroup.educational.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -10,6 +11,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 //@EnableWebMvc   不要接管SpringMVC
 @Configuration
 public class MyMvcConfig extends WebMvcConfigurerAdapter {
+
+    //允许全部请求跨域
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**");
+    }
 
     //所有的WebMvcConfigurerAdapter组件都会一起起作用
     @Bean //将组件注册在容器

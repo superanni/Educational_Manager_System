@@ -3,8 +3,7 @@ package com.twoGroup.educational.controller;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.twoGroup.educational.dataTransUtil.DataTransUtil;
+import com.twoGroup.educational.hanUtil.DataTransUtil;
 import com.twoGroup.educational.entities.DisciplineInfo;
 import com.twoGroup.educational.service.DisciplineInfoService;
 import org.slf4j.Logger;
@@ -30,7 +29,7 @@ public class DevelopmentManageController {
 
     @Autowired
     /*课程信息业务接口*/
-            DisciplineInfoService lessonInfoService;
+    DisciplineInfoService lessonInfoService;
 
     //跳转地址前缀
     private String locationURI = "manager/developmentManage";
@@ -98,11 +97,15 @@ public class DevelopmentManageController {
     @DeleteMapping("info/deleteDiscipline/{discipline_id}")
     public @ResponseBody
     String deleteDiscipline(@PathVariable String discipline_id) {
-        boolean b = lessonInfoService.deleteById(Integer.parseInt(discipline_id));
-        if (b == false) {
-            return "fail";
+        try {
+            boolean b = lessonInfoService.deleteById(Integer.parseInt(discipline_id));
+            if (b == false) {
+                return "false";
+            }
+            return "true";
+        } catch (Exception e) {
+            return "false";
         }
-        return "true";
     }
 
     @GetMapping("saveOrUpdate/{page}")
