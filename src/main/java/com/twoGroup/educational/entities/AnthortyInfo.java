@@ -18,7 +18,7 @@ import java.io.Serializable;
  * @author GroupTwo
  * @since 2019-05-26
  */
-@Accessors(chain=true)
+@Accessors(chain = true)
 @Data
 @TableName("anthorty_info")
 public class AnthortyInfo implements Serializable {
@@ -35,5 +35,6 @@ public class AnthortyInfo implements Serializable {
     private String anthortyDesc;
     @TableField("anthorty_url")
     private String anthortyUrl;
+
 
 }
