@@ -33,6 +33,25 @@ public class test {
 	}
 
 
+	@GetMapping("saveOrUpdate3/{page}")
+	public String testModifyData3(@PathVariable String page) {
+		return "manager/systemManager/saveOrUpdate/" + page;
+	}
+
+
+	@GetMapping("saveOrUpdate4/{page}")
+	public String testModifyData4(@PathVariable String page) {
+		return "manager/InformManager/saveOrUpdate/" + page;
+	}
+
+
+
+
+
+	@GetMapping("adminManage/{page}")
+	public String test(@PathVariable String page) {
+		return "manager/adminManage/" + page;
+	}
 
 	@GetMapping("/{page}")
 	public String test1(@PathVariable String page) {
@@ -51,13 +70,23 @@ public class test {
 
 	@GetMapping("teachActiviti/{page}")
 	public String test4(@PathVariable String page) {
-		return "manager/teachActiviti/" + page;
+		return "manager/teachActiviti/"+page;
 	}
 
 
 	@GetMapping("frontDesk/{page}")
 	public String test5(@PathVariable String page) {
-		return "frontDesk/" + page;
+		return "frontDesk/"+page;
 	}
+
+	@GetMapping("systemManager/{page}")
+	public String test6(@PathVariable String page) {
+		return "manager/systemManager/" + page;
+	}
+
+	@GetMapping("InformManager/{page}")
+	public String test7(@PathVariable String page) { return "manager/InformManager/"+page;
+	}
+
 
 }
