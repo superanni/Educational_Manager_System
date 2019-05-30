@@ -29,6 +29,18 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
                 registry.addViewController("/").setViewName("index");
                 registry.addViewController("index.html").setViewName("index");
 	            registry.addViewController("login.html").setViewName("login");
+	            /*教务管理*/
+                registry.addViewController("developmentManage/saveOrUpdate/saveOrUpdateLesson.html").setViewName("manager/developmentManage/saveOrUpdate/saveOrUpdateLesson");
+
+	            registry.addViewController("developmentManage/lessonManage.html").setViewName("manager/developmentManage/lessonManage");
+                registry.addViewController("developmentManage/classroomManage.html").setViewName("manager/developmentManage/classroomManage");
+                registry.addViewController("developmentManage/lessonTable.html").setViewName("manager/developmentManage/lessonTable");
+                registry.addViewController("developmentManage/teacherManage.html").setViewName("manager/developmentManage/teacherManage");
+                registry.addViewController("developmentManage/gradeclassManage.html").setViewName("manager/developmentManage/gradeclassManage");
+                registry.addViewController("developmentManage/gradeclassTransaction.html").setViewName("manager/developmentManage/gradeclassTransaction");
+                registry.addViewController("developmentManage/studentEvaluateByMonth.html").setViewName("manager/developmentManage/studentEvaluateByMonth");
+                registry.addViewController("developmentManage/studentEvaluateByTerm.html").setViewName("manager/developmentManage/studentEvaluateByTerm");
+                registry.addViewController("developmentManage/listenClassWriteDown.html").setViewName("manager/developmentManage/listenClassWriteDown");
             }
 
             //注册拦截器

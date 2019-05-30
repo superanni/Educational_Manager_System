@@ -4,20 +4,16 @@
     <meta charset="UTF-8">
     <title>课程管理</title>
     <script>
-        //全局配置根域名
-        Vue.http.options.root="";
-        //全局启用 emulateJSON 渲染
-        Vue.http.options.emulateJSON = true;
-
         var vm = new Vue({
+            router:router,
             el:"#showLessonInfo",
             //在页面加载的时候就被created()添加了数据
             data:{
-              disciplineName:'',
-              currentPage:1,
-              total:'',
-              totalPage:'',
-              list:[]
+                disciplineName:'',
+                currentPage:1,
+                total:'',
+                totalPage:'',
+                list:[]
             },
             /*方法执行前*/
             created(){
@@ -69,7 +65,12 @@
                     })
                 },
 
-                /*通用的数据绑定*/
+                //
+                update(){
+                    $('#content-change-main').load("saveOrUpdate/saveOrUpdateLesson",function(){});
+                },
+
+                //通用的数据绑定
                 common(result){
                     var result=result.body;
                     if(result.status === 0){
@@ -78,7 +79,7 @@
                         this.currentPage = result.currentPage;
                         this.totalPage = result.totalPage;
                     }else{
-                        alert("获取数据失败");
+                        toastr.error("获取数据失败");
                     }
                 }
             }
@@ -88,7 +89,7 @@
 <body>
 
 <div  id="showLessonInfo">
-	<div class="page-header">
+    <div class="page-header">
         <!--查询课程、添加课程-->
         <div class="navbar-menu-wrapper d-flex align-items-stretch">
             <div class="search-field">
@@ -100,7 +101,7 @@
                         <input type="text" name="disciplineName" class="form-control bg-transparent border-0" placeholder="课程名称">
                     </div>
                     <button type="button" @click="showLessonInfo(1)" class="btn btn-gradient-info btn-sm">模糊查询</button>
-                    <button type="button" style="margin-left: 40px" name="updateOrSave" class="btn btn-gradient-primary btn-sm">添加课程信息</button>
+                    <router-link tag="button" style="margin-left: 40px" to="/" name="save" class="btn btn-gradient-primary btn-sm">添加课程信息</router-link>
                 </form>
             </div>
         </div>
@@ -134,7 +135,8 @@
                                 <td>{{item.disciplineBring}}</td>
                                 <td>{{item.disciplineTuition}}</td>
                                 <td>{{item.disciplineType}}</td>
-                                <td><button type="button" class="btn btn-gradient-warning btn-sm">修改</button></td>
+                                <td @click="update()"><router-link tag="button" name="update" class="btn btn-gradient-warning btn-sm" :to="{path: 'update', query: { disciplineId: item.disciplineId }}">修改</router-link></td>
+                                <!--<td><button type="button" class="btn btn-gradient-warning btn-sm">修改</button></td>-->
                                 <td><button type="button" class="btn btn-gradient-danger btn-sm" @click="del(item.disciplineId)">删除</button></td>
                             </tr>
 
@@ -165,44 +167,44 @@
 </div>
 <script>
     $(function(){
-        $("[name='updateOrSave']").on('click',function(){
+        $("[name='save']").on('click',function(){
             /*$("#myModalLabel").text("新增");
             $('#myModal').modal();*/
             $('#content-change-main').load("saveOrUpdate/saveOrUpdateLesson",function(){});
         });
     });
 </script>
-    <!--<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="card-title">课程信息</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+<!--<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="card-title">课程信息</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="txt_departmentname">部门名称</label>
+                <input type="text" name="txt_departmentname" class="form-control" id="txt_departmentname" placeholder="部门名称">
             </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="txt_departmentname">部门名称</label>
-                    <input type="text" name="txt_departmentname" class="form-control" id="txt_departmentname" placeholder="部门名称">
-                </div>
-                <div class="form-group">
-                    <label for="txt_parentdepartment">上级部门</label>
-                    <input type="text" name="txt_parentdepartment" class="form-control" id="txt_parentdepartment" placeholder="上级部门">
-                </div>
-                <div class="form-group">
-                    <label for="txt_departmentlevel">部门级别</label>
-                    <input type="text" name="txt_departmentlevel" class="form-control" id="txt_departmentlevel" placeholder="部门级别">
-                </div>
-                <div class="form-group">
-                    <label for="txt_statu">描述</label>
-                    <input type="text" name="txt_statu" class="form-control" id="txt_statu" placeholder="状态">
-                </div>
+            <div class="form-group">
+                <label for="txt_parentdepartment">上级部门</label>
+                <input type="text" name="txt_parentdepartment" class="form-control" id="txt_parentdepartment" placeholder="上级部门">
             </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-gradient-success btn-sm">提交更改</button>
-                <button type="button" class="btn btn-gradient-primary btn-sm">重置</button>
+            <div class="form-group">
+                <label for="txt_departmentlevel">部门级别</label>
+                <input type="text" name="txt_departmentlevel" class="form-control" id="txt_departmentlevel" placeholder="部门级别">
+            </div>
+            <div class="form-group">
+                <label for="txt_statu">描述</label>
+                <input type="text" name="txt_statu" class="form-control" id="txt_statu" placeholder="状态">
             </div>
         </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-gradient-success btn-sm">提交更改</button>
+            <button type="button" class="btn btn-gradient-primary btn-sm">重置</button>
+        </div>
     </div>
+</div>
 </div>-->
 </body>
 </html>

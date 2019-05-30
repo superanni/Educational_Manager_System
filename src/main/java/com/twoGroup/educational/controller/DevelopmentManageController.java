@@ -3,7 +3,7 @@ package com.twoGroup.educational.controller;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.github.pagehelper.PageHelper;
-import com.twoGroup.educational.CommonUtils.DataTransUtil;
+import com.twoGroup.educational.commonUtils.DataTransUtil;
 import com.twoGroup.educational.entities.DisciplineInfo;
 import com.twoGroup.educational.service.DisciplineInfoService;
 import org.slf4j.Logger;
@@ -30,18 +30,22 @@ public class DevelopmentManageController {
     /*课程信息业务接口*/
     DisciplineInfoService lessonInfoService;
 
+
     //跳转地址前缀
-    private String locationURI = "manager/developmentManage";
+    private String locationURI = "manager/developmentManage/saveOrUpdate/";
 
     //所有课程信息
     private List<DisciplineInfo> lessonInfos;
 
+    //课程信息
+    private DisciplineInfo lessonInfo;
+
     //作为测试
     /*教务管理下跳转的页面放行*/
-    @GetMapping("{managePage}")
+    /*@GetMapping("{managePage}")
     public String test(@PathVariable String managePage) {
         return locationURI + "/" + managePage;
-    }
+    }*/
 
     /**
      * 分页查询所有课程信息,
@@ -56,46 +60,92 @@ public class DevelopmentManageController {
             //数据绑定
             return DataTransUtil.dataUtil(map, lessonInfos);
         }
-        return "error";
+        return "false";
     }
-
 
     /**
      * 条件查询
-     * @param map
-     * @param currentPage
-     * @param disciplineInfo
-     * @return
      */
     @PostMapping("info/listLessonManageLike")
     public @ResponseBody String listLessonManageLike(Map<String,Object> map,int currentPage , DisciplineInfo disciplineInfo){
-        Wrapper<DisciplineInfo> disciplineName = null;
         //判断有无条件
-        if (disciplineInfo.getDisciplineName() != null) {
-            if (!"".equals(disciplineInfo.getDisciplineName().trim())) {
-                disciplineName = new EntityWrapper<DisciplineInfo>().like("discipline_name", disciplineInfo.getDisciplineName().trim());
-            }
+        Wrapper<DisciplineInfo> disciplineInfoWrapper = null;
+        if (!"".equals(disciplineInfo.getDisciplineName())) {
+            disciplineInfoWrapper = new EntityWrapper<DisciplineInfo>().like("discipline_name", disciplineInfo.getDisciplineName().trim());
         }
         //每页显示五行数据
         PageHelper.startPage(currentPage, 5);
         //获取数据
-        lessonInfos = lessonInfoService.selectList(disciplineName); //也可以用匿名类
+        lessonInfos = lessonInfoService.selectList(disciplineInfoWrapper); //也可以用匿名类
         if (lessonInfos != null) {
             //数据绑定
             return DataTransUtil.dataUtil(map, lessonInfos);
         }
-        return "error";
+        return "false";
+    }
+
+    /**
+     * 更新、添加课程信息的条件查询
+     */
+    @GetMapping("saveOrUpdate/condition/{disciplineId}")
+    public @ResponseBody String condition(@PathVariable String disciplineId,Map map) {
+        //修改操作、有disciplineId参数
+        try {
+            if (!"".equals(disciplineId)){
+                lessonInfo=lessonInfoService.selectById(disciplineId);
+                return DataTransUtil.oneObjDataUtil(map,"lessonInfo",lessonInfo);
+            }else{
+            }
+        } catch (Exception e) {
+            return "false";
+        }
+        return "false";
+    }
+
+    /**
+     * 添加课程信息
+     */
+    @PostMapping("saveLesson")
+    public @ResponseBody String saveLesson(DisciplineInfo disciplineInfo){
+        if (lessonInfoService.selectOne(new EntityWrapper<DisciplineInfo>().eq("discipline_no",disciplineInfo.getDisciplineNo()))==null){
+            try {
+                boolean b = lessonInfoService.insert(disciplineInfo);
+                if (b==true){
+                    return "true";
+                }else {
+                    return "false";
+                }
+            } catch (Exception e) {
+                return "false";
+            }
+        }else {
+            return "false";
+        }
+
+    }
+
+    /**
+     * 更新课程信息
+     */
+    @PutMapping("updateLesson/{disciplineId}")
+    public @ResponseBody String saveLesson(@PathVariable String disciplineId,DisciplineInfo disciplineInfo){
+        try {
+            boolean b = lessonInfoService.updateById(disciplineInfo);
+            if (b==true){
+                return "true";
+            }else {
+                return "false";
+            }
+        } catch (Exception e) {
+            return "false";
+        }
     }
 
     /**
      * 删除课程信息
-     *
-     * @param discipline_id
-     * @return
      */
     @DeleteMapping("info/deleteDiscipline/{discipline_id}")
-    public @ResponseBody
-    String deleteDiscipline(@PathVariable String discipline_id) {
+    public @ResponseBody String deleteDiscipline(@PathVariable String discipline_id) {
         try {
             boolean b = lessonInfoService.deleteById(Integer.parseInt(discipline_id));
             if (b == false) {
@@ -107,53 +157,4 @@ public class DevelopmentManageController {
         }
     }
 
-    @GetMapping("saveOrUpdate/{page}")
-    public String testModifyData(@PathVariable String page) {
-        return locationURI + "/saveOrUpdate/" + page;
-    }
-
-
-    /*判断执行方法*/
-    public void intoFunction(String managePage, Map map) {
-        switch (managePage) {
-            /*课程管理*/
-            case "lessonManage":
-                /*查询所有课程信息*/
-
-
-                break;
-            /*课程表管理*/
-            case "lessonTable":
-
-                break;
-            /*教师管理*/
-            case "teacherManage":
-
-                break;
-            /*教室管理*/
-            case "classroomManage":
-
-                break;
-            /*班级管理*/
-            case "gradeclassManage":
-
-                break;
-            /*事务管理*/
-            case "gradeclassTransaction":
-
-                break;
-            /*听课记录*/
-            case "listenClassWriteDown":
-
-                break;
-            /*学生评教(月度)*/
-            case "studentEvaluateByMonth":
-
-                break;
-            /*学生评教(学期)*/
-            case "studentEvaluateByTerm":
-
-                break;
-        }
-    }
 }
