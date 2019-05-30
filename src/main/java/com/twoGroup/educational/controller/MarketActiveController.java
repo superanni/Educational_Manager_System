@@ -3,7 +3,7 @@ package com.twoGroup.educational.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
-import com.twoGroup.educational.CommonUtils.DataTransUtil;
+import com.twoGroup.educational.commonUtils.DataTransUtil;
 import com.twoGroup.educational.entities.MarketActive;
 import com.twoGroup.educational.service.MarketActiveService;
 import org.slf4j.Logger;

@@ -1,4 +1,4 @@
-package com.twoGroup.educational.CommonUtils;
+package com.twoGroup.educational.commonUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
@@ -17,6 +17,13 @@ public class DataTransUtil {
         map.put("total",pageInfo.getTotal());
         map.put("totalPage",pageInfo.getPages());
 
+        return JSON.toJSONString(map);
+    }
+
+    /*一个对象的数据封装*/
+    public static String  oneObjDataUtil(Map map,String name,Object object){
+        map.put("status",0);
+        map.put(name, object);
         return JSON.toJSONString(map);
     }
 }

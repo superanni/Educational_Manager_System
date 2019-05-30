@@ -10,7 +10,7 @@ spring:
     password:
   datasource:
     username: root
-    password: 10086
+    password:
     url: jdbc:mysql://localhost:3306/stu_info
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
@@ -58,3 +58,5 @@ mybatis-plus:
   mapper-locations: classpath:mapper/*Mapper.xml
   #实体扫描，多个package用逗号或者分号分隔
   typeAliasesPackage: com.twoGroup.educational.entities
+  configuration:
+    cache-enabled: false

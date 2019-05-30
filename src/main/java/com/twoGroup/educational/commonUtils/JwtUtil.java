@@ -1,4 +1,4 @@
-package com.twoGroup.educational.CommonUtils;
+package com.twoGroup.educational.commonUtils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
