@@ -3,7 +3,7 @@ package com.twoGroup.educational.controller;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.github.pagehelper.PageHelper;
-import com.twoGroup.educational.hanUtil.DataTransUtil;
+import com.twoGroup.educational.CommonUtils.DataTransUtil;
 import com.twoGroup.educational.entities.DisciplineInfo;
 import com.twoGroup.educational.service.DisciplineInfoService;
 import org.slf4j.Logger;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.locks.Condition;
 
 /**
  * 课程管理
@@ -25,7 +24,7 @@ import java.util.concurrent.locks.Condition;
 @Controller
 @RequestMapping("developmentManage")
 public class DevelopmentManageController {
-    private Logger logger = LoggerFactory.getLogger(DevelopmentManageController.class);
+ 	private Logger logger = LoggerFactory.getLogger(DevelopmentManageController.class);
 
     @Autowired
     /*课程信息业务接口*/

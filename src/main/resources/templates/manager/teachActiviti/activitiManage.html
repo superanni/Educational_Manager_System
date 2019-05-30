@@ -3,9 +3,77 @@
 <head>
 	<meta charset="UTF-8">
 	<title>活动管理</title>
+	
+	<script>
+		//全局配置根域名
+		Vue.http.options.root="";
+		//全局启用 emulateJSON 渲染
+		Vue.http.options.emulateJSON = true;
+		
+		var vm=new Vue({
+			el:"#activeManage",
+			data:{
+				templateName:'你想要查找的关键字...',
+				currentPage:1,
+				total:'',
+				totalPage:'',
+				list:[]
+			},
+			/*方法执行前*/
+			created(){
+				this.getAllList();
+			},
+			methods:{
+				/*分页处理*/
+				changePage(data){
+					if(data === "pre"){
+						this.currentPage-=1;
+						this.getAllList();
+					}else if(data === "next"){
+						this.currentPage+=1;
+						this.getAllList();
+					}
+				},
+				/*查询模板信息*/
+				getAllList(){
+					this.$http.get("teachActiviti/activitiCurrentList/"+this.currentPage).then(result => {
+						this.common(result);
+					})
+				},
+				/*根据课程名称查询课程信息*/
+				/*showActivitiInfo(){
+					this.$http.post("InfoManage/tamplateCurrentList/",{templateName:this.templateName}).then(result => {
+						this.common(result);
+					})
+				},*/
+				/*deleteTemplateInfo(id){
+					this.$http.delete("InfoManage/templateDelete",{templateId:id}).then(result=>{
+						var result =result.body;
+						alert(result)
+						// if(result == "success" ){
+							this.getAllList();
+						// }
+					})
+				},*/
+				/*通用的数据绑定*/
+				common(result){
+					var result=result.body;
+					if(result.status === 0){
+						this.list = result.list;
+						this.total = result.total;
+						this.currentPage = result.currentPage;
+						this.totalPage = result.totalPage;
+					}else{
+						alert("获取数据失败");
+					}
+				}
+			}
+		})
+	</script>
+	
 </head>
 <body>
-<div>
+<div id="activeManage">
 	<div class="page-header">
 		<!--查询活动、添加活动-->
 		<div class="navbar-menu-wrapper d-flex align-items-stretch">
@@ -24,7 +92,7 @@
 						</div>
 						<input type="text" class="form-control bg-transparent border-0" placeholder="活动名称">
 					</div>
-					<button type="submit" class="btn btn-gradient-info btn-sm">查询活动</button>
+					<button type="submit" class="btn btn-gradient-info btn-sm" @click="showActivitiInfo(1)">查询活动</button>
 					<button type="button" style="margin-left: 40px" name="updateOrSave" class="btn btn-gradient-primary btn-sm">添加活动</button>
 				</form>
 			</div>
@@ -35,14 +103,15 @@
 			<div class="card">
 				<div class="card-body">
 					<p class="card-description">
-						教务活动/活动管理 <code>activitiManage</code>
+						活动管理 <code>activitiManage</code>
 					</p>
 					<div class="table-responsive">
 						<table class="table">
 							<thead>
 							<tr align="center">
-								<th><i>全选</i>
-									<input type="checkbox"checked="">
+								<th>
+										<i class="input-helper">全选</i>
+										<input type="checkbox" checked="">
 								</th>
 								<th>活动名称</th>
 								<th>负责人</th>
@@ -54,23 +123,29 @@
 							</tr>
 							</thead>
 							<tbody>
-							<tr align="center">
-								<td><input type="checkbox" class="form-check-input" checked=""></td>
-								<td><i class="mdi mdi-arrow-down text-info">lol</i></td>
-								<td>刘赛松</td>
-								<td class="text-danger">2018-5-6</td>
-								<td class="text-danger">2018-5-6</td>
-								<td class="text-info">进行</td>
+							<tr v-for="item in list" align="center" :key="item.disciplineId">
+								<td><input type="checkbox"checked=""></td>
+								<td><i class="mdi mdi-arrow-down text-info">{{item.activeName}}</i></td>
+								<td>{{item.staffId}}</td>
+								<td class="text-danger ">{{item.activeStart}}</td>
+								<td class="text-danger">{{item.activeEnd}}</td>
+								<td class="text-info">{{item.activeType}}</td>
 								<td><button type="button" class="btn btn-gradient-warning btn-sm">修改</button></td>
 								<td><button type="button" class="btn btn-gradient-danger btn-sm">删除</button></td>
 							</tr>
 							<tr>
 								<td colspan="10" align="center">
-                                <span class="card-description">
-                                    共 <code>1</code>条数据
-                                </span>
-									<button type="button" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">上一页</button>
-									<button type="button" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">下一页</button>
+                               <span class="card-description">
+                                        共 <code>{{total}}</code>条数据
+                                    </span>
+									<span style="margin-left: 40px" class="card-description">
+                                        第 <code>{{currentPage}}</code>页
+                                    </span>
+									<button type="button" v-if="currentPage>1" style="margin-left: 40px" @click="changePage('pre')" class="btn btn-gradient-success btn-sm">上一页</button>
+									<button type="button" v-if="currentPage<totalPage" style="margin-left: 40px" @click="changePage('next')" class="btn btn-gradient-success btn-sm">下一页</button>
+									<span style="margin-left: 40px" class="card-description">
+                                        共 <code>{{totalPage}}</code>页
+                                    </span>
 								</td>
 							</tr>
 							</tbody>
