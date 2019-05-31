@@ -30,9 +30,15 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
                 registry.addViewController("index.html").setViewName("index");
 	            registry.addViewController("login.html").setViewName("login");
 	            /*教务管理*/
+                registry.addViewController("developmentManage/saveOrUpdate/saveOrUpdateClassroom.html").setViewName("manager/developmentManage/saveOrUpdate/saveOrUpdateClassroom");
+                registry.addViewController("developmentManage/saveOrUpdate/saveOrUpdateGradeClass.html").setViewName("manager/developmentManage/saveOrUpdate/saveOrUpdateGradeClass");
+                registry.addViewController("developmentManage/saveOrUpdate/saveOrUpdateGradeTransaction.html").setViewName("manager/developmentManage/saveOrUpdate/saveOrUpdateGradeTransaction");
                 registry.addViewController("developmentManage/saveOrUpdate/saveOrUpdateLesson.html").setViewName("manager/developmentManage/saveOrUpdate/saveOrUpdateLesson");
+                registry.addViewController("developmentManage/saveOrUpdate/saveOrUpdateLessonTable.html").setViewName("manager/developmentManage/saveOrUpdate/saveOrUpdateLessonTable");
+                registry.addViewController("developmentManage/saveOrUpdate/saveOrUpdateListenClassWriteDown.html").setViewName("manager/developmentManage/saveOrUpdate/saveOrUpdateListenClassWriteDown");
+                registry.addViewController("developmentManage/saveOrUpdate/saveOrUpdateTeacher.html").setViewName("manager/developmentManage/saveOrUpdate/saveOrUpdateTeacher");
 
-	            registry.addViewController("disciplineInfo/lessonManage.html").setViewName("manager/developmentManage/lessonManage");
+                registry.addViewController("developmentManage/lessonManage.html").setViewName("manager/developmentManage/lessonManage");
                 registry.addViewController("developmentManage/classroomManage.html").setViewName("manager/developmentManage/classroomManage");
                 registry.addViewController("developmentManage/lessonTable.html").setViewName("manager/developmentManage/lessonTable");
                 registry.addViewController("developmentManage/teacherManage.html").setViewName("manager/developmentManage/teacherManage");

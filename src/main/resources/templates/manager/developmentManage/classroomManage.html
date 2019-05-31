@@ -24,13 +24,13 @@
                 changePage(data){
                     if(data === "pre"){
                         this.currentPage-=1;
-                        if(this.disciplineName.trim() === '')
+                        if(this.classroomName.trim() === '')
                             this.getAllList();
                         else
                             this.showLessonInfo(this.currentPage);
                     }else if(data === "next"){
                         this.currentPage+=1;
-                        if(this.disciplineName.trim() === '')
+                        if(this.classroomName.trim() === '')
                             this.getAllList();
                         else
                             this.showLessonInfo(this.currentPage);
@@ -40,27 +40,27 @@
                 //根据选择框的页数查询数据
                 selectPage(){
                     this.currentPage=$("[name='currentPage']").val();
-                    this.getAllList();
+                    this.showClassroomInfo(this.currentPage);
                 },
 
-                /*查询所有课程信息*/
+                /*查询所有教室信息*/
                 getAllList(){
-                    this.$http.get("developmentManage/info/listLessonManage/"+this.currentPage).then(result => {
+                    this.$http.get("classroomInfo/info/listClassroomManage/"+this.currentPage).then(result => {
                         this.common(result);
                     })
                 },
 
-                /*根据课程名称查询课程信息*/
-                showLessonInfo(currentPage){
-                    this.disciplineName=$("[name='disciplineName']").val();
-                    this.$http.post("developmentManage/info/listLessonManageLike",{disciplineName:this.disciplineName , currentPage:currentPage}).then(result => {
+                /*根据教室名称查询教室信息*/
+                showClassroomInfo(currentPage){
+                    this.classroomName=$("[name='classroomName']").val();
+                    this.$http.post("classroomInfo/info/listClassroomManageLike",{classroomName:this.classroomName , currentPage:currentPage}).then(result => {
                         this.common(result);
                     })
                 },
 
-                //删除课程信息
+                //删除教室信息
                 del(id){
-                    this.$http.delete("developmentManage/info/deleteDiscipline/"+id).then(result => {
+                    this.$http.delete("classroomInfo/info/deleteClassroom/"+id).then(result => {
                         var result=result.body;
                         if (result==true){
                             toastr.success("删除成功");
@@ -73,7 +73,7 @@
 
                 //更新加载页面
                 update(){
-                    $('#content-change-main').load("saveOrUpdate/saveOrUpdateLesson",function(){});
+                    $('#content-change-main').load("developmentManage/saveOrUpdate/saveOrUpdateClassroom.html",function(){});
                 },
 
                 //通用的数据绑定
@@ -93,20 +93,20 @@
     </script>
 </head>
 <body>
-<div>
+<div id="showClassroomInfo">
     <div class="page-header">
         <!--查询教室、添加教室-->
         <div class="navbar-menu-wrapper d-flex align-items-stretch">
             <div class="search-field">
-                <form class="d-flex align-items-center h-100" id="showClassroomInfo">
+                <form class="d-flex align-items-center h-100">
                     <div class="input-group">
                         <div style="margin-top: 5px">
                             <i class="input-group-text border-0 mdi mdi-magnify" style="height: 31px"></i>
                         </div>
-                        <input type="text" class="form-control bg-transparent border-0" placeholder="教室名称">
+                        <input type="text" name="classroomName" class="form-control bg-transparent border-0" placeholder="教室名称">
                     </div>
-                    <button type="submit" class="btn btn-gradient-info btn-sm">查询</button>
-                    <button type="button" style="margin-left: 40px" name="updateOrSave" class="btn btn-gradient-primary btn-sm">添加教室信息</button>
+                    <button type="button" @click="showClassroomInfo(1)" class="btn btn-gradient-info btn-sm">查询</button>
+                    <button type="button" style="margin-left: 40px" name="save" class="btn btn-gradient-primary btn-sm">添加教室信息</button>
                 </form>
             </div>
         </div>
@@ -116,9 +116,9 @@
             <div class="card">
                 <div class="card-body">
                     <p class="card-description">
-                        教室管理 <code>classroomManage</code>
+                        教务管理 / 教室管理 <code>classroomManage</code>
                     </p>
-                    <div class="table-responsive">
+                    <div class="table-responsive" >
                         <table class="table">
                             <thead>
                             <tr align="center">
@@ -130,20 +130,31 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr align="center">
-                                <td class="text-danger"> 28.76% <i class="mdi mdi-arrow-down"></i></td>
-                                <td><label class="badge badge-danger">Pending</label></td>
-                                <td><label class="badge badge-danger">Pending</label></td>
-                                <td><button type="button" class="btn btn-gradient-warning btn-sm">修改</button></td>
-                                <td><button type="button" class="btn btn-gradient-danger btn-sm">删除</button></td>
+                            <tr v-for="item in list" align="center">
+                                <td>{{item.classroomName}}</td>
+                                <td>{{item.classroomMax}}</td>
+                                <td>{{item.classroomInfo}}</td>
+                                <td @click="update()"><router-link tag="button" name="update" class="btn btn-gradient-warning btn-sm" :to="{path: 'update', query: { classroomId: item.classroomId }}">修改</router-link></td>
+                                <td><button type="button" class="btn btn-gradient-danger btn-sm" @click="del(item.classroomId)">删除</button></td>
                             </tr>
                             <tr>
-                                <td colspan="5" align="center">
-                                <span class="card-description">
-                                    共 <code>1</code>条数据
-                                </span>
-                                    <button type="button" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">上一页</button>
-                                    <button type="button" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">下一页</button>
+                                <td colspan="7" align="center">
+                                    <span class="card-description">
+                                        共 <code>{{total}}</code>条数据
+                                    </span>
+                                    <span style="margin-left: 25px" class="card-description">
+                                        <!--第 <code>{{currentPage}}</code>页-->
+                                        第&nbsp;
+                                        <select name="currentPage" v-model="currentPage" @change="selectPage()">
+                                            <option v-for="item in totalPage" :value="item">{{item}}</option>
+                                        </select>
+                                        &nbsp;&nbsp;页
+                                    </span>
+                                    <button type="button" v-if="currentPage>1" style="margin-left: 25px" @click="changePage('pre')" class="btn btn-gradient-success btn-sm">上一页</button>
+                                    <button type="button" v-if="currentPage<totalPage" style="margin-left: 25px" @click="changePage('next')" class="btn btn-gradient-success btn-sm">下一页</button>
+                                    <span style="margin-left: 25px" class="card-description">
+                                        共 <code>{{totalPage}}</code>页
+                                    </span>
                                 </td>
                             </tr>
                             </tbody>
@@ -156,8 +167,10 @@
 </div>
 <script>
     $(function(){
-        $("[name='updateOrSave']").on('click',function(){
-            $('#content-change-main').load("saveOrUpdate/saveOrUpdateClassroom",function(){});
+        $("[name='save']").on('click',function(){
+            /*$("#myModalLabel").text("新增");
+            $('#myModal').modal();*/
+            $('#content-change-main').load("developmentManage/saveOrUpdate/saveOrUpdateClassroom.html",function(){});
         });
     });
 </script>

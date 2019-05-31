@@ -50,7 +50,7 @@ public class DisciplineInfoManageController {
      * 分页查询所有课程信息,
      */
     @GetMapping("info/listLessonManage/{currentPage}")
-    public @ResponseBody String listLessonManage(Map map, @PathVariable int currentPage, DisciplineInfo disciplineInfo) {
+    public @ResponseBody String listLessonManage(Map map, @PathVariable int currentPage) {
         //每页显示五行数据
         PageHelper.startPage(currentPage, 5);
         //获取数据
@@ -143,10 +143,10 @@ public class DisciplineInfoManageController {
     /**
      * 删除课程信息
      */
-    @DeleteMapping("info/deleteDiscipline/{discipline_id}")
-    public @ResponseBody String deleteDiscipline(@PathVariable String discipline_id) {
+    @DeleteMapping("info/deleteDiscipline/{disciplineId}")
+    public @ResponseBody String deleteDiscipline(@PathVariable String disciplineId) {
         try {
-            boolean b = lessonInfoService.deleteById(Integer.parseInt(discipline_id));
+            boolean b = lessonInfoService.deleteById(Integer.parseInt(disciplineId));
             if (b == false) {
                 return "false";
             }

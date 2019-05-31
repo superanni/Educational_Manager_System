@@ -40,7 +40,7 @@
                 //根据选择框的页数查询数据
                 selectPage(){
                     this.currentPage=$("[name='currentPage']").val();
-                    this.getAllList();
+                    this.showLessonInfo(this.currentPage);
                 },
 
                 /*查询所有课程信息*/
@@ -93,8 +93,7 @@
     </script>
 </head>
 <body>
-
-<div  id="showLessonInfo">
+<div id="showLessonInfo">
     <div class="page-header">
         <!--查询课程、添加课程-->
         <div class="navbar-menu-wrapper d-flex align-items-stretch">
@@ -106,14 +105,12 @@
                         </div>
                         <input type="text" name="disciplineName" class="form-control bg-transparent border-0" placeholder="课程名称">
                     </div>
-                    <button type="button" @click="showLessonInfo(1)" class="btn btn-gradient-info btn-sm">模糊查询</button>
+                    <button type="button" @click="showLessonInfo(1)" class="btn btn-gradient-info btn-sm">查询</button>
                     <router-link tag="button" style="margin-left: 40px" to="/" name="save" class="btn btn-gradient-primary btn-sm">添加课程信息</router-link>
                 </form>
             </div>
         </div>
     </div>
-
-
     <div class="row">
         <div class="col-12 grid-margin">
             <div class="card">
@@ -145,8 +142,6 @@
                                 <!--<td><button type="button" class="btn btn-gradient-warning btn-sm">修改</button></td>-->
                                 <td><button type="button" class="btn btn-gradient-danger btn-sm" @click="del(item.disciplineId)">删除</button></td>
                             </tr>
-
-
                             <tr>
                                 <td colspan="7" align="center">
                                     <span class="card-description">
@@ -167,7 +162,6 @@
                                     </span>
                                 </td>
                             </tr>
-
                             </tbody>
                         </table>
                     </div>
