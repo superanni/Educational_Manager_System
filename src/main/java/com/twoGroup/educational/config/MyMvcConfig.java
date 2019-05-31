@@ -32,7 +32,7 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
 	            /*教务管理*/
                 registry.addViewController("developmentManage/saveOrUpdate/saveOrUpdateLesson.html").setViewName("manager/developmentManage/saveOrUpdate/saveOrUpdateLesson");
 
-	            registry.addViewController("developmentManage/lessonManage.html").setViewName("manager/developmentManage/lessonManage");
+	            registry.addViewController("disciplineInfo/lessonManage.html").setViewName("manager/developmentManage/lessonManage");
                 registry.addViewController("developmentManage/classroomManage.html").setViewName("manager/developmentManage/classroomManage");
                 registry.addViewController("developmentManage/lessonTable.html").setViewName("manager/developmentManage/lessonTable");
                 registry.addViewController("developmentManage/teacherManage.html").setViewName("manager/developmentManage/teacherManage");

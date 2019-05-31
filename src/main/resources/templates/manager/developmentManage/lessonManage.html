@@ -45,7 +45,7 @@
 
                 /*查询所有课程信息*/
                 getAllList(){
-                    this.$http.get("developmentManage/info/listLessonManage/"+this.currentPage).then(result => {
+                    this.$http.get("disciplineInfo/info/listLessonManage/"+this.currentPage).then(result => {
                         this.common(result);
                     })
                 },
@@ -53,14 +53,14 @@
                 /*根据课程名称查询课程信息*/
                 showLessonInfo(currentPage){
                     this.disciplineName=$("[name='disciplineName']").val();
-                    this.$http.post("developmentManage/info/listLessonManageLike",{disciplineName:this.disciplineName , currentPage:currentPage}).then(result => {
+                    this.$http.post("disciplineInfo/info/listLessonManageLike",{disciplineName:this.disciplineName , currentPage:currentPage}).then(result => {
                         this.common(result);
                     })
                 },
 
                 //删除课程信息
                 del(id){
-                    this.$http.delete("developmentManage/info/deleteDiscipline/"+id).then(result => {
+                    this.$http.delete("disciplineInfo/info/deleteDiscipline/"+id).then(result => {
                         var result=result.body;
                         if (result==true){
                             toastr.success("删除成功");
@@ -73,7 +73,7 @@
 
                 //更新加载页面
                 update(){
-                    $('#content-change-main').load("saveOrUpdate/saveOrUpdateLesson",function(){});
+                    $('#content-change-main').load("developmentManage/saveOrUpdate/saveOrUpdateLesson.html",function(){});
                 },
 
                 //通用的数据绑定
@@ -181,7 +181,7 @@
         $("[name='save']").on('click',function(){
             /*$("#myModalLabel").text("新增");
             $('#myModal').modal();*/
-            $('#content-change-main').load("saveOrUpdate/saveOrUpdateLesson",function(){});
+            $('#content-change-main').load("developmentManage/saveOrUpdate/saveOrUpdateLesson.html",function(){});
         });
     });
 </script>

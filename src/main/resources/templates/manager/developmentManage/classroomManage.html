@@ -3,6 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <title>教室管理</title>
+    <script>
+        var vm = new Vue({
+            router:router,
+            el:"#showClassroomInfo",
+            //在页面加载的时候就被created()添加了数据
+            data:{
+                classroomName:'',
+                currentPage:1,
+                total:'',
+                totalPage:'',
+                list:[]
+            },
+            /*方法执行前*/
+            created(){
+                this.getAllList();
+            },
+            methods:{
+                /*分页处理*/
+                changePage(data){
+                    if(data === "pre"){
+                        this.currentPage-=1;
+                        if(this.disciplineName.trim() === '')
+                            this.getAllList();
+                        else
+                            this.showLessonInfo(this.currentPage);
+                    }else if(data === "next"){
+                        this.currentPage+=1;
+                        if(this.disciplineName.trim() === '')
+                            this.getAllList();
+                        else
+                            this.showLessonInfo(this.currentPage);
+                    }
+                },
+
+                //根据选择框的页数查询数据
+                selectPage(){
+                    this.currentPage=$("[name='currentPage']").val();
+                    this.getAllList();
+                },
+
+                /*查询所有课程信息*/
+                getAllList(){
+                    this.$http.get("developmentManage/info/listLessonManage/"+this.currentPage).then(result => {
+                        this.common(result);
+                    })
+                },
+
+                /*根据课程名称查询课程信息*/
+                showLessonInfo(currentPage){
+                    this.disciplineName=$("[name='disciplineName']").val();
+                    this.$http.post("developmentManage/info/listLessonManageLike",{disciplineName:this.disciplineName , currentPage:currentPage}).then(result => {
+                        this.common(result);
+                    })
+                },
+
+                //删除课程信息
+                del(id){
+                    this.$http.delete("developmentManage/info/deleteDiscipline/"+id).then(result => {
+                        var result=result.body;
+                        if (result==true){
+                            toastr.success("删除成功");
+                            this.getAllList();
+                        } else{
+                            toastr.warning("删除失败");
+                        }
+                    })
+                },
+
+                //更新加载页面
+                update(){
+                    $('#content-change-main').load("saveOrUpdate/saveOrUpdateLesson",function(){});
+                },
+
+                //通用的数据绑定
+                common(result){
+                    var result=result.body;
+                    if(result.status === 0){
+                        this.list = result.list;
+                        this.total = result.total;
+                        this.currentPage = result.currentPage;
+                        this.totalPage = result.totalPage;
+                    }else{
+                        toastr.error("获取数据失败");
+                    }
+                }
+            }
+        })
+    </script>
 </head>
 <body>
 <div>
@@ -10,7 +98,7 @@
         <!--查询教室、添加教室-->
         <div class="navbar-menu-wrapper d-flex align-items-stretch">
             <div class="search-field">
-                <form class="d-flex align-items-center h-100" action="#">
+                <form class="d-flex align-items-center h-100" id="showClassroomInfo">
                     <div class="input-group">
                         <div style="margin-top: 5px">
                             <i class="input-group-text border-0 mdi mdi-magnify" style="height: 31px"></i>

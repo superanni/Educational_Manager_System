@@ -16,15 +16,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 课程管理
- *
  * @Author: 黄彬朕
  * @Date: 19.05.27
+ * 教务管理模块->课程管理
  */
-@Controller
-@RequestMapping("developmentManage")
-public class DevelopmentManageController {
- 	private Logger logger = LoggerFactory.getLogger(DevelopmentManageController.class);
+@RestController
+@RequestMapping("disciplineInfo")
+public class DisciplineInfoManageController {
+ 	private Logger logger = LoggerFactory.getLogger(DisciplineInfoManageController.class);
 
     @Autowired
     /*课程信息业务接口*/

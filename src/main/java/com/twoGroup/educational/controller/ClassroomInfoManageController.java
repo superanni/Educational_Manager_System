@@ -4,18 +4,17 @@ package com.twoGroup.educational.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
- * <p>
- *  前端控制器
- * </p>
- *
- * @author GroupTwo
- * @since 2019-05-26
+ * @Author: 黄彬朕
+ * @Date: 19.05.27
+ * 教务管理模块->教室管理
  */
-@Controller
+@RestController
 @RequestMapping("/classroomInfo")
-public class ClassroomInfoController {
+public class ClassroomInfoManageController {
+
 
 }
 
