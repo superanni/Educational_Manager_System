@@ -37,6 +37,12 @@
                     }
                 },
 
+                //根据选择框的页数查询数据
+                selectPage(){
+                    this.currentPage=$("[name='currentPage']").val();
+                    this.getAllList();
+                },
+
                 /*查询所有课程信息*/
                 getAllList(){
                     this.$http.get("developmentManage/info/listLessonManage/"+this.currentPage).then(result => {
@@ -65,7 +71,7 @@
                     })
                 },
 
-                //
+                //更新加载页面
                 update(){
                     $('#content-change-main').load("saveOrUpdate/saveOrUpdateLesson",function(){});
                 },
@@ -129,7 +135,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="item in list" align="center" :key="item.disciplineId">
+                            <tr v-for="item in list" align="center">
                                 <td>{{item.disciplineNo}}</td>
                                 <td>{{item.disciplineName}}</td>
                                 <td>{{item.disciplineBring}}</td>
@@ -146,12 +152,17 @@
                                     <span class="card-description">
                                         共 <code>{{total}}</code>条数据
                                     </span>
-                                    <span style="margin-left: 40px" class="card-description">
-                                        第 <code>{{currentPage}}</code>页
+                                    <span style="margin-left: 25px" class="card-description">
+                                        <!--第 <code>{{currentPage}}</code>页-->
+                                        第&nbsp;
+                                        <select name="currentPage" v-model="currentPage" @change="selectPage()">
+                                            <option v-for="item in totalPage" :value="item">{{item}}</option>
+                                        </select>
+                                        &nbsp;&nbsp;页
                                     </span>
-                                    <button type="button" v-if="currentPage>1" style="margin-left: 40px" @click="changePage('pre')" class="btn btn-gradient-success btn-sm">上一页</button>
-                                    <button type="button" v-if="currentPage<totalPage" style="margin-left: 40px" @click="changePage('next')" class="btn btn-gradient-success btn-sm">下一页</button>
-                                    <span style="margin-left: 40px" class="card-description">
+                                    <button type="button" v-if="currentPage>1" style="margin-left: 25px" @click="changePage('pre')" class="btn btn-gradient-success btn-sm">上一页</button>
+                                    <button type="button" v-if="currentPage<totalPage" style="margin-left: 25px" @click="changePage('next')" class="btn btn-gradient-success btn-sm">下一页</button>
+                                    <span style="margin-left: 25px" class="card-description">
                                         共 <code>{{totalPage}}</code>页
                                     </span>
                                 </td>
