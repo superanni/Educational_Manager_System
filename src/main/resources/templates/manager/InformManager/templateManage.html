@@ -12,7 +12,7 @@
 		var vm=new Vue({
 			el:"#templateManage",
 			data:{
-				templateContent:'',
+				templateName:'你想要查找的关键字...',
 				currentPage:1,
 				total:'',
 				totalPage:'',
@@ -40,22 +40,20 @@
 					})
 				},
 				/*根据课程名称查询课程信息*/
-				showTemplateInfo(){
-					alert(this.templateContent);
-					this.$http.post("InforManager/templateLikeList",{templateContent:this.templateContent,currentPage:this.currentPage}).then(result => {
+				/*showTemplateInfo(){
+					this.$http.post("InfoManage/tamplateCurrentList/",{templateName:this.templateName}).then(result => {
 						this.common(result);
 					})
-				},
-				deleteTemplateInfo(id){
-					alert(id)
-					this.$http.delete("InforManager/templateDelete/"+id).then(result=>{
+				},*/
+				/*deleteTemplateInfo(id){
+					this.$http.delete("InfoManage/templateDelete",{templateId:id}).then(result=>{
 						var result =result.body;
 						alert(result)
 						// if(result == "success" ){
 							this.getAllList();
 						// }
 					})
-				},
+				},*/
 				/*通用的数据绑定*/
 				common(result){
 					var result=result.body;
@@ -83,9 +81,9 @@
 						<div style="margin-top: 5px">
 							<i class="input-group-text border-0 mdi mdi-magnify" style="height: 31px"></i>
 						</div>
-						<input v-model="templateContent" type="text" class="form-control bg-transparent border-0" placeholder="你想要查找的关键字...">
+						<input v-model="templateName" type="text" class="form-control bg-transparent border-0" placeholder="模板名称">
 					</div>
-					<button type="submit" class="btn btn-gradient-info btn-sm" @click="showTemplateInfo()">查询模板</button>
+					<button type="submit" class="btn btn-gradient-info btn-sm">查询模板</button>
 					<button type="button" style="margin-left: 40px" name="updateOrSave" class="btn btn-gradient-primary btn-sm">添加模板</button>
 				</form>
 			</div>
@@ -121,7 +119,7 @@
 								<td class="text-info">{{item.templateContent}}</td>
 								<td class="text-danger">{{item.templateType}}</td>
 								<td><button type="button" class="btn btn-gradient-warning btn-sm">修改</button></td>
-								<td><button type="button" class="btn btn-gradient-danger btn-sm" @click="deleteTemplateInfo(item.templateId)">删除</button></td>
+								<td><button type="button" class="btn btn-gradient-danger btn-sm" @click="deleteTemplateInfo({{item.template.templateId}})">删除</button></td>
 							</tr>
 							<tr>
 								<td colspan="10" align="center">
@@ -149,7 +147,7 @@
 <script>
 	$(function(){
 		$("[name='updateOrSave']").on('click',function(){
-			$('#content-change-main').load("InforManager/saveOrUpdateTemplate",function(){});
+			$('#content-change-main').load("saveOrUpdate4/saveOrUpdateTemplate",function(){});
 		});
 	});
 </script>

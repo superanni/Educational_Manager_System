@@ -18,10 +18,16 @@
       <!--vue-->
       <script th:src="@{/js/vue.min.js}"></script>
       <script th:src="@{/js/vue-resource.min.js}"></script>
+      <script th:src="@{/js/vue-router.js}"></script>
       <!--jquery toastr提示框插件-->
       <link rel="stylesheet" th:href="@{/css/toastr.min.css}" />
       <script th:src="@{/js/toastr.min.js}"></script>
       <script>
+          //全局配置根域名
+          Vue.http.options.root="";
+          //全局启用 emulateJSON 渲染
+          Vue.http.options.emulateJSON = true;
+          var router=new VueRouter();
         $(function(){
             $("[name='nav-link']").on('click',function(e){
                 e.preventDefault();

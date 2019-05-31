@@ -27,10 +27,10 @@ public class test {
 		return "manager/fileUpload/saveOrUpdate/" + page;
 	}
 
-	@GetMapping("saveOrUpdate2/{page}")
-	public String testModifyData2(@PathVariable String page) {
-		return "manager/teachActiviti/saveOrUpdate/" + page;
-	}
+//	@GetMapping("saveOrUpdate2/{page}")
+//	public String testModifyData2(@PathVariable String page) {
+//		return "manager/teachActiviti/saveOrUpdate/" + page;
+//	}
 
 
 	@GetMapping("saveOrUpdate3/{page}")
@@ -39,11 +39,10 @@ public class test {
 	}
 
 
-	@GetMapping("saveOrUpdate4/{page}")
-	public String testModifyData4(@PathVariable String page) {
-		return "manager/InformManager/saveOrUpdate/" + page;
-	}
-
+//	@GetMapping("saveOrUpdate4/{page}")
+//	public String testModifyData4(@PathVariable String page) {
+//		return "manager/InformManager/saveOrUpdate/" + page;
+//	}
 
 
 
@@ -68,10 +67,10 @@ public class test {
 		return "manager/fileUpload/" + page;
 	}
 
-	@GetMapping("teachActiviti/{page}")
-	public String test4(@PathVariable String page) {
-		return "manager/teachActiviti/"+page;
-	}
+//	@GetMapping("teachActiviti/{page}")
+//	public String test4(@PathVariable String page) {
+//		return "manager/teachActiviti/"+page;
+//	}
 
 
 	@GetMapping("frontDesk/{page}")
@@ -84,9 +83,9 @@ public class test {
 		return "manager/systemManager/" + page;
 	}
 
-	@GetMapping("InformManager/{page}")
-	public String test7(@PathVariable String page) { return "manager/InformManager/"+page;
-	}
+//	@GetMapping("InformManager/{page}")
+//	public String test7(@PathVariable String page) { return "manager/InformManager/"+page;
+//	}
 
 
 }
