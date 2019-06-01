@@ -1,7 +1,6 @@
 package com.twoGroup.educational.controller;
 
-
-import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.github.pagehelper.PageHelper;
 import com.twoGroup.educational.commonUtils.DataTransUtil;
 import com.twoGroup.educational.entities.MarketActive;
@@ -34,19 +33,13 @@ public class MarketActiveController {
 
 	private List<MarketActive> marketActives;
 
-//	//直接跳转需要的页面
-//	@GetMapping("{redictPage}")
-//	public String templateList(@PathVariable String redictPage) {
-//		System.out.println("go to " + redictPage);
-//		return locationURI + "/" + redictPage;
-//	}
-
+	private MarketActive marketActive;
 	/**
 	 * 分页查询所有课程信息,
 	 */
 	@GetMapping("activitiCurrentList/{currentPage}")
 	public @ResponseBody String listLessonManage(Map map, @PathVariable int currentPage) {
-		System.out.println("查询活动"+currentPage);
+		System.out.println("查询 活动"+currentPage);
 		//每页显示五行数据
 		PageHelper.startPage(currentPage, 5);
 		//获取数据
@@ -57,13 +50,57 @@ public class MarketActiveController {
 		}
 		return "false";
 	}
+
+	/**
+	 * 更新、添加活动信息的条件查询
+	 */
+	@GetMapping("saveOrUpdate/condition/{activeId}")
+	public @ResponseBody String condition(@PathVariable String activeId,Map map) {
+		//修改操作、有activeId参数
+		try {
+			System.out.println("更新 添加 活动"+activeId);
+			if (!"".equals(activeId)){
+				marketActive=marketActiveService.selectById(activeId);
+				return DataTransUtil.oneObjDataUtil(map,"lessonInfo",marketActive);
+			}else{
+			}
+		} catch (Exception e) {
+			return "false";
+		}
+		return "false";
+	}
+	/**
+	 * 添加活动信息
+	 */
+	@PostMapping("activitiCurrentSave")
+	public @ResponseBody String saveLesson(MarketActive markeActive){
+		System.out.println("添加 活动"+markeActive);
+		if (marketActiveService.selectOne(new EntityWrapper<MarketActive>().eq("activeName",markeActive.getActiveName()))==null){
+				try {
+				boolean b = marketActiveService.insert(markeActive);
+				if (b==true){
+					return "true";
+				}else {
+					return "false";
+				}
+			} catch (Exception e) {
+				return "false";
+			}
+		}else {
+			return "false";
+		}
+
+	}
+
+
 	/**
 	 * 删除课程信息
 	 */
 	@DeleteMapping("activitiCurrentDelete/{activeId}")
-	public @ResponseBody String deleteDiscipline(@PathVariable String disciplineId) {
+	public @ResponseBody String deleteDiscipline(@PathVariable String activeId) {
 		try {
-			boolean b = marketActiveService.deleteById(Integer.parseInt(disciplineId));
+			System.out.println("删除 活动"+activeId);
+			boolean b = marketActiveService.deleteById(Integer.parseInt(activeId));
 			if (b == false) {
 				return "false";
 			}
