@@ -47,6 +47,12 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
                 registry.addViewController("developmentManage/studentEvaluateByMonth.html").setViewName("manager/developmentManage/studentEvaluateByMonth");
                 registry.addViewController("developmentManage/studentEvaluateByTerm.html").setViewName("manager/developmentManage/studentEvaluateByTerm");
                 registry.addViewController("developmentManage/listenClassWriteDown.html").setViewName("manager/developmentManage/listenClassWriteDown");
+
+                /* 教务活动*/
+	            registry.addViewController("teachActiviti/saveOrUpdate/saveOrUpdateTeacher.html").setViewName("manager/teachActiviti/saveOrUpdate/saveOrUpdateAcitiviti");
+
+	            registry.addViewController("teachActiviti/activitiManage.html").setViewName("manager/teachActiviti/activitiManage");
+
             }
 
             //注册拦截器
