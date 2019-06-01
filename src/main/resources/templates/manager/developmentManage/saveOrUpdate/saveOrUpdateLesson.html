@@ -23,7 +23,7 @@
                     //判断是否添加或修改
                     if(disciplineId==null){
                     }else{
-                        this.$http.get("developmentManage/saveOrUpdate/condition/"+disciplineId).then(result => {
+                        this.$http.get("disciplineInfo/saveOrUpdate/condition/"+disciplineId).then(result => {
                             this.common(result);
                         })
                     }
@@ -45,20 +45,20 @@
                 submit(){
                     if(this.list.disciplineId == undefined){
                         //添加操作
-                        $.post("developmentManage/saveLesson",$("#lessonForm").serialize(),function(result) {
+                        $.post("disciplineInfo/saveLesson",$("#lessonForm").serialize(),function(result) {
                             if(result=="true"){
                                 toastr.success("添加成功");
-                                $('#content-change-main').load("developmentManage/lessonManage.html",function(){});
+                                $('#content-change-main').load("disciplineInfo/lessonManage.html",function(){});
                             }else{
                                 toastr.error("添加失败");
                             }
                         })
                     }else{
                         //修改操作
-                        $.post("developmentManage/updateLesson/"+this.list.disciplineId,$("#lessonForm").serialize(),function (result) {
+                        $.post("disciplineInfo/updateLesson/"+this.list.disciplineId,$("#lessonForm").serialize(),function (result) {
                             if(result=="true"){
                                 toastr.success("修改成功");
-                                $('#content-change-main').load("developmentManage/lessonManage.html",function(){});
+                                $('#content-change-main').load("disciplineInfo/lessonManage.html",function(){});
                             }else{
                                 toastr.error("修改失败");
                             }
@@ -74,7 +74,7 @@
         //回退
         $(function () {
             $("[name='backToDisplay']").click(function () {
-                $('#content-change-main').load("developmentManage/lessonManage.html",function(){});
+                $('#content-change-main').load("disciplineInfo/lessonManage.html",function(){});
             })
         })
     </script>
@@ -140,7 +140,11 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">课程类型</label>
                                 <div class="col-sm-9">
-                                    <select name="disciplineType" v-model="list.disciplineType" class="form-control">
+                                    <select v-if="list.disciplineId!=undefined" name="disciplineType" v-model="list.disciplineType" class="form-control">
+                                        <option value="必修">必修</option>
+                                        <option value="选修">选修</option>
+                                    </select>
+                                    <select v-if="list.disciplineId==undefined" name="disciplineType" class="form-control">
                                         <option value="必修">必修</option>
                                         <option value="选修">选修</option>
                                     </select>

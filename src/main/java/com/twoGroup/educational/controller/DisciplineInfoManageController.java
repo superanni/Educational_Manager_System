@@ -16,15 +16,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 课程管理
- *
  * @Author: 黄彬朕
  * @Date: 19.05.27
+ * 教务管理模块->课程管理
  */
-@Controller
-@RequestMapping("developmentManage")
-public class DevelopmentManageController {
- 	private Logger logger = LoggerFactory.getLogger(DevelopmentManageController.class);
+@RestController
+@RequestMapping("disciplineInfo")
+public class DisciplineInfoManageController {
+ 	private Logger logger = LoggerFactory.getLogger(DisciplineInfoManageController.class);
 
     @Autowired
     /*课程信息业务接口*/
@@ -51,7 +50,8 @@ public class DevelopmentManageController {
      * 分页查询所有课程信息,
      */
     @GetMapping("info/listLessonManage/{currentPage}")
-    public @ResponseBody String listLessonManage(Map map, @PathVariable int currentPage, DisciplineInfo disciplineInfo) {
+    public @ResponseBody String listLessonManage(Map map, @PathVariable int currentPage) {
+	    System.out.println("查询课程"+currentPage);
         //每页显示五行数据
         PageHelper.startPage(currentPage, 5);
         //获取数据
@@ -144,10 +144,10 @@ public class DevelopmentManageController {
     /**
      * 删除课程信息
      */
-    @DeleteMapping("info/deleteDiscipline/{discipline_id}")
-    public @ResponseBody String deleteDiscipline(@PathVariable String discipline_id) {
+    @DeleteMapping("info/deleteDiscipline/{disciplineId}")
+    public @ResponseBody String deleteDiscipline(@PathVariable String disciplineId) {
         try {
-            boolean b = lessonInfoService.deleteById(Integer.parseInt(discipline_id));
+            boolean b = lessonInfoService.deleteById(Integer.parseInt(disciplineId));
             if (b == false) {
                 return "false";
             }

@@ -37,9 +37,15 @@
                     }
                 },
 
+                //根据选择框的页数查询数据
+                selectPage(){
+                    this.currentPage=$("[name='currentPage']").val();
+                    this.showLessonInfo(this.currentPage);
+                },
+
                 /*查询所有课程信息*/
                 getAllList(){
-                    this.$http.get("developmentManage/info/listLessonManage/"+this.currentPage).then(result => {
+                    this.$http.get("disciplineInfo/info/listLessonManage/"+this.currentPage).then(result => {
                         this.common(result);
                     })
                 },
@@ -47,14 +53,14 @@
                 /*根据课程名称查询课程信息*/
                 showLessonInfo(currentPage){
                     this.disciplineName=$("[name='disciplineName']").val();
-                    this.$http.post("developmentManage/info/listLessonManageLike",{disciplineName:this.disciplineName , currentPage:currentPage}).then(result => {
+                    this.$http.post("disciplineInfo/info/listLessonManageLike",{disciplineName:this.disciplineName , currentPage:currentPage}).then(result => {
                         this.common(result);
                     })
                 },
 
                 //删除课程信息
                 del(id){
-                    this.$http.delete("developmentManage/info/deleteDiscipline/"+id).then(result => {
+                    this.$http.delete("disciplineInfo/info/deleteDiscipline/"+id).then(result => {
                         var result=result.body;
                         if (result==true){
                             toastr.success("删除成功");
@@ -65,9 +71,9 @@
                     })
                 },
 
-                //
+                //更新加载页面
                 update(){
-                    $('#content-change-main').load("saveOrUpdate/saveOrUpdateLesson",function(){});
+                    $('#content-change-main').load("developmentManage/saveOrUpdate/saveOrUpdateLesson.html",function(){});
                 },
 
                 //通用的数据绑定
@@ -87,8 +93,7 @@
     </script>
 </head>
 <body>
-
-<div  id="showLessonInfo">
+<div id="showLessonInfo">
     <div class="page-header">
         <!--查询课程、添加课程-->
         <div class="navbar-menu-wrapper d-flex align-items-stretch">
@@ -100,14 +105,12 @@
                         </div>
                         <input type="text" name="disciplineName" class="form-control bg-transparent border-0" placeholder="课程名称">
                     </div>
-                    <button type="button" @click="showLessonInfo(1)" class="btn btn-gradient-info btn-sm">模糊查询</button>
+                    <button type="button" @click="showLessonInfo(1)" class="btn btn-gradient-info btn-sm">查询</button>
                     <router-link tag="button" style="margin-left: 40px" to="/" name="save" class="btn btn-gradient-primary btn-sm">添加课程信息</router-link>
                 </form>
             </div>
         </div>
     </div>
-
-
     <div class="row">
         <div class="col-12 grid-margin">
             <div class="card">
@@ -129,7 +132,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="item in list" align="center" :key="item.disciplineId">
+                            <tr v-for="item in list" align="center">
                                 <td>{{item.disciplineNo}}</td>
                                 <td>{{item.disciplineName}}</td>
                                 <td>{{item.disciplineBring}}</td>
@@ -139,24 +142,26 @@
                                 <!--<td><button type="button" class="btn btn-gradient-warning btn-sm">修改</button></td>-->
                                 <td><button type="button" class="btn btn-gradient-danger btn-sm" @click="del(item.disciplineId)">删除</button></td>
                             </tr>
-
-
                             <tr>
                                 <td colspan="7" align="center">
                                     <span class="card-description">
                                         共 <code>{{total}}</code>条数据
                                     </span>
-                                    <span style="margin-left: 40px" class="card-description">
-                                        第 <code>{{currentPage}}</code>页
+                                    <span style="margin-left: 25px" class="card-description">
+                                        <!--第 <code>{{currentPage}}</code>页-->
+                                        第&nbsp;
+                                        <select name="currentPage" v-model="currentPage" @change="selectPage()">
+                                            <option v-for="item in totalPage" :value="item">{{item}}</option>
+                                        </select>
+                                        &nbsp;&nbsp;页
                                     </span>
-                                    <button type="button" v-if="currentPage>1" style="margin-left: 40px" @click="changePage('pre')" class="btn btn-gradient-success btn-sm">上一页</button>
-                                    <button type="button" v-if="currentPage<totalPage" style="margin-left: 40px" @click="changePage('next')" class="btn btn-gradient-success btn-sm">下一页</button>
-                                    <span style="margin-left: 40px" class="card-description">
+                                    <button type="button" v-if="currentPage>1" style="margin-left: 25px" @click="changePage('pre')" class="btn btn-gradient-success btn-sm">上一页</button>
+                                    <button type="button" v-if="currentPage<totalPage" style="margin-left: 25px" @click="changePage('next')" class="btn btn-gradient-success btn-sm">下一页</button>
+                                    <span style="margin-left: 25px" class="card-description">
                                         共 <code>{{totalPage}}</code>页
                                     </span>
                                 </td>
                             </tr>
-
                             </tbody>
                         </table>
                     </div>
@@ -170,7 +175,7 @@
         $("[name='save']").on('click',function(){
             /*$("#myModalLabel").text("新增");
             $('#myModal').modal();*/
-            $('#content-change-main').load("saveOrUpdate/saveOrUpdateLesson",function(){});
+            $('#content-change-main').load("developmentManage/saveOrUpdate/saveOrUpdateLesson.html",function(){});
         });
     });
 </script>

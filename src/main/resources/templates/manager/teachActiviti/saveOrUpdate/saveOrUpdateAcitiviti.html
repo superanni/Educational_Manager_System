@@ -3,8 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <title>添加、活动信息</title>
+	<script>
+		Vue.http.options.emulateJSON = true;
+		var vm = new Vue({
+			el:"#activeForm",
+			//在页面加载的时候就被created()添加了数据
+			data:{
+				list:[]
+			},
+			/*方法执行前*/
+			created(){
+				this.condition();
+			},
+			methods:{
+				/*查询所有活动信息*/
+				condition(){
+					var activeId=this.getUrlKey("activeId");
+					//判断是否添加或修改
+					if(activeId==null){
+					}else{
+						this.$http.get("disciplineInfo/saveOrUpdate/condition/"+activeId).then(result => {
+							this.common(result);
+						})
+					}
+				},
+				//解析前端路由的url
+				getUrlKey(name){
+					return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null
+				},
+				/*通用的数据绑定*/
+				common(result){
+					var result=result.body;
+					if(result.status === 0){
+						this.list=result.lessonInfo;
+					}else{
+						toastr.error("获取数据失败");
+					}
+				},
+				/*更新或保存*/
+				submit(){
+					if(this.list.activeId == undefined){
+						//添加操作
+						$.post("disciplineInfo/saveLesson",$("#activeForm").serialize(),function(result) {
+							if(result=="true"){
+								toastr.success("添加成功");
+								$('#content-change-main').load("teachActiviti/activitiManage.html",function(){});
+							}else{
+								toastr.error("添加失败");
+							}
+						})
+					}else{
+						//修改操作
+						$.post("disciplineInfo/updateLesson/"+this.list.activeId,$("#activeForm").serialize(),function (result) {
+							if(result=="true"){
+								toastr.success("修改成功");
+								$('#content-change-main').load("teachActiviti/activitiManage.html",function(){});
+							}else{
+								toastr.error("修改失败");
+							}
+						})
+					}
+				}
+			}
+		})
+	</script>
 </head>
 <body>
+<script>
+	//回退
+	$(function () {
+		$("[name='backToDisplay']").click(function () {
+			$('#content-change-main').load("teachActiviti/activitiManage.html",function(){});
+		})
+	})
+</script>
     <div class="row">
         <div class="col-12 grid-margin">
             <div class="card">
@@ -13,7 +85,7 @@
 	                <h3 class="card-title">Horizontal Two column</h3>
 		                <button type="button" name="backToDisplay" class="btn btn-gradient-info btn-sm">返回</button>
 	                </div>
-		                <form class="form-sample">
+		                <form class="form-sample" id="activeForm" @submit.prevent="submit">
                         <p class="card-description">
 	                        教务活动/活动添加
                         </p>
@@ -22,17 +94,16 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">编号</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm"
-                                          value="111"  readonly="readonly"/>
+	                                    <input disabled="disabled" v-model="list.activeId" type="text" class="form-control form-control-sm" />
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">活动名称:</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm"  value="lol"/>
-                                    </div>
+	                                <div class="col-sm-9">
+		                                <input type="text" name="activeName" v-model="list.activeName" class="form-control form-control-sm" />
+	                                </div>
                                 </div>
                             </div>
                         </div>
@@ -42,8 +113,7 @@
 			                    <div class="form-group row">
 				                    <label class="col-sm-3 col-form-label">开始时间:</label>
 				                    <div class="col-sm-9">
-					                    <input type="text" class="form-control form-control-sm"
-					                           value="2019-5-5" />
+					                    <input type="text" name="activeStart" v-model="list.activeStart" class="form-control form-control-sm" />
 				                    </div>
 			                    </div>
 		                    </div>
@@ -53,8 +123,9 @@
 				                    <div class="col-sm-9">
 					                    <select class="form-control form-control-sm">
 						                    <option value="">请选择</option>
-						                    <option value="staffName">正常</option>
-						                    <option value="staffMobilePhone">进行</option>
+						                    <option value="1">1、策划</option>
+						                    <option value="2">2、进行</option>
+						                    <option value="3">3、结束</option>
 					                    </select>
 				                    </div>
 			                    </div>
@@ -65,8 +136,7 @@
 			                    <div class="form-group row">
 				                    <label class="col-sm-3 col-form-label">结束时间：</label>
 				                    <div class="col-sm-9">
-					                    <input type="text" class="form-control form-control-sm"
-					                           value="2019-6-9" />
+					                    <input type="text" name="activeEnd" v-model="list.activeEnd" class="form-control form-control-sm" />
 				                    </div>
 			                    </div>
 		                    </div>
@@ -76,8 +146,8 @@
 				                    <div class="col-sm-9">
 					                    <select class="form-control form-control-sm">
 						                    <option value="">请选择</option>
-						                    <option value="staffName">电子竞技</option>
-						                    <option value="staffMobilePhone">编程大赛</option>
+						                    <option value="电子竞技">电子竞技</option>
+						                    <option value="编程大赛">编程大赛</option>
 					                    </select>
 				                    </div>
 			                    </div>
@@ -89,8 +159,8 @@
 			                    <div class="form-group row">
 				                    <label class="col-sm-3 col-form-label">预算成本</label>
 				                    <div class="col-sm-9">
-					                    <input type="text" class="form-control form-control-sm"
-					                           value="111" />
+					                    <input type="text" name="activeCosteEmtimate" v-model="list.activeCosteEmtimate"
+					                           class="form-control form-control-sm" />
 				                    </div>
 			                    </div>
 		                    </div>
@@ -98,7 +168,8 @@
 			                    <div class="form-group row">
 				                    <label class="col-sm-3 col-form-label">实际成本:</label>
 				                    <div class="col-sm-9">
-					                    <input type="text" class="form-control form-control-sm"  value="122"/>
+					                    <input type="text" name="activeCoste" v-model="list.activeCoste"
+					                           class="form-control form-control-sm" />
 				                    </div>
 			                    </div>
 		                    </div>
@@ -109,9 +180,9 @@
 				                    <label class="col-sm-3 col-form-label">预期反应：</label>
 				                    <div class="col-sm-9">
 					                    <select class="form-control form-control-sm">
-						                    <option value="">好</option>
-						                    <option value="staffName">中</option>
-						                    <option value="staffMobilePhone">差</option>
+						                    <option value="1">1、好</option>
+						                    <option value="2">2、中</option>
+						                    <option value="3">3、差</option>
 					                    </select>
 				                    </div>
 			                    </div>
@@ -120,14 +191,16 @@
 			                    <div class="form-group row">
 				                    <label class="col-sm-3 col-form-label">预期人数:</label>
 				                    <div class="col-sm-9">
-					                    <input type="text" class="form-control form-control-sm"  value="123"/>
+					                    <input type="text" name="activeCoste" v-model="list.activeCoste"
+					                           class="form-control form-control-sm" />
 				                    </div>
 			                    </div>
 		                    </div>
 	                    </div>
                         <div class="form-group">
-                            <label for="exampleTextarea1">备注</label>
-                            <textarea class="form-control" id="exampleTextarea1" rows="4"></textarea>
+	         <label for="exampleTextarea1">备注</label>
+	                        <textarea class="form-control" id="exampleTextarea1"    name="disciplineDesc"
+	                                  v-model="list.disciplineDesc" rows="4"></textarea>
                         </div>
                         <div class="row">
                             <div class="col-md-12" align="center">

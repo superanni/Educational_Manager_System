@@ -30,9 +30,13 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
                 registry.addViewController("index.html").setViewName("index");
 	            registry.addViewController("login.html").setViewName("login");
 	            /*教务管理*/
+                registry.addViewController("developmentManage/saveOrUpdate/saveOrUpdateClassroom.html").setViewName("manager/developmentManage/saveOrUpdate/saveOrUpdateClassroom");
+                registry.addViewController("developmentManage/saveOrUpdate/saveOrUpdateGradeClass.html").setViewName("manager/developmentManage/saveOrUpdate/saveOrUpdateGradeClass");
+                registry.addViewController("developmentManage/saveOrUpdate/saveOrUpdateGradeTransaction.html").setViewName("manager/developmentManage/saveOrUpdate/saveOrUpdateGradeTransaction");
                 registry.addViewController("developmentManage/saveOrUpdate/saveOrUpdateLesson.html").setViewName("manager/developmentManage/saveOrUpdate/saveOrUpdateLesson");
-                registry.addViewController("developmentManage/saveOrUpdate/saveOrUpdateLesson.html").setViewName("manager/developmentManage/saveOrUpdate/saveOrUpdateLesson");
-                registry.addViewController("developmentManage/saveOrUpdate/saveOrUpdateLesson.html").setViewName("manager/developmentManage/saveOrUpdate/saveOrUpdateLesson");
+                registry.addViewController("developmentManage/saveOrUpdate/saveOrUpdateLessonTable.html").setViewName("manager/developmentManage/saveOrUpdate/saveOrUpdateLessonTable");
+                registry.addViewController("developmentManage/saveOrUpdate/saveOrUpdateListenClassWriteDown.html").setViewName("manager/developmentManage/saveOrUpdate/saveOrUpdateListenClassWriteDown");
+                registry.addViewController("developmentManage/saveOrUpdate/saveOrUpdateTeacher.html").setViewName("manager/developmentManage/saveOrUpdate/saveOrUpdateTeacher");
 
                 registry.addViewController("developmentManage/lessonManage.html").setViewName("manager/developmentManage/lessonManage");
                 registry.addViewController("developmentManage/classroomManage.html").setViewName("manager/developmentManage/classroomManage");
@@ -44,11 +48,10 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
                 registry.addViewController("developmentManage/studentEvaluateByTerm.html").setViewName("manager/developmentManage/studentEvaluateByTerm");
                 registry.addViewController("developmentManage/listenClassWriteDown.html").setViewName("manager/developmentManage/listenClassWriteDown");
 
-                /*
-                * 信息通知管理
-                * */
-                registry.addViewController("InforManager/templateManage").setViewName("manager/InformManager/templateManage");
+                /* 教务活动*/
+	            registry.addViewController("teachActiviti/saveOrUpdate/saveOrUpdateAcitiviti.html").setViewName("manager/teachActiviti/saveOrUpdate/saveOrUpdateAcitiviti");
 
+	            registry.addViewController("teachActiviti/activitiManage.html").setViewName("manager/teachActiviti/activitiManage");
 
             }
 
