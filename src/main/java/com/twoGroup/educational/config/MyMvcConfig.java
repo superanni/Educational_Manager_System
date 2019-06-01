@@ -31,8 +31,10 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
 	            registry.addViewController("login.html").setViewName("login");
 	            /*教务管理*/
                 registry.addViewController("developmentManage/saveOrUpdate/saveOrUpdateLesson.html").setViewName("manager/developmentManage/saveOrUpdate/saveOrUpdateLesson");
+                registry.addViewController("developmentManage/saveOrUpdate/saveOrUpdateLesson.html").setViewName("manager/developmentManage/saveOrUpdate/saveOrUpdateLesson");
+                registry.addViewController("developmentManage/saveOrUpdate/saveOrUpdateLesson.html").setViewName("manager/developmentManage/saveOrUpdate/saveOrUpdateLesson");
 
-	            registry.addViewController("developmentManage/lessonManage.html").setViewName("manager/developmentManage/lessonManage");
+                registry.addViewController("developmentManage/lessonManage.html").setViewName("manager/developmentManage/lessonManage");
                 registry.addViewController("developmentManage/classroomManage.html").setViewName("manager/developmentManage/classroomManage");
                 registry.addViewController("developmentManage/lessonTable.html").setViewName("manager/developmentManage/lessonTable");
                 registry.addViewController("developmentManage/teacherManage.html").setViewName("manager/developmentManage/teacherManage");
@@ -41,6 +43,13 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
                 registry.addViewController("developmentManage/studentEvaluateByMonth.html").setViewName("manager/developmentManage/studentEvaluateByMonth");
                 registry.addViewController("developmentManage/studentEvaluateByTerm.html").setViewName("manager/developmentManage/studentEvaluateByTerm");
                 registry.addViewController("developmentManage/listenClassWriteDown.html").setViewName("manager/developmentManage/listenClassWriteDown");
+
+                /*
+                * 信息通知管理
+                * */
+                registry.addViewController("InforManager/templateManage").setViewName("manager/InformManager/templateManage");
+
+
             }
 
             //注册拦截器
