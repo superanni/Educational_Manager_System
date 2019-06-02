@@ -41,6 +41,7 @@ public class DisciplineInfoManageController {
      */
     @GetMapping("info/listLessonManage/{currentPage}")
     public @ResponseBody String listLessonManage(Map map, @PathVariable int currentPage) {
+	    System.out.println("查询课程"+currentPage);
         //每页显示五行数据
         PageHelper.startPage(currentPage, 5);
         //获取数据

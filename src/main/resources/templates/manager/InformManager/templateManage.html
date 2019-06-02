@@ -12,7 +12,7 @@
 		var vm=new Vue({
 			el:"#templateManage",
 			data:{
-				templateName:'你想要查找的关键字...',
+				templateName:'',
 				currentPage:1,
 				total:'',
 				totalPage:'',
@@ -35,25 +35,26 @@
 				},
 				/*查询模板信息*/
 				getAllList(){
-					this.$http.get("InforManager/tamplateCurrentList/"+this.currentPage).then(result => {
+					this.$http.get("InforManager/tamplateCurrentList/"+this.currentPage,{templateName:this.templateName}).then(result => {
 						this.common(result);
 					})
 				},
 				/*根据课程名称查询课程信息*/
-				/*showTemplateInfo(){
-					this.$http.post("InfoManage/tamplateCurrentList/",{templateName:this.templateName}).then(result => {
+				showTemplateInfo(){
+					alert(this.templateName)
+					this.$http.post("InforManager/templateLikeList",{templateName:this.templateName}).then(result => {
 						this.common(result);
 					})
-				},*/
-				/*deleteTemplateInfo(id){
-					this.$http.delete("InfoManage/templateDelete",{templateId:id}).then(result=>{
+				},
+				deleteTemplateInfo(id){
+					this.$http.delete("InforManage/templateDelete",{templateId:id}).then(result=>{
 						var result =result.body;
 						alert(result)
 						// if(result == "success" ){
 							this.getAllList();
 						// }
 					})
-				},*/
+				},
 				/*通用的数据绑定*/
 				common(result){
 					var result=result.body;
@@ -81,9 +82,9 @@
 						<div style="margin-top: 5px">
 							<i class="input-group-text border-0 mdi mdi-magnify" style="height: 31px"></i>
 						</div>
-						<input v-model="templateName" type="text" class="form-control bg-transparent border-0" placeholder="模板名称">
+						<input v-model="templateName" type="text" class="form-control bg-transparent border-0" placeholder="内容名称">
 					</div>
-					<button type="submit" class="btn btn-gradient-info btn-sm">查询模板</button>
+					<button type="submit" class="btn btn-gradient-info btn-sm" @click="showTemplateInfo()">查询模板</button>
 					<button type="button" style="margin-left: 40px" name="updateOrSave" class="btn btn-gradient-primary btn-sm">添加模板</button>
 				</form>
 			</div>
@@ -119,7 +120,7 @@
 								<td class="text-info">{{item.templateContent}}</td>
 								<td class="text-danger">{{item.templateType}}</td>
 								<td><button type="button" class="btn btn-gradient-warning btn-sm">修改</button></td>
-								<td><button type="button" class="btn btn-gradient-danger btn-sm" @click="deleteTemplateInfo()">删除</button></td>
+								<td><button type="button" class="btn btn-gradient-danger btn-sm" @click="deleteTemplateInfo(item.templateId)">删除</button></td>
 							</tr>
 							<tr>
 								<td colspan="10" align="center">

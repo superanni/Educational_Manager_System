@@ -41,13 +41,13 @@ public class MarketActive implements Serializable {
     @TableField("active_type")
     private Integer activeType;
     @TableField("active_coste_emtimate")
-    private Double activeCosteEmtimate;
+    private Double activeCosteEmtimate;  //预算成本
     @TableField("active_coste")
-    private Double activeCoste;
+    private Double activeCoste;      //实际成本
     @TableField("active_refect_estimate")
-    private Integer activeRefectEstimate;
+    private Integer activeRefectEstimate;//预期反应
     @TableField("active_student")
-    private String activeStudent;
+    private String activeStudent; //预期人数
     @TableField("active_content")
     private String activeContent;
 

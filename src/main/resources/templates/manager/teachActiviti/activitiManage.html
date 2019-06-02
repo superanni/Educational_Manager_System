@@ -5,15 +5,12 @@
 	<title>活动管理</title>
 	
 	<script>
-		//全局配置根域名
-		Vue.http.options.root="";
-		//全局启用 emulateJSON 渲染
-		Vue.http.options.emulateJSON = true;
-		
-		var vm=new Vue({
-			el:"#activeManage",
+		var vm = new Vue({
+			router:router,
+			el:"#showActiveInfo",
+			//在页面加载的时候就被created()添加了数据
 			data:{
-				templateName:'你想要查找的关键字...',
+				disciplineName:'',
 				currentPage:1,
 				total:'',
 				totalPage:'',
@@ -28,34 +25,59 @@
 				changePage(data){
 					if(data === "pre"){
 						this.currentPage-=1;
-						this.getAllList();
+						if(this.disciplineName.trim() === '')
+							this.getAllList();
+						else
+							this.showActiveInfo(this.currentPage);
 					}else if(data === "next"){
 						this.currentPage+=1;
-						this.getAllList();
+						if(this.disciplineName.trim() === '')
+							this.getAllList();
+						else
+							this.showActiveInfo(this.currentPage);
 					}
 				},
-				/*查询模板信息*/
+
+				// //根据选择框的页数查询数据
+				// selectPage(){
+				// 	this.currentPage=$("[name='currentPage']").val();
+				// 	this.showActiveInfo(this.currentPage);
+				// },
+
+				/*查询所有课程信息*/
 				getAllList(){
-					this.$http.get("teachActiviti/activitiCurrentList/"+this.currentPage).then(result => {
+					this.$http.get("marketActive/activitiCurrentList/"+this.currentPage).then(result => {
 						this.common(result);
 					})
 				},
-				/*根据课程名称查询课程信息*/
-				/*showActivitiInfo(){
-					this.$http.post("InfoManage/tamplateCurrentList/",{templateName:this.templateName}).then(result => {
-						this.common(result);
-					})
-				},*/
-				/*deleteTemplateInfo(id){
-					this.$http.delete("InfoManage/templateDelete",{templateId:id}).then(result=>{
-						var result =result.body;
-						alert(result)
-						// if(result == "success" ){
+				//
+				// /*根据课程名称查询课程信息*/
+				// showActiveInfo(currentPage){
+				// 	this.disciplineName=$("[name='disciplineName']").val();
+				// 	this.$http.post("disciplineInfo/info/listLessonManageLike",{disciplineName:this.disciplineName , currentPage:currentPage}).then(result => {
+				// 		this.common(result);
+				// 	})
+				// },
+				
+				//删除课程信息
+				del(id){
+					this.$http.delete("marketActive/activitiCurrentDelete/"+id).then(result => {
+						var result=result.body;
+						if (result==true){
+							toastr.success("删除成功");
 							this.getAllList();
-						// }
+						} else{
+							toastr.warning("删除失败");
+						}
 					})
-				},*/
-				/*通用的数据绑定*/
+				},
+				
+				//更新加载页面
+				update(){
+					$('#content-change-main').load("teachActiviti/saveOrUpdate/saveOrUpdateAcitiviti.html",function(){});
+				},
+
+				//通用的数据绑定
 				common(result){
 					var result=result.body;
 					if(result.status === 0){
@@ -64,7 +86,7 @@
 						this.currentPage = result.currentPage;
 						this.totalPage = result.totalPage;
 					}else{
-						alert("获取数据失败");
+						toastr.error("获取数据失败");
 					}
 				}
 			}
@@ -73,7 +95,7 @@
 	
 </head>
 <body>
-<div id="activeManage">
+<div id="showActiveInfo">
 	<div class="page-header">
 		<!--查询活动、添加活动-->
 		<div class="navbar-menu-wrapper d-flex align-items-stretch">
@@ -84,16 +106,15 @@
 							<div class="input-group-text" style="height:31px">活动状态</div>
 							<select class="form-control form-control-sm">
 								<option value="">请选择</option>
-								<option value="staffName">策划</option>
-								<option value="staffMobilePhone">推迟</option>
-								<option value="staffSex">进行</option>
-								<option value="staffNativePlace">结束</option>
+								<option value="1">1、策划</option>
+								<option value="2">2、进行</option>
+								<option value="3">3、结束</option>
 							</select>
 						</div>
 						<input type="text" class="form-control bg-transparent border-0" placeholder="活动名称">
 					</div>
 					<button type="submit" class="btn btn-gradient-info btn-sm" @click="showActivitiInfo(1)">查询活动</button>
-					<button type="button" style="margin-left: 40px" name="updateOrSave" class="btn btn-gradient-primary btn-sm">添加活动</button>
+					<router-link tag="button" style="margin-left: 40px" to="/" name="save" class="btn btn-gradient-primary btn-sm">添加活动</router-link>
 				</form>
 			</div>
 		</div>
@@ -123,23 +144,28 @@
 							</tr>
 							</thead>
 							<tbody>
-							<tr v-for="item in list" align="center" :key="item.disciplineId">
+							<tr v-for="item in list" align="center">
 								<td><input type="checkbox"checked=""></td>
 								<td><i class="mdi mdi-arrow-down text-info">{{item.activeName}}</i></td>
-								<td>{{item.staffId}}</td>
+								<td>{{item.staffInfo.staffName}}</td>
 								<td class="text-danger ">{{item.activeStart}}</td>
 								<td class="text-danger">{{item.activeEnd}}</td>
 								<td class="text-info">{{item.activeType}}</td>
-								<td><button type="button" class="btn btn-gradient-warning btn-sm">修改</button></td>
-								<td><button type="button" class="btn btn-gradient-danger btn-sm">删除</button></td>
+								<td @click="update()"><router-link tag="button" name="update" class="btn btn-gradient-warning btn-sm" :to="{path: 'update', query: { disciplineId: item.disciplineId }}">修改</router-link></td>
+								<td><button type="button" class="btn btn-gradient-danger btn-sm" @click="del(item.activeId)">删除</button></td>
 							</tr>
 							<tr>
 								<td colspan="10" align="center">
                                <span class="card-description">
                                         共 <code>{{total}}</code>条数据
                                     </span>
-									<span style="margin-left: 40px" class="card-description">
-                                        第 <code>{{currentPage}}</code>页
+									<span style="margin-left: 25px" class="card-description">
+                                        <!--第 <code>{{currentPage}}</code>页-->
+                                        第&nbsp;
+                                        <select name="currentPage" v-model="currentPage" @change="selectPage()">
+                                            <option v-for="item in totalPage" :value="item">{{item}}</option>
+                                        </select>
+                                        &nbsp;&nbsp;页
                                     </span>
 									<button type="button" v-if="currentPage>1" style="margin-left: 40px" @click="changePage('pre')" class="btn btn-gradient-success btn-sm">上一页</button>
 									<button type="button" v-if="currentPage<totalPage" style="margin-left: 40px" @click="changePage('next')" class="btn btn-gradient-success btn-sm">下一页</button>
@@ -156,12 +182,15 @@
 		</div>
 	</div>
 </div>
+
 <script>
 	$(function(){
-		$("[name='updateOrSave']").on('click',function(){
-			$('#content-change-main').load("saveOrUpdate2/saveOrUpdateAcitiviti",function(){});
+		$("[name='save']").on('click',function(){
+			$("#myModalLabel").text("新增");
+			$('#content-change-main').load("teachActiviti/saveOrUpdate/saveOrUpdateAcitiviti.html",function(){});
 		});
 	});
 </script>
+
 </body>
 </html>

@@ -1,7 +1,6 @@
 package com.twoGroup.educational.controller;
 
-
-import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.github.pagehelper.PageHelper;
 import com.twoGroup.educational.commonUtils.DataTransUtil;
 import com.twoGroup.educational.entities.MarketActive;
@@ -19,61 +18,97 @@ import java.util.Map;
  * <p>
  * 前端控制器
  * </p>
- *
+ * 教务活动-->活动管理
  * @author lsson
  * @since 2019-05-26
  */
 @Controller
-@RequestMapping("/teachActiviti")
+@RequestMapping("marketActive")
 public class MarketActiveController {
-	private Logger logger = LoggerFactory.getLogger( MarketActiveController.class);
-
-	@Autowired
+	private Logger logger = LoggerFactory.getLogger(MarketActiveController.class);
+@Autowired
 	MarketActiveService marketActiveService;
-
-	private String locationURI = "manager/teachActiviti";      //跳转路径前缀
-
+	private String locationURI = "manager/teachActiviti/saveOrUpdate/";      //跳转路径前缀
 	private DataTransUtil dataTransUtil;        //数据传输工具
 
 	private List<MarketActive> marketActives;
 
-	//直接跳转需要的页面
-	@GetMapping("{redictPage}")
-	public String templateList(@PathVariable String redictPage) {
-		System.out.println("go to " + redictPage);
-		return locationURI + "/" + redictPage;
-	}
-
-	//获取当前页数据
+	private MarketActive marketActive;
+	/**
+	 * 分页查询所有课程信息,
+	 */
 	@GetMapping("activitiCurrentList/{currentPage}")
-	public @ResponseBody
-	String TemplateCurrentList(Map<String, Object> map, @PathVariable Integer currentPage) {
-		System.out.println("get activitiCurrentList!");
-		PageHelper.startPage(currentPage, 5);        //获取当前页记录,每页5条
-		marketActives = marketActiveService.selectList(null);
-		if (marketActives != null && marketActives.size() != 0) {
-			dataTransUtil = new DataTransUtil();
-			System.out.println("get activitiCurrentList!"+marketActives);
-			dataTransUtil.dataUtil(map, marketActives);
-		} else
-			logger.info("查询数据失败");
-		return JSON.toJSONString(map);
-	}
-
-	//删除模板信息
-	@DeleteMapping("templateDelete")
-	public @ResponseBody  String templateDelete(@PathVariable Integer templateId) {
-		logger.info("删除模板信息！");
-		try {
-			if (marketActiveService.deleteById(templateId))
-				return "success";
-			else return "fail";
-		} catch (Exception e) {
-			logger.info("删除模板异常!");
+	public @ResponseBody String listLessonManage(Map map, @PathVariable int currentPage) {
+		System.out.println("查询 活动"+currentPage);
+		//每页显示五行数据
+		PageHelper.startPage(currentPage, 5);
+		//获取数据
+		marketActives = marketActiveService.selectlistMarketActive();
+		if (marketActives != null) {
+			//数据绑定
+			return DataTransUtil.dataUtil(map, marketActives);
 		}
-		return "fail";
+		return "false";
 	}
 
+	/**
+	 * 更新、添加活动信息的条件查询
+	 */
+	@GetMapping("saveOrUpdate/condition/{activeId}")
+	public @ResponseBody String condition(@PathVariable String activeId,Map map) {
+		//修改操作、有activeId参数
+		try {
+			System.out.println("更新 添加 活动"+activeId);
+			if (!"".equals(activeId)){
+				marketActive=marketActiveService.selectById(activeId);
+				return DataTransUtil.oneObjDataUtil(map,"lessonInfo",marketActive);
+			}else{
+			}
+		} catch (Exception e) {
+			return "false";
+		}
+		return "false";
+	}
+	/**
+	 * 添加活动信息
+	 */
+	@PostMapping("activitiCurrentSave")
+	public @ResponseBody String saveLesson(MarketActive markeActive){
+		System.out.println("添加 活动"+markeActive);
+		if (marketActiveService.selectOne(new EntityWrapper<MarketActive>().eq("activeName",markeActive.getActiveName()))==null){
+				try {
+				boolean b = marketActiveService.insert(markeActive);
+				if (b==true){
+					return "true";
+				}else {
+					return "false";
+				}
+			} catch (Exception e) {
+				return "false";
+			}
+		}else {
+			return "false";
+		}
+
+	}
+
+
+	/**
+	 * 删除课程信息
+	 */
+	@DeleteMapping("activitiCurrentDelete/{activeId}")
+	public @ResponseBody String deleteDiscipline(@PathVariable String activeId) {
+		try {
+			System.out.println("删除 活动"+activeId);
+			boolean b = marketActiveService.deleteById(Integer.parseInt(activeId));
+			if (b == false) {
+				return "false";
+			}
+			return "true";
+		} catch (Exception e) {
+			return "false";
+		}
+	}
 
 }
 

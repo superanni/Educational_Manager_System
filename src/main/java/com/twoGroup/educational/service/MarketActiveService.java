@@ -3,6 +3,8 @@ package com.twoGroup.educational.service;
 import com.twoGroup.educational.entities.MarketActive;
 import com.baomidou.mybatisplus.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.service.IService;
  */
 public interface MarketActiveService extends IService<MarketActive> {
 
+	public List<MarketActive> selectlistMarketActive();
 }
