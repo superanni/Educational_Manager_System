@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>课程管理</title>
     <script>
-        var vm = new Vue({
+        new Vue({
             router:router,
             el:"#showLessonInfo",
             //在页面加载的时候就被created()添加了数据
@@ -24,21 +24,18 @@
                 changePage(data){
                     if(data === "pre"){
                         this.currentPage-=1;
-                        if(this.disciplineName.trim() === '')
-                            this.getAllList();
-                        else
-                            this.showLessonInfo(this.currentPage);
                     }else if(data === "next"){
                         this.currentPage+=1;
-                        if(this.disciplineName.trim() === '')
-                            this.getAllList();
-                        else
-                            this.showLessonInfo(this.currentPage);
                     }
+                    if(this.disciplineName.trim() === '')
+                        this.getAllList();
+                    else
+                        this.showLessonInfo(this.currentPage);
                 },
 
                 //根据选择框的页数查询数据
                 selectPage(){
+
                     this.currentPage=$("[name='currentPage']").val();
                     this.showLessonInfo(this.currentPage);
                 },
@@ -139,7 +136,6 @@
                                 <td>{{item.disciplineTuition}}</td>
                                 <td>{{item.disciplineType}}</td>
                                 <td @click="update()"><router-link tag="button" name="update" class="btn btn-gradient-warning btn-sm" :to="{path: 'update', query: { disciplineId: item.disciplineId }}">修改</router-link></td>
-                                <!--<td><button type="button" class="btn btn-gradient-warning btn-sm">修改</button></td>-->
                                 <td><button type="button" class="btn btn-gradient-danger btn-sm" @click="del(item.disciplineId)">删除</button></td>
                             </tr>
                             <tr>

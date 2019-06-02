@@ -34,9 +34,6 @@ public class ClassroomInfoManageController {
     /*课程信息业务接口*/
     ClassroomInfoService classroomInfoService;
 
-    //跳转地址前缀
-    private String locationURI = "manager/developmentManage/saveOrUpdate/";
-
     //所有教室信息
     private List<ClassroomInfo> classroomInfos;
 
@@ -125,7 +122,7 @@ public class ClassroomInfoManageController {
      * 更新教室信息
      */
     @PutMapping("updateClassroom/{classroomId}")
-    public @ResponseBody String saveLesson(@PathVariable String classroomId,ClassroomInfo classroomInfo){
+    public @ResponseBody String updateClassroom(@PathVariable String classroomId,ClassroomInfo classroomInfo){
         try {
             boolean b = classroomInfoService.updateById(classroomInfo);
             if (b==true){

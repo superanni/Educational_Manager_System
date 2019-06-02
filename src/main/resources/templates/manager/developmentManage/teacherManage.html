@@ -3,9 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <title>教师管理</title>
+    <script>
+        new Vue({
+            router:router,
+            el:"#showTeacherInfo",
+            //在页面加载的时候就被created()添加了数据
+            data:{
+                currentPage:1,
+                selectCondition:'',
+                conditionValue:'',
+                total:'',
+                totalPage:'',
+                list:[],
+                teacherInfo:[]
+            },
+            /*方法执行前*/
+            created(){
+                this.getAllList();
+            },
+            methods:{
+                /*分页处理*/
+                changePage(data){
+                    if(data === "pre"){
+                        this.currentPage-=1;
+                    }else if(data === "next"){
+                        this.currentPage+=1;
+                    }
+                    if(this.conditionValue.trim() === '')
+                        this.getAllList();
+                    else
+                        this.showTeacherInfo(this.currentPage);
+                },
+
+                //根据选择框的页数查询数据
+                selectPage(){
+                    this.currentPage=$("[name='currentPage']").val();
+                    this.showTeacherInfo(this.currentPage);
+                },
+
+                /*查询所有教师信息*/
+                getAllList(){
+                    this.$http.get("staffInfo/info/listTeacherManage/"+this.currentPage).then(result => {
+                        this.common(result);
+                    })
+                },
+
+                /*根据条件查询教师信息*/
+                showTeacherInfo(currentPage){
+                    this.conditionValue=$("[name='conditionValue']").val();
+                    this.selectCondition=$("[name='selectCondition']").val();
+                    this.$http.post("staffInfo/info/listTeacherManageLike",{selectCondition:this.selectCondition,conditionValue:this.conditionValue , currentPage:currentPage}).then(result => {
+                        this.common(result);
+                    })
+                },
+
+                //删除教师信息
+                del(id){
+                    this.$http.delete("staffInfo/info/deleteTeacher/"+id).then(result => {
+                        var result=result.body;
+                        if (result==true){
+                            toastr.success("删除成功");
+                            this.getAllList();
+                        } else{
+                            toastr.warning("删除失败");
+                        }
+                    })
+                },
+
+                //更新加载页面
+                update(){
+                    $('#content-change-main').load("developmentManage/saveOrUpdate/saveOrUpdateTeacher.html",function(){});
+                },
+
+                //通用的数据绑定
+                common(result){
+                    var result=result.body;
+                    if(result.status === 0){
+                        this.list = result.list;
+                        this.total = result.total;
+                        this.currentPage = result.currentPage;
+                        this.totalPage = result.totalPage;
+                    }else{
+                        toastr.error("获取数据失败");
+                    }
+                },
+
+                showTeacherMessage(staffId) {
+                    this.$http.get("staffInfo/saveOrUpdate/condition/"+staffId).then(result => {
+                        var result=result.body;
+                        if(result.status === 0){
+                            this.teacherInfo = result.staffInfo;
+                        }else{
+                            toastr.error("获取数据失败");
+                        }
+                    })
+                }
+            }
+        })
+    </script>
 </head>
 <body>
-<div>
+<div id="showTeacherInfo">
     <div class="page-header">
         <!--查询教师、添加教师-->
         <div class="navbar-menu-wrapper d-flex align-items-stretch">
@@ -14,19 +112,18 @@
                     <div class="input-group">
                         <div class="input-group-prepend" style="margin-top: 5px">
                             <div class="input-group-text" style="height: 31px">条件</div>
-                            <select class="form-control form-control-sm">
-                                <option value="">请选择</option>
-                                <option value="staffName">姓名</option>
-                                <option value="staffMobilePhone">移动电话</option>
-                                <option value="staffSex">性别</option>
-                                <option value="staffNativePlace">籍贯</option>
-                                <option value="staffEductionLevel">学历</option>
+                            <select name="selectCondition" class="form-control form-control-sm">
+                                <option value="staff_name">姓名</option>
+                                <option value="staff_mobile_phone">移动电话</option>
+                                <option value="staff_sex">性别</option>
+                                <option value="staff_native_place">籍贯</option>
+                                <option value="staff_eduction_level">学历</option>
                             </select>
                         </div>
-                        <input type="text" class="form-control bg-transparent border-0" placeholder="条件">
+                        <input type="text" name="conditionValue" class="form-control bg-transparent border-0" placeholder="条件">
                     </div>
-                    <button type="submit" class="btn btn-gradient-info btn-sm">查询</button>
-                    <button type="button" style="margin-left: 40px" name="updateOrSave" class="btn btn-gradient-primary btn-sm">添加教师信息</button>
+                    <button type="button" @click="showTeacherInfo(1)" class="btn btn-gradient-info btn-sm">查询</button>
+                    <router-link tag="button" style="margin-left: 40px" to="/" name="save" class="btn btn-gradient-primary btn-sm">添加教师信息</router-link>
                 </form>
             </div>
         </div>
@@ -36,7 +133,7 @@
             <div class="card">
                 <div class="card-body">
                     <p class="card-description">
-                        教师管理 <code>teacherManage</code>
+                        教务管理 / 教师管理 <code>teacherManage</code>
                     </p>
                     <div class="table-responsive">
                         <table class="table">
@@ -54,24 +151,34 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr align="center">
-                                <td>Jacob</td>
-                                <td>Photoshop</td>
-                                <td>Jacob</td>
-                                <td>Photoshop</td>
-                                <td class="text-danger"> 28.76% <i class="mdi mdi-arrow-down"></i></td>
-                                <td><label class="badge badge-danger">Pending</label></td>
-                                <td><label class="badge badge-danger">Pending</label></td>
-                                <td><button type="button" class="btn btn-gradient-warning btn-sm">修改</button></td>
-                                <td><button type="button" class="btn btn-gradient-danger btn-sm">删除</button></td>
+                            <tr v-for="item in list" align="center">
+                                <td><a data-toggle="modal" href="#" data-target="#teacherModal" @click="showTeacherMessage(item.staffId)">{{item.staffName}}</a></td>
+                                <td>{{item.staffSex}}</td>
+                                <td>{{item.staffAge}}</td>
+                                <td>{{item.staffMobilePhone}}</td>
+                                <td>{{item.staffEamil}}</td>
+                                <td>{{item.staffEntryTime}}</td>
+                                <td>{{item.staffEductionLevel}}</td>
+                                <td @click="update()"><router-link tag="button" name="update" class="btn btn-gradient-warning btn-sm" :to="{path: 'update', query: { staffId: item.staffId }}">修改</router-link></td>
+                                <td><button type="button" class="btn btn-gradient-danger btn-sm" @click="del(item.staffId)">删除</button></td>
                             </tr>
                             <tr>
                                 <td colspan="9" align="center">
-                                <span class="card-description">
-                                    共 <code>1</code>条数据
-                                </span>
-                                    <button type="button" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">上一页</button>
-                                    <button type="button" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">下一页</button>
+                                    <span class="card-description">
+                                        共 <code>{{total}}</code>条数据
+                                    </span>
+                                    <span style="margin-left: 25px" class="card-description">
+                                        第&nbsp;
+                                        <select name="currentPage" v-model="currentPage" @change="selectPage()">
+                                            <option v-for="item in totalPage" :value="item">{{item}}</option>
+                                        </select>
+                                        &nbsp;&nbsp;页
+                                    </span>
+                                    <button type="button" v-if="currentPage>1" style="margin-left: 25px" @click="changePage('pre')" class="btn btn-gradient-success btn-sm">上一页</button>
+                                    <button type="button" v-if="currentPage<totalPage" style="margin-left: 25px" @click="changePage('next')" class="btn btn-gradient-success btn-sm">下一页</button>
+                                    <span style="margin-left: 25px" class="card-description">
+                                        共 <code>{{totalPage}}</code>页
+                                    </span>
                                 </td>
                             </tr>
                             </tbody>
@@ -81,11 +188,183 @@
             </div>
         </div>
     </div>
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="teacherModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Teacher Message</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="row">
+                    <div class="col-12 grid-margin">
+                        <div class="card">
+                            <div class="card-body">
+                                <form class="form-sample">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">编号</label>
+                                                <div class="col-sm-9">
+                                                    <input disabled="disabled" v-model="teacherInfo.staffId" type="text" class="form-control form-control-sm" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">姓名</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" readonly="readonly" v-model="teacherInfo.staffName" class="form-control form-control-sm" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">年龄</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" readonly="readonly" v-model="teacherInfo.staffAge" class="form-control form-control-sm" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">性别</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" readonly="readonly" v-model="teacherInfo.staffSex" class="form-control form-control-sm" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">籍贯</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" readonly="readonly" v-model="teacherInfo.staffNativePlace" class="form-control form-control-sm" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">身份证</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" readonly="readonly" v-model="teacherInfo.staffIdcard" class="form-control form-control-sm" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">出生日期</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" readonly="readonly" v-model="teacherInfo.staffBrithday" class="form-control form-control-sm" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">办公电话</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" readonly="readonly" v-model="teacherInfo.staffOfficePhone" class="form-control form-control-sm" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">电子邮件</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" readonly="readonly" v-model="teacherInfo.staffEamil" class="form-control form-control-sm" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">移动电话</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" readonly="readonly" v-model="teacherInfo.staffMobilePhone" class="form-control form-control-sm" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">家庭住址</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" readonly="readonly" v-model="teacherInfo.staffAddr" class="form-control form-control-sm" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">QQ</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" readonly="readonly" v-model="teacherInfo.staffQq" class="form-control form-control-sm" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">入职时间</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" readonly="readonly" v-model="teacherInfo.staffEntryTime" class="form-control form-control-sm" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">教育水平</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" readonly="readonly" v-model="teacherInfo.staffEductionLevel" class="form-control form-control-sm" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">账号</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" readonly="readonly" v-model="teacherInfo.userNumber" class="form-control form-control-sm" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">密码</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" readonly="readonly" v-model="teacherInfo.userPassowrd" class="form-control form-control-sm" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>备注</label>
+                                        <textarea class="form-control" readonly="readonly" v-model="teacherInfo.staffRemark" rows="4"></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">关闭</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
 </div>
 <script>
     $(function(){
-        $("[name='updateOrSave']").on('click',function(){
-            $('#content-change-main').load("saveOrUpdate/saveOrUpdateTeacher",function(){});
+        $("[name='save']").on('click',function(){
+            $('#content-change-main').load("developmentManage/saveOrUpdate/saveOrUpdateTeacher.html",function(){});
         });
     });
 </script>

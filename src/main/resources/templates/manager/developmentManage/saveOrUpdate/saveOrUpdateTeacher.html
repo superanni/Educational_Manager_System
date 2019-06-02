@@ -3,15 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <title>添加、修改教师信息</title>
+    <script>
+        new Vue({
+            el:"#teacherForm",
+            //在页面加载的时候就被created()添加了数据
+            data:{
+                list:[]
+            },
+            /*方法执行前*/
+            created(){
+                this.condition();
+            },
+            methods:{
+                /*查询教师信息*/
+                condition(){
+                    var staffId=this.getUrlKey("staffId");
+                    //判断是否添加或修改
+                    if(staffId==null){
+                    }else{
+                        this.$http.get("staffInfo/saveOrUpdate/condition/"+staffId).then(result => {
+                            this.common(result);
+                        })
+                    }
+                },
+                //解析前端路由的url
+                getUrlKey(name){
+                    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null
+                },
+                /*通用的数据绑定*/
+                common(result){
+                    var result=result.body;
+                    if(result.status === 0){
+                        this.list=result.staffInfo;
+                    }else{
+                        toastr.error("获取数据失败");
+                    }
+                },
+                /*更新或保存*/
+                submit(){
+                    if(this.list.staffId == undefined){
+                        //添加操作
+                        $.post("staffInfo/saveTeacher",$("#teacherForm").serialize(),function(result) {
+                            if(result=="true"){
+                                toastr.success("添加成功");
+                                $('#content-change-main').load("developmentManage/teacherManage.html",function(){});
+                            }else{
+                                toastr.error("添加失败");
+                            }
+                        })
+                    }else{
+                        //修改操作
+                        $.post("staffInfo/updateTeacher/"+this.list.staffId,$("#teacherForm").serialize(),function (result) {
+                            if(result=="true"){
+                                toastr.success("修改成功");
+                                $('#content-change-main').load("developmentManage/teacherManage.html",function(){});
+                            }else{
+                                toastr.error("修改失败");
+                            }
+                        })
+                    }
+                }
+            }
+        })
+    </script>
 </head>
 <body>
-<script>
-    $(function () {
-        $("[name='backToDisplay']").click(function () {
-            $('#content-change-main').load("developmentManage/teacherManage",function(){});
+    <script>
+        $(function () {
+            $("[name='backToDisplay']").click(function () {
+                $('#content-change-main').load("developmentManage/teacherManage.html",function(){});
+            })
         })
-    })
-</script>
+    </script>
     <div class="row">
         <div class="col-12 grid-margin">
             <div class="card">
@@ -20,7 +83,8 @@
                         <h3 class="card-title">Horizontal Two column</h3>
                         <button type="button" name="backToDisplay" class="btn btn-gradient-info btn-sm">返回</button>
                     </div>
-                    <form class="form-sample">
+                    <form class="form-sample" id="teacherForm" ref="teacherForm">
+                        <input v-if="list.staffId!=undefined" name="_method" value="put" hidden="hidden">
                         <p class="card-description">
                             教师信息
                         </p>
@@ -29,7 +93,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">编号</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm" />
+                                        <input disabled="disabled" v-model="list.staffId" type="text" class="form-control form-control-sm" />
                                     </div>
                                 </div>
                             </div>
@@ -37,7 +101,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">姓名</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm" />
+                                        <input type="text" name="staffName" v-model="list.staffName" class="form-control form-control-sm" />
                                     </div>
                                 </div>
                             </div>
@@ -47,7 +111,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">年龄</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm" />
+                                        <input type="text" name="staffAge" v-model="list.staffAge" class="form-control form-control-sm" />
                                     </div>
                                 </div>
                             </div>
@@ -57,7 +121,7 @@
                                     <div class="col-sm-4">
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input type="radio" class="form-check-input" name="membershipRadios" id="membershipRadios1" value="男" checked="">
+                                                <input type="radio" class="form-check-input" name="staffSex" v-model="list.staffSex" value="男">
                                                 男
                                                 <i class="input-helper"></i></label>
                                         </div>
@@ -65,7 +129,7 @@
                                     <div class="col-sm-5">
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input type="radio" class="form-check-input" name="membershipRadios" id="membershipRadios2" value="女">
+                                                <input type="radio" class="form-check-input" name="staffSex" v-model="list.staffSex" id="membershipRadios2" value="女">
                                                 女
                                                 <i class="input-helper"></i></label>
                                         </div>
@@ -78,7 +142,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">籍贯</label>
                                     <div class="col-sm-9">
-                                        <select name="staffNativePlace"  class="form-control form-sm">
+                                        <select name="staffNativePlace" class="form-control form-sm">
                                             <option value="江西">江西</option>
                                             <option value="湖北">湖北</option>
                                             <option value="湖南">湖南</option>
@@ -118,7 +182,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">身份证</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm"/>
+                                        <input type="text" name="staffIdcard" v-model="list.staffIdcard" class="form-control form-control-sm" />
                                     </div>
                                 </div>
                             </div>
@@ -128,7 +192,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">出生日期</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm"/>
+                                        <input type="text" name="staffBrithday" v-model="list.staffBrithday" class="form-control form-control-sm" />
                                     </div>
                                 </div>
                             </div>
@@ -136,7 +200,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">办公电话</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm"/>
+                                        <input type="text" name="staffOfficePhone" v-model="list.staffOfficePhone" class="form-control form-control-sm" />
                                     </div>
                                 </div>
                             </div>
@@ -146,7 +210,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">电子邮件</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm"/>
+                                        <input type="text" name="staffEamil" v-model="list.staffEamil" class="form-control form-control-sm" />
                                     </div>
                                 </div>
                             </div>
@@ -154,7 +218,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">移动电话</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm"/>
+                                        <input type="text" name="staffMobilePhone" v-model="list.staffMobilePhone" class="form-control form-control-sm" />
                                     </div>
                                 </div>
                             </div>
@@ -164,7 +228,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">家庭住址</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm"/>
+                                        <input type="text" name="staffAddr" v-model="list.staffAddr" class="form-control form-control-sm" />
                                     </div>
                                 </div>
                             </div>
@@ -172,7 +236,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">QQ</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm"/>
+                                        <input type="text" name="staffQq" v-model="list.staffQq" class="form-control form-control-sm" />
                                     </div>
                                 </div>
                             </div>
@@ -182,7 +246,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">入职时间</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm"/>
+                                        <input type="text" name="staffEntryTime" v-model="list.staffEntryTime" class="form-control form-control-sm" />
                                     </div>
                                 </div>
                             </div>
@@ -190,7 +254,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">教育水平</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm"/>
+                                        <input type="text" name="staffEductionLevel" v-model="list.staffEductionLevel" class="form-control form-control-sm" />
                                     </div>
                                 </div>
                             </div>
@@ -200,7 +264,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">账号</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm"/>
+                                        <input type="text" name="userNumber" v-model="list.userNumber" class="form-control form-control-sm" />
                                     </div>
                                 </div>
                             </div>
@@ -208,19 +272,19 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">密码</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm"/>
+                                        <input type="text" name="userPassowrd" v-model="list.userPassowrd" class="form-control form-control-sm" />
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="exampleTextarea1">备注</label>
-                            <textarea class="form-control" id="exampleTextarea1" rows="4"></textarea>
+                            <label>备注</label>
+                            <textarea class="form-control" name="staffRemark" v-model="list.staffRemark" rows="4"></textarea>
                         </div>
                         <div class="row">
                             <div class="col-md-12" align="center">
-                                <button type="submit" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">保存</button>
-                                <button type="button" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">重置</button>
+                                <button type="button" @click="submit" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">保存</button>
+                                <button type="button" name="backToDisplay" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">取消</button>
                             </div>
                         </div>
                     </form>

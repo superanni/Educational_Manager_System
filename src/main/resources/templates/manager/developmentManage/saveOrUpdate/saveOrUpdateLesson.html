@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <title>添加、修改课程信息</title>
     <script>
-        Vue.http.options.emulateJSON = true;
-
-        var vm = new Vue({
+        new Vue({
             el:"#lessonForm",
             //在页面加载的时候就被created()添加了数据
             data:{
@@ -17,7 +15,7 @@
                 this.condition();
             },
             methods:{
-                /*查询所有课程信息*/
+                /*查询课程信息*/
                 condition(){
                     var disciplineId=this.getUrlKey("disciplineId");
                     //判断是否添加或修改
@@ -48,7 +46,7 @@
                         $.post("disciplineInfo/saveLesson",$("#lessonForm").serialize(),function(result) {
                             if(result=="true"){
                                 toastr.success("添加成功");
-                                $('#content-change-main').load("disciplineInfo/lessonManage.html",function(){});
+                                $('#content-change-main').load("developmentManage/lessonManage.html",function(){});
                             }else{
                                 toastr.error("添加失败");
                             }
@@ -58,7 +56,7 @@
                         $.post("disciplineInfo/updateLesson/"+this.list.disciplineId,$("#lessonForm").serialize(),function (result) {
                             if(result=="true"){
                                 toastr.success("修改成功");
-                                $('#content-change-main').load("disciplineInfo/lessonManage.html",function(){});
+                                $('#content-change-main').load("developmentManage/lessonManage.html",function(){});
                             }else{
                                 toastr.error("修改失败");
                             }
@@ -74,7 +72,7 @@
         //回退
         $(function () {
             $("[name='backToDisplay']").click(function () {
-                $('#content-change-main').load("disciplineInfo/lessonManage.html",function(){});
+                $('#content-change-main').load("developmentManage/lessonManage.html",function(){});
             })
         })
     </script>
@@ -83,10 +81,10 @@
         <div class="card">
             <div class="card-body">
                 <div class="modal-header">
-                    <h3 class="card-title">developmentManage / saveOrUpdateLesson/</h3>
+                    <h3 class="card-title">developmentManage / saveOrUpdateLesson</h3>
                     <button type="button" name="backToDisplay" class="btn btn-gradient-info btn-sm">返回</button>
                 </div>
-                <form class="form-sample" id="lessonForm" @submit.prevent="submit">
+                <form class="form-sample" id="lessonForm">
                     <input v-if="list.disciplineId!=undefined" name="_method" value="put" hidden="hidden">
                     <p class="card-description">
                         课程信息
@@ -144,7 +142,7 @@
                                         <option value="必修">必修</option>
                                         <option value="选修">选修</option>
                                     </select>
-                                    <select v-if="list.disciplineId==undefined" name="disciplineType" class="form-control">
+                                    <select v-else name="disciplineType" class="form-control">
                                         <option value="必修">必修</option>
                                         <option value="选修">选修</option>
                                     </select>
@@ -161,8 +159,8 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12" align="center">
-                            <button type="submit" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">保存</button>
-                            <button type="button" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">重置</button>
+                            <button type="button" @click="submit" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">保存</button>
+                            <button type="button" name="backToDisplay" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">取消</button>
                         </div>
                     </div>
                 </form>

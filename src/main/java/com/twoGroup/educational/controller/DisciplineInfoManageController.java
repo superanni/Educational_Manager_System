@@ -29,25 +29,15 @@ public class DisciplineInfoManageController {
     /*课程信息业务接口*/
     DisciplineInfoService lessonInfoService;
 
-
-    //跳转地址前缀
-    private String locationURI = "manager/developmentManage/saveOrUpdate/";
-
     //所有课程信息
     private List<DisciplineInfo> lessonInfos;
 
     //课程信息
     private DisciplineInfo lessonInfo;
 
-    //作为测试
-    /*教务管理下跳转的页面放行*/
-    /*@GetMapping("{managePage}")
-    public String test(@PathVariable String managePage) {
-        return locationURI + "/" + managePage;
-    }*/
 
     /**
-     * 分页查询所有课程信息,
+     * 分页查询所有课程信息
      */
     @GetMapping("info/listLessonManage/{currentPage}")
     public @ResponseBody String listLessonManage(Map map, @PathVariable int currentPage) {
@@ -127,7 +117,7 @@ public class DisciplineInfoManageController {
      * 更新课程信息
      */
     @PutMapping("updateLesson/{disciplineId}")
-    public @ResponseBody String saveLesson(@PathVariable String disciplineId,DisciplineInfo disciplineInfo){
+    public @ResponseBody String updateLesson(@PathVariable String disciplineId,DisciplineInfo disciplineInfo){
         try {
             boolean b = lessonInfoService.updateById(disciplineInfo);
             if (b==true){

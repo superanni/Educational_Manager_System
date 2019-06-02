@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>教室管理</title>
     <script>
-        var vm = new Vue({
+        new Vue({
             router:router,
             el:"#showClassroomInfo",
             //在页面加载的时候就被created()添加了数据
@@ -24,17 +24,13 @@
                 changePage(data){
                     if(data === "pre"){
                         this.currentPage-=1;
-                        if(this.classroomName.trim() === '')
-                            this.getAllList();
-                        else
-                            this.showClassroomInfo(this.currentPage);
                     }else if(data === "next"){
                         this.currentPage+=1;
-                        if(this.classroomName.trim() === '')
-                            this.getAllList();
-                        else
-                            this.showClassroomInfo(this.currentPage);
                     }
+                    if(this.classroomName.trim() === '')
+                        this.getAllList();
+                    else
+                        this.showClassroomInfo(this.currentPage);
                 },
 
                 //根据选择框的页数查询数据
@@ -106,7 +102,7 @@
                         <input type="text" name="classroomName" class="form-control bg-transparent border-0" placeholder="教室名称">
                     </div>
                     <button type="button" @click="showClassroomInfo(1)" class="btn btn-gradient-info btn-sm">查询</button>
-                    <button type="button" style="margin-left: 40px" name="save" class="btn btn-gradient-primary btn-sm">添加教室信息</button>
+                    <router-link tag="button" style="margin-left: 40px" to="/" name="save" class="btn btn-gradient-primary btn-sm">添加教室信息</router-link>
                 </form>
             </div>
         </div>
