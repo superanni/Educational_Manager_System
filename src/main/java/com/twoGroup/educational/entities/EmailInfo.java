@@ -27,23 +27,22 @@ public class EmailInfo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "email_id", type = IdType.AUTO)
-    private Integer emailId;
+    private Integer emailId;            //编号
     @TableField("staff_id")
-    private Integer staffId;
+    private Integer staffId;            //员工编号
     @TableField("email_title")
-    private String emailTitle;
+    private String emailTitle;          //主题
     @TableField("email_content")
-    private String emailContent;
+    private String emailContent;        //邮件内容
     @TableField("email_time")
-    private Date emailTime;
+    private Date emailTime;             //发送时间
     @TableField("email_man")
-    private String emailMan;
+    private String emailMan;            //接收人
     @TableField("email_addr")
-    private String emailAddr;
+    private String emailAddr;           //邮件地址
     @TableField("email_state")
-    private Integer emailState;
+    private Integer emailState;         //邮件状态
 
     @TableField(exist = false)
-    private StaffInfo staffInfo;  //对应员工
-
+    private StaffInfo staffInfo;        //对应员工
 }

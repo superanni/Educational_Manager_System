@@ -26,7 +26,7 @@ import java.util.Map;
 @RequestMapping("marketActive")
 public class MarketActiveController {
 	private Logger logger = LoggerFactory.getLogger(MarketActiveController.class);
-@Autowired
+    @Autowired
 	MarketActiveService marketActiveService;
 	private String locationURI = "manager/teachActiviti/saveOrUpdate/";      //跳转路径前缀
 	private DataTransUtil dataTransUtil;        //数据传输工具
@@ -58,7 +58,7 @@ public class MarketActiveController {
 	public @ResponseBody String condition(@PathVariable String activeId,Map map) {
 		//修改操作、有activeId参数
 		try {
-			System.out.println("更新 添加 活动"+activeId);
+			System.out.println("更新 添加 活动条件查询"+activeId);
 			if (!"".equals(activeId)){
 				marketActive=marketActiveService.selectById(activeId);
 				return DataTransUtil.oneObjDataUtil(map,"lessonInfo",marketActive);
@@ -69,11 +69,12 @@ public class MarketActiveController {
 		}
 		return "false";
 	}
+
 	/**
 	 * 添加活动信息
 	 */
-	@PostMapping("activitiCurrentSave")
-	public @ResponseBody String saveLesson(MarketActive markeActive){
+	@PostMapping("saveMarkeActive")
+	public @ResponseBody String saveMarkeActive(MarketActive markeActive){
 		System.out.println("添加 活动"+markeActive);
 		if (marketActiveService.selectOne(new EntityWrapper<MarketActive>().eq("activeName",markeActive.getActiveName()))==null){
 				try {
@@ -89,15 +90,12 @@ public class MarketActiveController {
 		}else {
 			return "false";
 		}
-
 	}
-
-
 	/**
 	 * 删除课程信息
 	 */
-	@DeleteMapping("activitiCurrentDelete/{activeId}")
-	public @ResponseBody String deleteDiscipline(@PathVariable String activeId) {
+	@DeleteMapping("deleteMarkeActive/{activeId}")
+	public @ResponseBody String deleteMarkeActive(@PathVariable String activeId) {
 		try {
 			System.out.println("删除 活动"+activeId);
 			boolean b = marketActiveService.deleteById(Integer.parseInt(activeId));
@@ -109,6 +107,4 @@ public class MarketActiveController {
 			return "false";
 		}
 	}
-
 }
-

@@ -27,15 +27,15 @@ public class RoleAnthorityInfo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "role_anthority_id", type = IdType.AUTO)
-    private Integer roleAnthorityId;
+    private Integer roleAnthorityId;            //角色权限编号
     @TableField("role_id")
-    private Integer roleId;
+    private Integer roleId;                     //角色编号
     @TableField("anthorty_id")
-    private Integer anthortyId;
+    private Integer anthortyId;                 //权限编号
 
     @TableField(exist = false)
-    private RoleInfo roleInfo;  //对应角色
+    private RoleInfo roleInfo;                   //对应角色
     @TableField(exist = false)
-    private AnthortyInfo anthortyInfo;  //对应权限
+    private AnthortyInfo anthortyInfo;          //对应权限
 
 }

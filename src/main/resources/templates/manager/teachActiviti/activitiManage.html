@@ -38,11 +38,11 @@
 					}
 				},
 
-				// //根据选择框的页数查询数据
-				// selectPage(){
-				// 	this.currentPage=$("[name='currentPage']").val();
-				// 	this.showActiveInfo(this.currentPage);
-				// },
+				//根据选择框的页数查询数据
+				selectPage(){
+					this.currentPage=$("[name='currentPage']").val();
+					this.showActiveInfo(this.currentPage);
+				},
 
 				/*查询所有课程信息*/
 				getAllList(){
@@ -50,18 +50,18 @@
 						this.common(result);
 					})
 				},
-				//
-				// /*根据课程名称查询课程信息*/
-				// showActiveInfo(currentPage){
-				// 	this.disciplineName=$("[name='disciplineName']").val();
-				// 	this.$http.post("disciplineInfo/info/listLessonManageLike",{disciplineName:this.disciplineName , currentPage:currentPage}).then(result => {
-				// 		this.common(result);
-				// 	})
-				// },
+				
+				/*根据课程名称查询课程信息*/
+				showActiveInfo(currentPage){
+					this.disciplineName=$("[name='disciplineName']").val();
+					this.$http.post("disciplineInfo/info/listLessonManageLike",{disciplineName:this.disciplineName , currentPage:currentPage}).then(result => {
+						this.common(result);
+					})
+				},
 				
 				//删除课程信息
 				del(id){
-					this.$http.delete("marketActive/activitiCurrentDelete/"+id).then(result => {
+					this.$http.delete("marketActive/deleteMarkeActive/"+id).then(result => {
 						var result=result.body;
 						if (result==true){
 							toastr.success("删除成功");

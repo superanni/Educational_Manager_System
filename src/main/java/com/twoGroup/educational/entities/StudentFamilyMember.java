@@ -30,37 +30,29 @@ public class StudentFamilyMember implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "student_family_id", type = IdType.AUTO)
-    private Integer studentFamilyId;
+    private Integer studentFamilyId;      //学生家庭编号
     @TableField("student_id")
-    private Integer studentId;
+    private Integer studentId;            //学生编号
     @TableField("staff_id")
-    private Integer staffId;
+    private Integer staffId;              //员工编号
     @TableField("family_name")
-    private String familyName;
-    /**
-     * 称谓
-     */
+    private String familyName;            //姓名
     @TableField("family_app")
-    private String familyApp;
+    private String familyApp;             //称谓
     @TableField("family_age")
-    private Integer familyAge;
-    /**
-     * 政治面貌
-     */
+    private Integer familyAge;            //年龄
     @TableField("family_zzmm")
-    private String familyZzmm;
-    /**
-     * 何处工作任职
-     */
-    private String workplace;
+    private String familyZzmm;            //政治面貌
+	@TableField("workplace")
+    private String workplace;             //何处工作任职
     @TableField("reg_time")
-    private Date regTime;
+    private Date regTime;                 //登记时间
     @TableField("family_note")
-    private String familyNote;
+    private String familyNote;            //备注
 
     @TableField(exist = false)
-    private StaffInfo staffInfo;  //对应员工
+    private StaffInfo staffInfo;            //对应员工
     @TableField(exist = false)
-    private StudentInfo studentInfo;  //对应学生
+    private StudentInfo studentInfo;        //对应学生
 
 }

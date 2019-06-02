@@ -30,37 +30,37 @@ public class ClassInfo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "class_id", type = IdType.AUTO)
-    private Integer classId;
+    private Integer classId;            //班级编号
     @TableField("syllabus_id")
-    private Integer syllabusId;
+    private Integer syllabusId;         //编辑课表编号
     @TableField("classroom_id")
-    private Integer classroomId;
+    private Integer classroomId;        //教室编号
     @TableField("staff_id")
-    private Integer staffId;
+    private Integer staffId;            //员工编号
     @TableField("class_name")
-    private String className;
+    private String className;           //班级名
     @TableField("class_number")
-    private Integer classNumber;
+    private Integer classNumber;        //班级人数
     @TableField("class_start_time")
-    private Date classStartTime;
+    private Date classStartTime;        //开班日期
     @TableField("class_end_time")
-    private Date classEndTime;
+    private Date classEndTime;          //结束日期
     @TableField("class_isuesd")
-    private String classIsuesd;
+    private String classIsuesd;         //是否使用
     @TableField("class_state")
-    private String classState;
+    private String classState;          //班级状态
     @TableField("class_desc")
-    private String classDesc;
+    private String classDesc;           //班级描述
     @TableField("class_major")
-    private String classMajor;
+    private String classMajor;          //专业
 
     @TableField(exist = false)
-    private StaffInfo staffInfo;  //对应员工
+    private StaffInfo staffInfo;              //对应员工
     @TableField(exist = false)
-    private SyllabusInfo syllabusInfo;  //课表
+    private SyllabusInfo syllabusInfo;        //课表
     @TableField(exist = false)
-    private ClassroomInfo classroomInfo;    //教室
+    private ClassroomInfo classroomInfo;      //教室
     @TableField(exist = false)
-    private DisciplineInfo disciplineInfo;      //课程
+    private DisciplineInfo disciplineInfo;    //课程
 
 }

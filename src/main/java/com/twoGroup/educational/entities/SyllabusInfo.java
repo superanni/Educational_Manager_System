@@ -26,9 +26,9 @@ public class SyllabusInfo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "syllabus_id", type = IdType.AUTO)
-    private Integer syllabusId;
+    private Integer syllabusId;          //课程表编号
     @TableField("syllabus_yi")
-    private String syllabusYi;
+    private String syllabusYi;            //星期1-7
     @TableField("syllabus_er")
     private String syllabusEr;
     @TableField("syllabus_san")
@@ -42,8 +42,8 @@ public class SyllabusInfo implements Serializable {
     @TableField("syllabus_qi")
     private String syllabusQi;
     @TableField("is_uesd")
-    private String isUesd;
+    private String isUesd;              //是否使用
     @TableField("syllabus_name")
-    private String syllabusName;
+    private String syllabusName;       //课表名称
 
 }
