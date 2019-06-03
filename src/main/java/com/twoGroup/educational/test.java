@@ -22,10 +22,10 @@ public class test {
 		return "manager/developmentManage/saveOrUpdate/" + page;
 	}
 
-	@GetMapping("saveOrUpdate1/{page}")
-	public String testModifyData1(@PathVariable String page) {
-		return "manager/fileUpload/saveOrUpdate/" + page;
-	}
+//	@GetMapping("saveOrUpdate1/{page}")
+//	public String testModifyData1(@PathVariable String page) {
+//		return "manager/fileUpload/saveOrUpdate/" + page;
+//	}
 
 //	@GetMapping("saveOrUpdate2/{page}")
 //	public String testModifyData2(@PathVariable String page) {
@@ -62,10 +62,10 @@ public class test {
 		return "manager/dataAndStatistics/" + page;
 	}
 
-	@GetMapping("fileUpload/{page}")
-	public String test3(@PathVariable String page) {
-		return "manager/fileUpload/" + page;
-	}
+//	@GetMapping("fileUpload/{page}")
+//	public String test3(@PathVariable String page) {
+//		return "manager/fileUpload/" + page;
+//	}
 
 //	@GetMapping("teachActiviti/{page}")
 //	public String test4(@PathVariable String page) {

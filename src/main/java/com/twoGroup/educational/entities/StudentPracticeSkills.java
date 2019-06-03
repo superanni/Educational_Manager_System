@@ -28,29 +28,29 @@ public class StudentPracticeSkills implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "student_practice_id", type = IdType.AUTO)
-    private Integer studentPracticeId;
+    private Integer studentPracticeId;   //学生社会实践培训编号
     @TableField("student_id")
-    private Integer studentId;
+    private Integer studentId;          //学生编号
     @TableField("staff_id")
-    private Integer staffId;
+    private Integer staffId;            //员工编号
     @TableField("practice_start")
-    private Date practiceStart;
+    private Date practiceStart;         //培训实践开始
     @TableField("practice_end")
-    private Date practiceEnd;
+    private Date practiceEnd;           //培训实践结束
     @TableField("practice_address")
-    private String practiceAddress;
+    private String practiceAddress;     //培训实践地点
     @TableField("practice_content")
-    private String practiceContent;
+    private String practiceContent;     //培训实践内容
     @TableField("practice_score")
-    private String practiceScore;
+    private String practiceScore;       //成绩
     @TableField("reg_time")
-    private Date regTime;
+    private Date regTime;               //登记时间
     @TableField("practice_note")
-    private String practiceNote;
+    private String practiceNote;        //备注
 
     @TableField(exist = false)
-    private StaffInfo staffInfo;  //对应员工
+    private StaffInfo staffInfo;        //对应员工
     @TableField(exist = false)
-    private StudentInfo studentInfo;  //对应学生
+    private StudentInfo studentInfo;    //对应学生
 
 }
