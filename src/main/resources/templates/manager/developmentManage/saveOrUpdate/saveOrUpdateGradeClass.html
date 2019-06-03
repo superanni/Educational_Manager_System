@@ -54,7 +54,7 @@
                 submit(){
                     if(this.list.classId == undefined){
                         //添加操作
-                        $.post("classInfo/saveClass",$("#classForm").serialize(),function(result) {
+                        $.post("classInfo/saveClass",$("#gradeClassForm").serialize(),function(result) {
                             if(result=="true"){
                                 toastr.success("添加成功");
                                 $('#content-change-main').load("developmentManage/gradeclassManage.html",function(){});
@@ -64,7 +64,8 @@
                         })
                     }else{
                         //修改操作
-                        $.post("classInfo/updateClass/"+this.list.classId,$("#classForm").serialize(),function (result) {
+                        $.post("classInfo/updateClass/"+this.list.classId,$("#gradeClassForm").serialize(),function (result) {
+
                             if(result=="true"){
                                 toastr.success("修改成功");
                                 $('#content-change-main').load("developmentManage/gradeclassManage.html",function(){});
@@ -105,7 +106,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">班级编号</label>
                                     <div class="col-sm-9">
-                                        <input disabled="disabled" v-model="list.classId" type="text" class="form-control form-control-sm" />
+                                        <input readonly="readonly" v-model="list.classId" type="text" class="form-control form-control-sm" />
                                     </div>
                                 </div>
                             </div>

@@ -73,7 +73,7 @@ public class test {
 //	}
 
 
-	@GetMapping("frontDesk/{page}")
+	@GetMapping("front/{page}")
 	public String test5(@PathVariable String page) {
 		return "frontDesk/"+page;
 	}

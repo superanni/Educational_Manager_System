@@ -3,9 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <title>班级事务</title>
+    <script>
+        new Vue({
+            router:router,
+            el:"#showTransaction",
+            //在页面加载的时候就被created()添加了数据
+            data:{
+                classTransactionTitle:'',
+                currentPage:1,
+                total:'',
+                totalPage:'',
+                list:[]
+            },
+            /*方法执行前*/
+            created(){
+                this.getAllList();
+            },
+            methods:{
+                /*分页处理*/
+                changePage(data){
+                    if(data === "pre"){
+                        this.currentPage-=1;
+                    }else if(data === "next"){
+                        this.currentPage+=1;
+                    }
+                    if(this.classTransactionTitle.trim() === '')
+                        this.getAllList();
+                    else
+                        this.showTransaction(this.currentPage);
+                },
+
+                //根据选择框的页数查询数据
+                selectPage(){
+                    this.currentPage=$("[name='currentPage']").val();
+                    this.showTransaction(this.currentPage);
+                },
+
+                /*查询所有班级事务信息*/
+                getAllList(){
+                    this.$http.get("classTransaction/info/listClassTransaction/"+this.currentPage).then(result => {
+                        this.common(result);
+                    })
+                },
+
+                /*根据课程名称查询课程信息*/
+                showTransaction(currentPage){
+                    this.classTransactionTitle=$("[name='classTransactionTitle']").val();
+                    this.$http.post("classTransaction/info/listClassTransactionLike",{classTransactionTitle:this.classTransactionTitle , currentPage:currentPage}).then(result => {
+                        this.common(result);
+                    })
+                },
+
+                //删除课程信息
+                del(id){
+                    this.$http.delete("classTransaction/info/deleteClassTransaction/"+id).then(result => {
+                        var result=result.body;
+                        if (result==true){
+                            toastr.success("删除成功");
+                            this.getAllList();
+                        } else{
+                            toastr.warning("删除失败");
+                        }
+                    })
+                },
+
+                //更新加载页面
+                update(){
+                    $('#content-change-main').load("developmentManage/saveOrUpdate/saveOrUpdateGradeTransaction.html",function(){});
+                },
+
+                //通用的数据绑定
+                common(result){
+                    var result=result.body;
+                    if(result.status === 0){
+                        this.list = result.list;
+                        this.total = result.total;
+                        this.currentPage = result.currentPage;
+                        this.totalPage = result.totalPage;
+                    }else{
+                        toastr.error("获取数据失败");
+                    }
+                }
+            }
+        })
+    </script>
 </head>
 <body>
-<div>
+<div id="showTransaction">
     <div class="page-header">
         <!--查询班级事务、添加班级事务-->
         <div class="navbar-menu-wrapper d-flex align-items-stretch">
@@ -15,10 +99,10 @@
                         <div style="margin-top: 5px">
                             <i class="input-group-text border-0 mdi mdi-magnify" style="height: 31px"></i>
                         </div>
-                        <input type="text" class="form-control bg-transparent border-0" placeholder="班级主题">
+                        <input type="text" name="classTransactionTitle" class="form-control bg-transparent border-0" placeholder="班级主题">
                     </div>
-                    <button type="submit" class="btn btn-gradient-info btn-sm">查询</button>
-                    <button type="button" style="margin-left: 40px" name="updateOrSave" class="btn btn-gradient-primary btn-sm">添加班级事务</button>
+                    <button type="button" @click="showTransaction(1)" class="btn btn-gradient-info btn-sm">查询</button>
+                    <router-link tag="button" style="margin-left: 40px" to="/" name="save" class="btn btn-gradient-primary btn-sm">添加班级事务</router-link>
                 </form>
             </div>
         </div>
@@ -28,7 +112,7 @@
             <div class="card">
                 <div class="card-body">
                     <p class="card-description">
-                        班级事务 <code>gradeclassManage</code>
+                        教务管理 / 班级事务 <code>gradeclassManage</code>
                     </p>
                     <div class="table-responsive">
                         <table class="table">
@@ -44,24 +128,33 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr align="center">
-                                <td>Jacob</td>
-                                <td>Photoshop</td>
-                                <td>Photoshop</td>
-                                <td><label class="badge badge-danger">Pending</label></td>
-                                <td><label class="badge badge-danger">Pending</label></td>
-                                <td><button type="button" class="btn btn-gradient-warning btn-sm">修改</button></td>
-                                <td><button type="button" class="btn btn-gradient-danger btn-sm">删除</button></td>
+                            <tr v-for="item in list" align="center">
+                                <td>{{item.classInfo.className}}</td>
+                                <td>{{item.classTransactionTitle}}</td>
+                                <td>{{item.classTransactionContent}}</td>
+                                <td>{{item.classTransactionPerson}}</td>
+                                <td>{{item.classTransactionTime}}</td>
+                                <td @click="update()"><router-link tag="button" name="update" class="btn btn-gradient-warning btn-sm" :to="{path: 'update', query: { classTransactionId: item.classTransactionId }}">修改</router-link></td>
+                                <td><button type="button" class="btn btn-gradient-danger btn-sm" @click="del(item.classTransactionId)">删除</button></td>
                             </tr>
-                            <tr>
-                                <td colspan="7" align="center">
-                                <span class="card-description">
-                                    共 <code>1</code>条数据
-                                </span>
-                                    <button type="button" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">上一页</button>
-                                    <button type="button" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">下一页</button>
-                                </td>
-                            </tr>
+                            <td colspan="7" align="center">
+                                    <span class="card-description">
+                                        共 <code>{{total}}</code>条数据
+                                    </span>
+                                <span style="margin-left: 25px" class="card-description">
+                                        <!--第 <code>{{currentPage}}</code>页-->
+                                        第&nbsp;
+                                        <select name="currentPage" v-model="currentPage" @change="selectPage()">
+                                            <option v-for="item in totalPage" :value="item">{{item}}</option>
+                                        </select>
+                                        &nbsp;&nbsp;页
+                                    </span>
+                                <button type="button" v-if="currentPage>1" style="margin-left: 25px" @click="changePage('pre')" class="btn btn-gradient-success btn-sm">上一页</button>
+                                <button type="button" v-if="currentPage<totalPage" style="margin-left: 25px" @click="changePage('next')" class="btn btn-gradient-success btn-sm">下一页</button>
+                                <span style="margin-left: 25px" class="card-description">
+                                        共 <code>{{totalPage}}</code>页
+                                    </span>
+                            </td>
                             </tbody>
                         </table>
                     </div>
@@ -72,8 +165,8 @@
 </div>
 <script>
     $(function(){
-        $("[name='updateOrSave']").on('click',function(){
-            $('#content-change-main').load("saveOrUpdate/saveOrUpdateGradeTransaction",function(){});
+        $("[name='save']").on('click',function(){
+            $('#content-change-main').load("developmentManage/saveOrUpdate/saveOrUpdateGradeTransaction.html",function(){});
         });
     });
 </script>

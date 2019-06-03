@@ -157,8 +157,8 @@ public class ClassInfoController {
     /**
      * 更新班级信息
      */
-    @PutMapping("updateClass/{class_id}")
-    public @ResponseBody String updateClass(@PathVariable String class_id,ClassInfo classInfo){
+    @PutMapping("updateClass/{classId}")
+    public @ResponseBody String updateClass(@PathVariable String classId,ClassInfo classInfo){
         try {
             boolean b = classInfoService.updateById(classInfo);
             if (b==true){

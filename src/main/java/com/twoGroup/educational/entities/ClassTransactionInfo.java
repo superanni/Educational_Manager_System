@@ -5,6 +5,7 @@ import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -44,6 +45,5 @@ public class ClassTransactionInfo implements Serializable {
 
     @TableField(exist = false)
     private ClassInfo classInfo ;   //所属班级
-
 
 }
