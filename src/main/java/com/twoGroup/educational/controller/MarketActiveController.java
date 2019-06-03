@@ -22,14 +22,12 @@ import java.util.Map;
  * @author lsson
  * @since 2019-05-26
  */
-@Controller
+@RestController
 @RequestMapping("marketActive")
 public class MarketActiveController {
 	private Logger logger = LoggerFactory.getLogger(MarketActiveController.class);
     @Autowired
 	MarketActiveService marketActiveService;
-	private String locationURI = "manager/teachActiviti/saveOrUpdate/";      //跳转路径前缀
-	private DataTransUtil dataTransUtil;        //数据传输工具
 
 	private List<MarketActive> marketActives;
 
@@ -38,27 +36,28 @@ public class MarketActiveController {
 	 * 分页查询所有课程信息,
 	 */
 	@GetMapping("activitiCurrentList/{currentPage}")
-	public @ResponseBody String listLessonManage(Map map, @PathVariable int currentPage) {
-		System.out.println("查询 活动"+currentPage);
+	public @ResponseBody String activitiCurrentList(Map map, @PathVariable int currentPage) {
+		System.out.println("get 活动 list"+currentPage);
 		//每页显示五行数据
 		PageHelper.startPage(currentPage, 5);
 		//获取数据
 		marketActives = marketActiveService.selectlistMarketActive();
-		if (marketActives != null) {
+		if (marketActives==null) {
+			return "false";
+		}else{
 			//数据绑定
 			return DataTransUtil.dataUtil(map, marketActives);
 		}
-		return "false";
 	}
 
 	/**
 	 * 更新、添加活动信息的条件查询
 	 */
-	@GetMapping("saveOrUpdate/condition/{activeId}")
-	public @ResponseBody String condition(@PathVariable String activeId,Map map) {
+	@GetMapping("saveOrUpdate/conditionMarkeActive/{activeId}")
+	public @ResponseBody String conditionMarkeActive(@PathVariable String activeId,Map map) {
 		//修改操作、有activeId参数
 		try {
-			System.out.println("更新 添加 活动条件查询"+activeId);
+			System.out.println("update 活动 条件查询"+activeId);
 			if (!"".equals(activeId)){
 				marketActive=marketActiveService.selectById(activeId);
 				return DataTransUtil.oneObjDataUtil(map,"lessonInfo",marketActive);

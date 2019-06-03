@@ -2,8 +2,90 @@
 <html>
 <head>
 	<title>上传文件</title>
+	
+	<script>
+		new Vue({
+			el:"#fileUploadForm",
+			//在页面加载的时候就被created()添加了数据
+			data:{
+				list:[],
+				teachers:[],
+				lessonTables:[],
+				classrooms:[]
+			},
+			/*方法执行前*/
+			created(){
+				this.condition();
+			},
+			methods:{
+				/*查询班级信息*/
+				condition(){
+					var fileId=this.getUrlKey("fileId");
+					//判断是否添加或修改
+
+					if(fileId==null){
+						this.$http.get("uploadFile/OrUpdate/saveCondition").then(result => {
+							this.common(result);
+						})
+					}else{
+						this.$http.get("uploadFile/OrUpdate/condition/"+fileId).then(result => {
+							this.common(result);
+						})
+					}
+				},
+				//解析前端路由的url
+				getUrlKey(name){
+					return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null
+				},
+				/*通用的数据绑定*/
+				common(result){
+					var result=result.body;
+					if(result.status === 0){
+						this.teachers=result.teachers;
+						this.lessonTables=result.lessonTables;
+						this.classrooms=result.classrooms;
+						if(result.uploadFile!=undefined)
+							this.list=result.uploadFi}else{
+						toastr.error("获取数据失败");
+					}
+				},
+				/*更新或保存*/
+				submit(){
+					if(this.list.fileId == undefined){
+						//添加操作
+						$.post("uploadFile/saveUploadFile",$("#fileForm").serialize(),function(result) {
+							if(result=="true"){
+								toastr.success("添加成功");
+								$('#content-change-main').load("fileUpload/fileUploadManage.html",function(){});
+							}else{
+								toastr.error("添加失败");
+							}
+						})
+					}else{
+						//修改操作
+						$.post("uploadFile/updateloadFile/"+this.list.fileId,$("#fileForm").serialize(),function (result) {
+							if(result=="true"){
+								toastr.success("修改成功");
+								$('#content-change-main').load("developmentManage/gradeclassManage.html",function(){});
+							}else{
+								toastr.error("修改失败");
+							}
+						})
+					}
+				}
+			}
+		})
+	</script>
 </head>
 <body>
+<script>
+	//回退
+	$(function () {
+		$("[name='backToDisplay']").click(function () {
+			$('#content-change-main').load("fileUpload/fileUploadManage.html",function(){});
+		})
+	})
+</script>
 <div class="page-header">
 	<div style="padding:0px; margin:0px;">
 	<ul class="breadcrumb alert-info" style="margin:0px; ">
@@ -11,15 +93,13 @@
 	</ul>
 </div>
 </div>
-
 <div align="center">
 	<div class="alert alert-info"
 	     style="margin: 0px; padding: 5px; width: 100%;">
 		<button type="button" class="close" data-dismiss="alert">
 			<span aria-hidden="true">&times;</span>
 		</button>
-		
-		<form action="uploadfile/update.do" class="form-horizontal" method="post">
+		<form id="gradeClassForm"class="form-horizontal" name="fileForm" method="post" enctype="multipart/form-data">
 	<h5 class="alert-info" style="padding:10px; margin:0px; margin-bottom:5px;">基本信息</h5>
 	<div class="row">
 		<div class="col-sm-5">
@@ -40,7 +120,8 @@
 				</div>
 			</div>
 		</div>
-		<input type="submit"  style="height: 40px; margin-left:20px" class="btn btn-gradient-info btn-sm" value="上传"/>
+		<button type="button" @click="submit" style="height: 40px; margin-left:20px" class="btn btn-gradient-info btn-sm">点击上传</button>
+		<button type="button" name="backToDisplay" style="height: 40px; margin-left:20px" class="btn btn-gradient-info btn-sm" >返回</button>
 	</div>
 	
 </form>
@@ -54,5 +135,10 @@
 		})
 	})
 </script>
+
+<style type="text/css">
+	#div1, #div2
+	{float:left; width:100px; height:35px; margin:10px;padding:10px;border:1px solid #aaaaaa;}
+</style>
 </body>
 </html>

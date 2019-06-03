@@ -25,7 +25,6 @@ import java.io.Serializable;
 public class UploadFile implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
     @TableId(value = "file_id", type = IdType.AUTO)
     private Integer fileId;             //文件编号
     @TableField("staff_id")

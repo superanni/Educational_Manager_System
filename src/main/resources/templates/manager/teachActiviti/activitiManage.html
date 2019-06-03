@@ -51,13 +51,13 @@
 					})
 				},
 				
-				/*根据课程名称查询课程信息*/
-				showActiveInfo(currentPage){
-					this.disciplineName=$("[name='disciplineName']").val();
-					this.$http.post("disciplineInfo/info/listLessonManageLike",{disciplineName:this.disciplineName , currentPage:currentPage}).then(result => {
-						this.common(result);
-					})
-				},
+				// /*根据课程名称查询课程信息*/
+				// showActiveInfo(currentPage){
+				// 	this.disciplineName=$("[name='disciplineName']").val();
+				// 	this.$http.post("disciplineInfo/info/listLessonManageLike",{disciplineName:this.disciplineName , currentPage:currentPage}).then(result => {
+				// 		this.common(result);
+				// 	})
+				// },
 				
 				//删除课程信息
 				del(id){
@@ -72,10 +72,10 @@
 					})
 				},
 				
-				//更新加载页面
-				update(){
-					$('#content-change-main').load("teachActiviti/saveOrUpdate/saveOrUpdateAcitiviti.html",function(){});
-				},
+				// //更新加载页面
+				// update(){
+				// 	$('#content-change-main').load("teachActiviti/saveOrUpdate/saveOrUpdateAcitiviti.html",function(){});
+				// },
 
 				//通用的数据绑定
 				common(result){
@@ -131,8 +131,7 @@
 							<thead>
 							<tr align="center">
 								<th>
-										<i class="input-helper">全选</i>
-										<input type="checkbox" checked="">
+									<input type="checkbox" id="theadInp" />
 								</th>
 								<th>活动名称</th>
 								<th>负责人</th>
@@ -145,7 +144,7 @@
 							</thead>
 							<tbody>
 							<tr v-for="item in list" align="center">
-								<td><input type="checkbox"checked=""></td>
+								<td><input type="checkbox"></td>
 								<td><i class="mdi mdi-arrow-down text-info">{{item.activeName}}</i></td>
 								<td>{{item.staffInfo.staffName}}</td>
 								<td class="text-danger ">{{item.activeStart}}</td>
@@ -162,11 +161,10 @@
 									<span style="margin-left: 25px" class="card-description">
                                         <!--第 <code>{{currentPage}}</code>页-->
                                         第&nbsp;
-                                        <select name="currentPage" v-model="currentPage" @change="selectPage()">
-                                            <option v-for="item in totalPage" :value="item">{{item}}</option>
-                                        </select>
-                                        &nbsp;&nbsp;页
-                                    </span>
+                                       	<select name="currentPage" v-model="currentPage" @change="selectPage()">
+											<option v-for="item in totalPage" :value="item">{{item}}</option>
+											</select>
+                                        &nbsp;&nbsp;页</span>
 									<button type="button" v-if="currentPage>1" style="margin-left: 40px" @click="changePage('pre')" class="btn btn-gradient-success btn-sm">上一页</button>
 									<button type="button" v-if="currentPage<totalPage" style="margin-left: 40px" @click="changePage('next')" class="btn btn-gradient-success btn-sm">下一页</button>
 									<span style="margin-left: 40px" class="card-description">
@@ -192,5 +190,23 @@
 	});
 </script>
 
+
+<script>
+	//实现全选复选
+	$(function() {
+		//实现全选反选
+		$("#theadInp").on('click', function() {
+			$("tbody input:checkbox").prop("checked", $(this).prop('checked'));
+		})
+		$("tbody input:checkbox").on('click', function() {
+			//当选中的长度等于checkbox的长度的时候,就让控制全选反选的checkbox设置为选中,否则就为未选中
+			if($("tbody input:checkbox").length === $("tbody input:checked").length) {
+				$("#theadInp").prop("checked", true);
+			} else {
+				$("#theadInp").prop("checked", false);
+			}
+		})
+	})
+</script>
 </body>
 </html>
