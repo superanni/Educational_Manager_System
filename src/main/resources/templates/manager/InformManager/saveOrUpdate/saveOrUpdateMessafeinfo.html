@@ -5,77 +5,79 @@
     <title>添加、短信信息</title>
 </head>
 <body>
-    <div class="row">
-        <div class="col-12 grid-margin">
-            <div class="card">
-                <div class="card-body">
-	                <div class="modal-header">
-	                <h3 class="card-title">Horizontal Two column</h3>
-		                <button type="button" name="backToDisplay" class="btn btn-gradient-info btn-sm">返回</button>
-	                </div>
-		                <form class="form-sample">
-                        <p class="card-description">
-	                        通知管理/短信添加
-                        </p>
-			                
-	                    <div class="row">
-		                    <div class="col-md-6">
-			                    <div class="form-group row">
-				                    <label class="col-sm-3 col-form-label">接收人:</label>
-				                    <div class="col-sm-9">
-					                    <input type="text" class="form-control form-control-sm"
-					                           value="2019-5-5" />
-				                    </div>
-			                    </div>
-		                    </div>
-		                    <div class="col-md-6">
-			                    <div class="form-group row">
-				                    <label class="col-sm-3 col-form-label">模板名称:</label>
-				                    <div class="col-sm-9">
-					                    <select class="form-control form-control-sm">
-						                    <option value="">请选择</option>
-						                    <option value="staffName">生日提示</option>
-						                    <option value="staffMobilePhone">春节祝福</option>
-					                    </select>
-				                    </div>
-			                    </div>
-		                    </div>
-	                    </div>
-	                    <div class="row">
-		                    <div class="col-md-6">
-			                    <div class="form-group row">
-				                    <label class="col-sm-3 col-form-label">电话：</label>
-				                    <div class="col-sm-9">
-					                    <input type="text" class="form-control form-control-sm"
-					                           value="2019-6-9" />
-				                    </div>
-			                    </div>
-		                    </div>
-	                    </div>
-			
-			                <div class="form-group">
-				                    <label for="exampleTextarea1">短信内容</label>
-				                    <textarea class="form-control" id="exampleTextarea1" rows="4"></textarea>
-			                    </div>
-		                    </div>
-		                    
-                        <div class="row">
-                            <div class="col-md-12" align="center">
-                                <button type="submit" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">保存</button>
-                                <button type="button" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">重置</button>
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <div class="modal-header">
+                    <h3 class="card-title">Horizontal Two column</h3>
+                    <button type="button" name="backToDisplay" class="btn btn-gradient-info btn-sm">返回</button>
+                </div>
+                <form class="form-sample">
+                    <p class="card-description">
+                        通知管理/短信添加
+                    </p>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">接收人:</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control form-control-sm"
+                                           value="2019-5-5"/>
+                                </div>
                             </div>
                         </div>
-                    </form>
-                </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">模板名称:</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control form-control-sm">
+                                        <option value="">请选择</option>
+                                        <option value="staffName">生日提示</option>
+                                        <option value="staffMobilePhone">春节祝福</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">电话：</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control form-control-sm"
+                                           value="2019-6-9"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleTextarea1">短信内容</label>
+                        <textarea class="form-control" id="exampleTextarea1" rows="4"></textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12" align="center">
+                            <button type="submit" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">保存
+                            </button>
+                            <button type="button" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">重置
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
 </body>
 <script>
-	$(function () {
-		$("[name='backToDisplay']").click(function () {
-			$('#content-change-main').load("InformManager/messafeinfoManage",function(){});
-		})
-	})
+    $(function () {
+        $("[name='backToDisplay']").click(function () {
+            $('#content-change-main').load("InformManager/messafeinfoManage", function () {
+            });
+        })
+    })
 </script>
 </html>

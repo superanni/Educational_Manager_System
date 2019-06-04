@@ -3,9 +3,86 @@
 <head>
 	<meta charset="UTF-8">
 	<title>短信管理</title>
+	<script>
+		new Vue({
+			router:router,
+			el:"#messageInfo",
+			//在页面加载的时候就被created()添加了数据
+			data:{
+				telephone:'',
+				currentPage:1,
+				total:'',
+				totalPage:'',
+				list:[]
+			},
+			/*方法执行前*/
+			created(){
+				this.getAllList();
+			},
+			methods:{
+				/*分页处理*/
+				changePage(data){
+					if(data === "pre"){
+						this.currentPage-=1;
+						this.getAllList();
+					}else if(data === "next"){
+						this.currentPage+=1;
+						this.getAllList();
+					}
+				},
+
+				//根据选择框的页数查询数据
+				selectPage(){
+					this.currentPage=$("[name='currentPage']").val();
+					this.getAllList();
+				},
+
+				/*查询所有课程信息*/
+				getAllList(){
+					this.$http.get("messafeInfo/messageCurrentList/"+this.currentPage).then(result => {
+						this.common(result);
+					})
+				},
+
+				/*根据课程名称查询课程信息*/
+				showMessageInfo(){
+					this.telephone=$("[name='telephone']").val();
+					this.$http.post("messafeInfo/messageLikeList",{telephone:this.telephone }).then(result => {
+						this.common(result);
+					})
+				},
+
+				//删除短信
+				del(id){
+					this.$http.delete("messafeInfo/deleteMessage/"+id).then(result => {
+						var result=result.body;
+						if (result==true){
+							toastr.success("删除成功");
+							this.getAllList();
+						} else{
+							toastr.warning("删除失败");
+						}
+					})
+				},
+
+				//通用的数据绑定
+				common(result){
+					var result=result.body;
+					if(result.status === 0){
+						this.list = result.list;
+						this.total = result.total;
+						this.currentPage = result.currentPage;
+						this.totalPage = result.totalPage;
+					}else{
+						toastr.error("获取数据失败");
+					}
+				}
+			}
+		})
+	</script>
 </head>
 <body>
-<div>
+<div id="messageInfo">
 	<div class="page-header">
 		<!--查询短信管理、短信管理-->
 		<div class="navbar-menu-wrapper d-flex align-items-stretch">
@@ -15,10 +92,10 @@
 						<div style="margin-top: 5px">
 							<i class="input-group-text border-0 mdi mdi-magnify" style="height: 31px"></i>
 						</div>
-						<input type="text" class="form-control bg-transparent border-0" placeholder="电话号码">
+						<input type="text" id="telephone" name="telephone" class="form-control bg-transparent border-0"  placeholder="电话号码">
 					</div>
-					<button type="submit" class="btn btn-gradient-info btn-sm">查询短信</button>
-					<button type="button" style="margin-left: 40px" name="updateOrSave" class="btn btn-gradient-primary btn-sm">发送短信</button>
+					<button type="submit" class="btn btn-gradient-info btn-sm" @click="showMessageInfo()">查询短信</button>
+					<button type="button" style="margin-left: 40px" id="save" name="save" class="btn btn-gradient-primary btn-sm">发送短信</button>
 				</form>
 			</div>
 		</div>
@@ -34,9 +111,6 @@
 						<table class="table">
 							<thead>
 							<tr align="center">
-								<th><i>全选</i>
-									<input type="checkbox"checked="">
-								</th>
 								<th>发送人</th>
 								<th>发送时间</th>
 								<th>接收人</th>
@@ -46,22 +120,32 @@
 							</tr>
 							</thead>
 							<tbody>
-							<tr align="center">
-								<td><input type="checkbox"checked=""></td>
-								<td><i class="mdi mdi-arrow-down text-info">刘赛松</i></td>
-								<td class="text-danger">2018-5-6</td>
-								<td class="text-danger">符润东</td>
-								<td class="text-info">18195292929</td>
+							<tr v-for="item in list" align="center">
+								<td class="text-info">{{item.staffInfo.staffName}}</td>
+								<td class="text-danger">{{item.messafeTime}}</td>
+								<td class="text-info">{{item.messafeMan}}</td>
+								<td class="text-danger">{{item.messafePhone}}</td>
 								<td><button type="button" class="btn btn-gradient-warning btn-sm">查看</button></td>
-								<td><button type="button" class="btn btn-gradient-danger btn-sm">删除</button></td>
+								<td><button type="button" class="btn btn-gradient-danger btn-sm" @click="del(item.messafeId)">删除</button></td>
 							</tr>
 							<tr>
-								<td colspan="10" align="center">
-                                <span class="card-description">
-                                    共 <code>1</code>条数据
-                                </span>
-									<button type="button" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">上一页</button>
-									<button type="button" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">下一页</button>
+								<td colspan="7" align="center">
+                                    <span class="card-description">
+                                        共 <code>{{total}}</code>条数据
+                                    </span>
+									<span style="margin-left: 25px" class="card-description">
+                                        <!--第 <code>{{currentPage}}</code>页-->
+                                        第&nbsp;
+                                        <select name="currentPage" v-model="currentPage" @change="selectPage()">
+                                            <option v-for="item in totalPage" :value="item">{{item}}</option>
+                                        </select>
+                                        &nbsp;&nbsp;页
+                                    </span>
+									<button type="button" v-if="currentPage>1" style="margin-left: 25px" @click="changePage('pre')" class="btn btn-gradient-success btn-sm">上一页</button>
+									<button type="button" v-if="currentPage<totalPage" style="margin-left: 25px" @click="changePage('next')" class="btn btn-gradient-success btn-sm">下一页</button>
+									<span style="margin-left: 25px" class="card-description">
+                                        共 <code>{{totalPage}}</code>页
+                                    </span>
 								</td>
 							</tr>
 							</tbody>
@@ -74,8 +158,9 @@
 </div>
 <script>
 	$(function(){
-		$("[name='updateOrSave']").on('click',function(){
-			$('#content-change-main').load("saveOrUpdate4/saveOrUpdateMessafeinfo",function(){});
+		$("[name='save']").on('click',function(){
+		    alert("save")
+			$('#content-change-main').load("InformManager/saveOrUpdate",function(){});
 		});
 	});
 </script>
