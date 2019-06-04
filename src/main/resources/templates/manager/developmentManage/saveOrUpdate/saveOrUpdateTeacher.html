@@ -135,7 +135,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6" v-if="list.staffId!=undefined">
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">性别</label>
                                     <div class="col-sm-4">
@@ -149,7 +149,28 @@
                                     <div class="col-sm-5">
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input type="radio" class="form-check-input" name="staffSex" v-model="list.staffSex" id="membershipRadios2" value="女">
+                                                <input type="radio" class="form-check-input" name="staffSex" v-model="list.staffSex" value="女">
+                                                女
+                                                <i class="input-helper"></i></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6" v-else>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">性别</label>
+                                    <div class="col-sm-4">
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input type="radio" class="form-check-input" name="staffSex" value="男" checked="checked">
+                                                男
+                                                <i class="input-helper"></i></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input type="radio" class="form-check-input" name="staffSex" value="女">
                                                 女
                                                 <i class="input-helper"></i></label>
                                         </div>

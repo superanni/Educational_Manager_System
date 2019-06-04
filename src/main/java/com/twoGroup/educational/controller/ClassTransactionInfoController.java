@@ -72,7 +72,7 @@ public class ClassTransactionInfoController {
             }
         }catch (Exception e){
             PageHelper.startPage(currentPage,5);
-            classTransactionInfos = classTransactionInfoService.selectList(null);
+            classTransactionInfos = classTransactionInfoService.selectList();
             if (classTransactionInfos != null) {
                 //数据绑定
                 return DataTransUtil.dataUtil(map,classTransactionInfos);
@@ -87,10 +87,11 @@ public class ClassTransactionInfoController {
      */
     @PostMapping("info/listClassTransactionLike")
     public @ResponseBody String listClassTransactionLike(Map<String,Object> map,int currentPage , ClassTransactionInfo classTransactionInfo){
-        //每页显示五行数据
-        PageHelper.startPage(currentPage, 5);
+
         //判断有无条件
         if (!"".equals(classTransactionInfo.getClassTransactionTitle())) {
+            //每页显示五行数据
+            PageHelper.startPage(currentPage, 5);
             classTransactionInfos=classTransactionInfoService.selectListLike(classTransactionInfo.getClassTransactionTitle());
             if (classTransactionInfos != null) {
                 //数据绑定

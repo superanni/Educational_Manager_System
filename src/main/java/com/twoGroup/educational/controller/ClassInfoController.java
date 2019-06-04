@@ -89,10 +89,10 @@ public class ClassInfoController {
      */
     @PostMapping("info/listClassManageLike")
     public @ResponseBody String listClassManageLike(Map<String,Object> map,int currentPage , ClassInfo classInfo){
-        //每页显示五行数据
-        PageHelper.startPage(currentPage, 5);
         //判断有无条件
         if (!"".equals(classInfo.getClassName())) {
+            //每页显示五行数据
+            PageHelper.startPage(currentPage, 5);
             classInfos=classInfoService.selectListLike(classInfo.getClassName());
             if (classInfos != null) {
                 //数据绑定
