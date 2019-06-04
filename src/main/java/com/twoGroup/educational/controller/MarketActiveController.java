@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.github.pagehelper.PageHelper;
 import com.twoGroup.educational.commonUtils.DataTransUtil;
 import com.twoGroup.educational.entities.MarketActive;
+import com.twoGroup.educational.entities.MarketActive;
 import com.twoGroup.educational.service.MarketActiveService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +42,7 @@ public class MarketActiveController {
 		//每页显示五行数据
 		PageHelper.startPage(currentPage, 5);
 		//获取数据
-		marketActives = marketActiveService.selectlistMarketActive();
+		marketActives = marketActiveService.selectList();
 		if (marketActives==null) {
 			return "false";
 		}else{
@@ -51,23 +52,28 @@ public class MarketActiveController {
 	}
 
 	/**
-	 * 更新、添加活动信息的条件查询
+	 * 条件查询 活动信息
 	 */
-	@GetMapping("saveOrUpdate/conditionMarkeActive/{activeId}")
-	public @ResponseBody String conditionMarkeActive(@PathVariable String activeId,Map map) {
-		//修改操作、有activeId参数
-		try {
-			System.out.println("update 活动 条件查询"+activeId);
-			if (!"".equals(activeId)){
-				marketActive=marketActiveService.selectById(activeId);
-				return DataTransUtil.oneObjDataUtil(map,"lessonInfo",marketActive);
-			}else{
-			}
-		} catch (Exception e) {
-			return "false";
+	@PostMapping("listMarketActiveLike")
+	public @ResponseBody String listMarketActiveLike(Map<String,Object> map,int currentPage ,MarketActive marketActive){
+		//判断有无条件
+		//每页显示五行数据
+		PageHelper.startPage(currentPage, 5);
+		System.out.println(marketActive.getActiveName());
+		//判断有无条件
+		if (!"".equals(marketActive.getActiveName())) {
+			marketActives=marketActiveService.selectListLike(marketActive.getActiveName());
+		}else {
+			marketActives=marketActiveService.selectList();
+		}
+		if (marketActives != null) {
+			//数据绑定
+			return DataTransUtil.dataUtil(map, marketActives);
 		}
 		return "false";
 	}
+
+
 
 	/**
 	 * 添加活动信息

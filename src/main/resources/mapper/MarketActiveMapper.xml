@@ -43,8 +43,14 @@
 	    </association>
     </resultMap>
 
-	<select id="selectlistMarketActive" resultMap="BaseResultMap">
+	<select id="selectList" resultMap="BaseResultMap">
 		SELECT *,si.* FROM market_active AS ma,staff_info AS si
 		WHERE  ma.staff_id=si.staff_id
+	</select>
+
+	<select id="selectListLikeName" resultMap="BaseResultMap">
+		SELECT * FROM market_active AS ma,staff_info AS si
+		WHERE  ma.staff_id=si.staff_id
+		AND  ma.active_name LIKE '%${activeName}%'
 	</select>
 </mapper>

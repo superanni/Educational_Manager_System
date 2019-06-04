@@ -61,7 +61,6 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
 
 	            registry.addViewController("fileUpload/fileUploadManage.html").setViewName("manager/fileUpload/fileUploadManage");
 
-
             }
 
             //注册拦截器

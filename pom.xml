@@ -31,6 +31,7 @@
 
     <dependencies>
 
+	    <!--springboot web test-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -149,7 +150,7 @@
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>1.2.5</version>
         </dependency>
-        <!--热部署-->
+        <!-- spring 自加载 热部署 -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>springloaded</artifactId>
@@ -165,6 +166,34 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+
+
+	    <!--&lt;!&ndash;JsonFormat&ndash;&gt;-->
+
+	    <!--<dependency>-->
+		    <!--<groupId>com.fasterxml.jackson.core</groupId>-->
+		    <!--<artifactId>jackson-annotations</artifactId>-->
+		    <!--<version>2.8.8</version>-->
+	    <!--</dependency>-->
+
+	    <!--<dependency>-->
+		    <!--<groupId>com.fasterxml.jackson.core</groupId>-->
+		    <!--<artifactId>jackson-databind</artifactId>-->
+		    <!--<version>2.8.8</version>-->
+	    <!--</dependency>-->
+
+	    <!--<dependency>-->
+		    <!--<groupId>org.codehaus.jackson</groupId>-->
+		    <!--<artifactId>jackson-mapper-asl</artifactId>-->
+		    <!--<version>1.9.13</version>-->
+	    <!--</dependency>-->
+	    <!--&lt;!&ndash; joda-time &ndash;&gt;-->
+	    <!--<dependency>-->
+		    <!--<groupId>joda-time</groupId>-->
+		    <!--<artifactId>joda-time</artifactId>-->
+		    <!--<version>2.3</version>-->
+	    <!--</dependency>-->
+
     </dependencies>
 
     <build>

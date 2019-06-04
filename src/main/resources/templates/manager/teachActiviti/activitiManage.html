@@ -10,7 +10,7 @@
 			el:"#showActiveInfo",
 			//在页面加载的时候就被created()添加了数据
 			data:{
-				disciplineName:'',
+				activeName:'',
 				currentPage:1,
 				total:'',
 				totalPage:'',
@@ -25,13 +25,13 @@
 				changePage(data){
 					if(data === "pre"){
 						this.currentPage-=1;
-						if(this.disciplineName.trim() === '')
+						if(this.activeName.trim() === '')
 							this.getAllList();
 						else
 							this.showActiveInfo(this.currentPage);
 					}else if(data === "next"){
 						this.currentPage+=1;
-						if(this.disciplineName.trim() === '')
+						if(this.activeName.trim() === '')
 							this.getAllList();
 						else
 							this.showActiveInfo(this.currentPage);
@@ -51,13 +51,14 @@
 					})
 				},
 				
-				// /*根据课程名称查询课程信息*/
-				// showActiveInfo(currentPage){
-				// 	this.disciplineName=$("[name='disciplineName']").val();
-				// 	this.$http.post("disciplineInfo/info/listLessonManageLike",{disciplineName:this.disciplineName , currentPage:currentPage}).then(result => {
-				// 		this.common(result);
-				// 	})
-				// },
+				/*根据活动状态和活动名查询*/
+				showActivitiInfo(currentPage){
+					this.activeName=$("[name='activeName']").val();
+					this.$http.post("marketActive/listMarketActiveLike",{activeName:this.activeName ,currentPage:currentPage}).then(result => {
+						this.common(result);
+					})
+				},
+				
 				
 				//删除课程信息
 				del(id){
@@ -72,10 +73,10 @@
 					})
 				},
 				
-				// //更新加载页面
-				// update(){
-				// 	$('#content-change-main').load("teachActiviti/saveOrUpdate/saveOrUpdateAcitiviti.html",function(){});
-				// },
+				//更新加载页面
+				update(){
+					$('#content-change-main').load("teachActiviti/saveOrUpdate/saveOrUpdateAcitiviti.html",function(){});
+				},
 
 				//通用的数据绑定
 				common(result){
@@ -100,7 +101,7 @@
 		<!--查询活动、添加活动-->
 		<div class="navbar-menu-wrapper d-flex align-items-stretch">
 			<div class="search-field">
-				<form class="d-flex align-items-center h-100" action="#">
+				<form action="#" method="post" class="form-inline">
 					<div class="input-group">
 						<div class="input-group-prepend" style="margin-top: 5px">
 							<div class="input-group-text" style="height:31px">活动状态</div>
@@ -111,9 +112,9 @@
 								<option value="3">3、结束</option>
 							</select>
 						</div>
-						<input type="text" class="form-control bg-transparent border-0" placeholder="活动名称">
+						<input type="text" class="form-control bg-transparent border-0"  name="activeName" placeholder="活动名称">
 					</div>
-					<button type="submit" class="btn btn-gradient-info btn-sm" @click="showActivitiInfo(1)">查询活动</button>
+					<button type="button" class="btn btn-gradient-info btn-sm" @click="showActivitiInfo(1)">查询活动</button>
 					<router-link tag="button" style="margin-left: 40px" to="/" name="save" class="btn btn-gradient-primary btn-sm">添加活动</router-link>
 				</form>
 			</div>
@@ -189,7 +190,6 @@
 		});
 	});
 </script>
-
 
 <script>
 	//实现全选复选
