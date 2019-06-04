@@ -47,7 +47,7 @@
     </select>
     <select id="selectLikeMessage" resultMap="BaseResultMap" parameterType="String">
         <include refid="baseSelect"></include>
-        where a.messafe_phone like '%${telephone}%'
+        where  a.messafe_phone like '%${telephone}%'
     </select>
 
 </mapper>
