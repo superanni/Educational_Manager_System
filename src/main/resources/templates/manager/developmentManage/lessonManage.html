@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>课程管理</title>
     <script>
-        var vm = new Vue({
+        new Vue({
             router:router,
             el:"#showLessonInfo",
             //在页面加载的时候就被created()添加了数据
@@ -24,17 +24,13 @@
                 changePage(data){
                     if(data === "pre"){
                         this.currentPage-=1;
-                        if(this.disciplineName.trim() === '')
-                            this.getAllList();
-                        else
-                            this.showLessonInfo(this.currentPage);
                     }else if(data === "next"){
                         this.currentPage+=1;
-                        if(this.disciplineName.trim() === '')
-                            this.getAllList();
-                        else
-                            this.showLessonInfo(this.currentPage);
                     }
+                    if(this.disciplineName.trim() === '')
+                        this.getAllList();
+                    else
+                        this.showLessonInfo(this.currentPage);
                 },
 
                 //根据选择框的页数查询数据
@@ -139,7 +135,6 @@
                                 <td>{{item.disciplineTuition}}</td>
                                 <td>{{item.disciplineType}}</td>
                                 <td @click="update()"><router-link tag="button" name="update" class="btn btn-gradient-warning btn-sm" :to="{path: 'update', query: { disciplineId: item.disciplineId }}">修改</router-link></td>
-                                <!--<td><button type="button" class="btn btn-gradient-warning btn-sm">修改</button></td>-->
                                 <td><button type="button" class="btn btn-gradient-danger btn-sm" @click="del(item.disciplineId)">删除</button></td>
                             </tr>
                             <tr>
@@ -173,43 +168,9 @@
 <script>
     $(function(){
         $("[name='save']").on('click',function(){
-            /*$("#myModalLabel").text("新增");
-            $('#myModal').modal();*/
             $('#content-change-main').load("developmentManage/saveOrUpdate/saveOrUpdateLesson.html",function(){});
         });
     });
 </script>
-<!--<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-<div class="modal-dialog" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3 class="card-title">课程信息</h3>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        </div>
-        <div class="modal-body">
-            <div class="form-group">
-                <label for="txt_departmentname">部门名称</label>
-                <input type="text" name="txt_departmentname" class="form-control" id="txt_departmentname" placeholder="部门名称">
-            </div>
-            <div class="form-group">
-                <label for="txt_parentdepartment">上级部门</label>
-                <input type="text" name="txt_parentdepartment" class="form-control" id="txt_parentdepartment" placeholder="上级部门">
-            </div>
-            <div class="form-group">
-                <label for="txt_departmentlevel">部门级别</label>
-                <input type="text" name="txt_departmentlevel" class="form-control" id="txt_departmentlevel" placeholder="部门级别">
-            </div>
-            <div class="form-group">
-                <label for="txt_statu">描述</label>
-                <input type="text" name="txt_statu" class="form-control" id="txt_statu" placeholder="状态">
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button type="submit" class="btn btn-gradient-success btn-sm">提交更改</button>
-            <button type="button" class="btn btn-gradient-primary btn-sm">重置</button>
-        </div>
-    </div>
-</div>
-</div>-->
 </body>
 </html>

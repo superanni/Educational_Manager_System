@@ -53,6 +53,15 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
 
 	            registry.addViewController("teachActiviti/activitiManage.html").setViewName("manager/teachActiviti/activitiManage");
 
+	            /* 图表分析*/
+
+
+	            /*文件上传下载*/
+	            registry.addViewController("fileUpload/saveOrUpdate/saveOrUpdateFileUpload.html").setViewName("manager/fileUpload/saveOrUpdate/saveOrUpdateFileUpload");
+
+	            registry.addViewController("fileUpload/fileUploadManage.html").setViewName("manager/fileUpload/fileUploadManage");
+
+
             }
 
             //注册拦截器

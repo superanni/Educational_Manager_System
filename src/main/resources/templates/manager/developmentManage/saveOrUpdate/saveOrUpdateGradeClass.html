@@ -3,17 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <title>添加、修改班级信息</title>
+    <script>
+        new Vue({
+            el:"#gradeClassForm",
+            //在页面加载的时候就被created()添加了数据
+            data:{
+                list:[],
+                teachers:[],
+                lessonTables:[],
+                classrooms:[]
+            },
+            /*方法执行前*/
+            created(){
+                this.condition();
+            },
+            methods:{
+                /*查询班级信息*/
+                condition(){
+                    var classId=this.getUrlKey("classId");
+                    //判断是否添加或修改
+
+                    if(classId==null){
+                        this.$http.get("classInfo/saveOrUpdate/saveCondition").then(result => {
+                            this.common(result);
+                        })
+                    }else{
+                        this.$http.get("classInfo/saveOrUpdate/condition/"+classId).then(result => {
+                            this.common(result);
+                        })
+                    }
+                },
+                //解析前端路由的url
+                getUrlKey(name){
+                    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null
+                },
+                /*通用的数据绑定*/
+                common(result){
+                    var result=result.body;
+                    if(result.status === 0){
+                        this.teachers=result.teachers;
+                        this.lessonTables=result.lessonTables;
+                        this.classrooms=result.classrooms;
+                        if(result.classInfo!=undefined)
+                            this.list=result.classInfo;
+                    }else{
+                        toastr.error("获取数据失败");
+                    }
+                },
+                /*更新或保存*/
+                submit(){
+                    if(this.list.classId == undefined){
+                        //添加操作
+                        $.post("classInfo/saveClass",$("#gradeClassForm").serialize(),function(result) {
+                            if(result=="true"){
+                                toastr.success("添加成功");
+                                $('#content-change-main').load("developmentManage/gradeclassManage.html",function(){});
+                            }else{
+                                toastr.error("添加失败");
+                            }
+                        })
+                    }else{
+                        //修改操作
+                        $.post("classInfo/updateClass/"+this.list.classId,$("#gradeClassForm").serialize(),function (result) {
+
+                            if(result=="true"){
+                                toastr.success("修改成功");
+                                $('#content-change-main').load("developmentManage/gradeclassManage.html",function(){});
+                            }else{
+                                toastr.error("修改失败");
+                            }
+                        })
+                    }
+                }
+            }
+        })
+    </script>
 </head>
 <body>
+    <script>
+        //回退
+        $(function () {
+            $("[name='backToDisplay']").click(function () {
+                $('#content-change-main').load("developmentManage/gradeclassManage.html",function(){});
+            })
+        })
+    </script>
     <div class="row">
         <div class="col-12 grid-margin">
             <div class="card">
                 <div class="card-body">
                     <div class="modal-header">
-                        <h3 class="card-title">Horizontal Two column</h3>
-                        <button type="button" class="btn btn-gradient-info btn-sm">返回</button>
+                        <h3 class="card-title">developmentManage / saveOrUpdateClass</h3>
+                        <button type="button" name="backToDisplay" class="btn btn-gradient-info btn-sm">返回</button>
                     </div>
-                    <form class="form-sample">
+                    <form class="form-sample" id="gradeClassForm">
+                        <input v-if="list.classId!=undefined" name="_method" value="put" hidden="hidden">
                         <p class="card-description">
                             班级信息
                         </p>
@@ -22,7 +106,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">班级编号</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm" />
+                                        <input readonly="readonly" v-model="list.classId" type="text" class="form-control form-control-sm" />
                                     </div>
                                 </div>
                             </div>
@@ -30,7 +114,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">班级名称</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm" />
+                                        <input type="text" name="className" v-model="list.className" class="form-control form-control-sm" />
                                     </div>
                                 </div>
                             </div>
@@ -40,7 +124,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">开班日期</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm" />
+                                        <input type="text" name="classStartTime" v-model="list.classStartTime" class="form-control form-control-sm" />
                                     </div>
                                 </div>
                             </div>
@@ -48,7 +132,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">结束日期</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm" />
+                                        <input type="text" name="classEndTime" v-model="list.classEndTime" class="form-control form-control-sm" />
                                     </div>
                                 </div>
                             </div>
@@ -58,7 +142,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">班级人数</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm" />
+                                        <input type="text" name="classNumber" v-model="list.classNumber" class="form-control form-control-sm" />
                                     </div>
                                 </div>
                             </div>
@@ -66,12 +150,14 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">班主任</label>
                                     <div class="col-sm-9">
-                                        <select class="form-control">
-                                            <option>王倩倩</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
+                                        <select v-if="list.classId!=undefined" name="staffId" v-model="list.staffId" class="form-control">
+                                            <template v-for="teacher in teachers">
+                                                <option v-if="list.staffId==teacher.staffId" selected="selected" :value="teacher.staffId">{{teacher.staffName}}</option>
+                                                <option v-else :value="teacher.staffId">{{teacher.staffName}}</option>
+                                            </template>
+                                        </select>
+                                        <select v-else name="staffId" class="form-control">
+                                            <option v-for="teacher in teachers" :value="teacher.staffId">{{teacher.staffName}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -82,12 +168,33 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">专业</label>
                                     <div class="col-sm-9">
-                                        <select class="form-control">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
+                                        <select v-if="list.classId!=undefined" class="form-control" name="classMajor" v-model="list.classMajor">
+                                            <option value="软件技术(Java软件开发方向)">软件技术(Java软件开发方向)</option>
+                                            <option value="软件技术(软件测试方向)">软件技术(软件测试方向)</option>
+                                            <option value="软件技术(网络运营策划方向)">软件技术(网络运营策划方向)</option>
+                                            <option value="软件技术(美工与设计方向)">软件技术(美工与设计方向)</option>
+                                            <option value="软件技术(新媒体营销与策划方向)">软件技术(新媒体营销与策划方向)</option>
+                                            <option value="软件技术(前端开发与UI设计方向)">软件技术(前端开发与UI设计方向)</option>
+                                            <option value="软件技术(通信与运维方向)">软件技术(通信与运维方向)</option>
+                                            <option value="软件技术(Android软件开发方向)">软件技术(Android软件开发方向)</option>
+                                            <option value="软件技术(大数据分析方向)">软件技术(大数据分析方向)</option>
+                                            <option value="软件技术(VR虚拟与现实方向)">软件技术(VR虚拟与现实方向)</option>
+                                            <option value="软件技术(18级)">软件技术(18级)</option>
+                                            <option value="计算机应用技术">计算机应用技术</option>
+                                        </select>
+                                        <select v-else class="form-control" name="classMajor">
+                                            <option value="软件技术(Java软件开发方向)">软件技术(Java软件开发方向)</option>
+                                            <option value="软件技术(软件测试方向)">软件技术(软件测试方向)</option>
+                                            <option value="软件技术(网络运营策划方向)">软件技术(网络运营策划方向)</option>
+                                            <option value="软件技术(美工与设计方向)">软件技术(美工与设计方向)</option>
+                                            <option value="软件技术(新媒体营销与策划方向)">软件技术(新媒体营销与策划方向)</option>
+                                            <option value="软件技术(前端开发与UI设计方向)">软件技术(前端开发与UI设计方向)</option>
+                                            <option value="软件技术(通信与运维方向)">软件技术(通信与运维方向)</option>
+                                            <option value="软件技术(Android软件开发方向)">软件技术(Android软件开发方向)</option>
+                                            <option value="软件技术(大数据分析方向)">软件技术(大数据分析方向)</option>
+                                            <option value="软件技术(VR虚拟与现实方向)">软件技术(VR虚拟与现实方向)</option>
+                                            <option value="软件技术(18级)">软件技术(18级)</option>
+                                            <option value="计算机应用技术">计算机应用技术</option>
                                         </select>
                                     </div>
                                 </div>
@@ -96,12 +203,14 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">课程表</label>
                                     <div class="col-sm-9">
-                                        <select class="form-control">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
+                                        <select v-if="list.classId!=undefined" name="syllabusId" class="form-control">
+                                            <template v-for="lessonTable in lessonTables">
+                                                <option v-if="list.syllabusId==lessonTable.syllabusId" selected="selected" :value="lessonTable.syllabusId">{{lessonTable.syllabusName}}</option>
+                                                <option v-else :value="lessonTable.syllabusId">{{lessonTable.syllabusName}}</option>
+                                            </template>
+                                        </select>
+                                        <select v-else name="syllabusId" class="form-control">
+                                            <option v-for="lessonTable in lessonTables" :value="lessonTable.syllabusId">{{lessonTable.syllabusName}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -112,12 +221,14 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">教室</label>
                                     <div class="col-sm-9">
-                                        <select class="form-control">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
+                                        <select v-if="list.classId!=undefined" name="classroomId" class="form-control">
+                                            <template v-for="classroom in classrooms">
+                                                <option v-if="list.classroomId==classroom.classroomId" selected="selected" :value="classroom.classroomId">{{classroom.classroomName}}</option>
+                                                <option v-else :value="classroom.classroomId">{{classroom.classroomName}}</option>
+                                            </template>
+                                        </select>
+                                        <select v-else name="classroomId" class="form-control">
+                                            <option v-for="classroom in classrooms" :value="classroom.classroomId">{{classroom.classroomName}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -125,8 +236,8 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12" align="center">
-                                <button type="submit" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">保存</button>
-                                <button type="button" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">重置</button>
+                                <button type="button" @click="submit" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">保存</button>
+                                <button type="button" name="backToDisplay" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">取消</button>
                             </div>
                         </div>
                     </form>

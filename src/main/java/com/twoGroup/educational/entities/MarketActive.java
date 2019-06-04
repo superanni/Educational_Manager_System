@@ -27,32 +27,32 @@ public class MarketActive implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "active_id", type = IdType.AUTO)
-    private Integer activeId;
+    private Integer activeId;               //编号
     @TableField("staff_id")
-    private Integer staffId;
+    private Integer staffId;                //员工编号
     @TableField("active_name")
-    private String activeName;
+    private String activeName;              //活动名称
     @TableField("active_state")
-    private Integer activeState;
+    private Integer activeState;            //活动状态
     @TableField("active_start")
-    private Date activeStart;
+    private Date activeStart;               //开始时间
     @TableField("active_end")
-    private Date activeEnd;
+    private Date activeEnd;                 //结束时间
     @TableField("active_type")
-    private Integer activeType;
+    private Integer activeType;             //活动类型
     @TableField("active_coste_emtimate")
-    private Double activeCosteEmtimate;  //预算成本
+    private Double activeCosteEmtimate;     //预算成本
     @TableField("active_coste")
-    private Double activeCoste;      //实际成本
+    private Double activeCoste;             //实际成本
     @TableField("active_refect_estimate")
-    private Integer activeRefectEstimate;//预期反应
+    private Integer activeRefectEstimate;   //预期反应
     @TableField("active_student")
-    private String activeStudent; //预期人数
+    private String activeStudent;            //预期人数
     @TableField("active_content")
-    private String activeContent;
+    private String activeContent;            //活动描述
 
     @TableField(exist = false)
-    private StaffInfo staffInfo;  //对应员工
+    private StaffInfo staffInfo;             //对应员工
 
 
 

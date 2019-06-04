@@ -3,12 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <title>添加、修改课程表信息</title>
+    <script>
+        new Vue({
+            el:"#lessonTableForm",
+            //在页面加载的时候就被created()添加了数据
+            data:{
+                list:[]
+            },
+            /*方法执行前*/
+            created(){
+                this.condition();
+            },
+            methods:{
+                /*查询课程表*/
+                condition(){
+                    var syllabusId=this.getUrlKey("syllabusId");
+                    //判断是否添加或修改
+                    if(syllabusId==null){
+                    }else{
+                        this.$http.get("lessonTableInfo/saveOrUpdate/condition/"+syllabusId).then(result => {
+                            this.common(result);
+                        })
+                    }
+                },
+                //解析前端路由的url
+                getUrlKey(name){
+                    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null
+                },
+                /*通用的数据绑定*/
+                common(result){
+                    var result=result.body;
+                    if(result.status === 0){
+                        this.list=result.syllabusInfo;
+
+                    }else{
+                        toastr.error("获取数据失败");
+                    }
+                },
+                /*更新或保存*/
+                submit(){
+                    if(this.list.syllabusId == undefined){
+                        //添加操作
+                        $.post("lessonTableInfo/saveLessonTable",$("#lessonTableForm").serialize(),function(result) {
+                            if(result=="true"){
+                                toastr.success("添加成功");
+                                $('#content-change-main').load("developmentManage/lessonTable.html",function(){});
+                            }else{
+                                toastr.error("添加失败");
+                            }
+                        })
+                    }else{
+                        //修改操作
+                        $.post("lessonTableInfo/updateLessonTable/"+this.list.syllabusId,$("#lessonTableForm").serialize(),function (result) {
+                            if(result=="true"){
+                                toastr.success("修改成功");
+                                $('#content-change-main').load("developmentManage/lessonTable.html",function(){});
+                            }else{
+                                toastr.error("修改失败");
+                            }
+                        })
+                    }
+                }
+            }
+        })
+    </script>
 </head>
 <body>
 <script>
     $(function () {
         $("[name='backToDisplay']").click(function () {
-            $('#content-change-main').load("developmentManage/lessonTable",function(){});
+            $('#content-change-main').load("developmentManage/lessonTable.html",function(){});
         })
     })
 </script>
@@ -17,10 +81,11 @@
             <div class="card">
                 <div class="card-body">
                     <div class="modal-header">
-                        <h3 class="card-title">Horizontal Two column</h3>
+                        <h3 class="card-title">developmentManage / saveOrUpdateLessonTable</h3>
                         <button type="button" name="backToDisplay" class="btn btn-gradient-info btn-sm">返回</button>
                     </div>
-                    <form class="form-sample">
+                    <form class="form-sample" id="lessonTableForm">
+                        <input v-if="list.syllabusId!=undefined" name="_method" value="put" hidden="hidden">
                         <p class="card-description">
                             课程表信息
                         </p>
@@ -29,7 +94,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">编号</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm" />
+                                        <input readonly="readonly" v-model="list.syllabusId" type="text" class="form-control form-control-sm" />
                                     </div>
                                 </div>
                             </div>
@@ -37,7 +102,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">课程表名称</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm" />
+                                        <input type="text" name="syllabusName" v-model="list.syllabusName" class="form-control form-control-sm" />
                                     </div>
                                 </div>
                             </div>
@@ -47,7 +112,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">星期一</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm" />
+                                        <input type="text" name="syllabusYi" v-model="list.syllabusYi" class="form-control form-control-sm" />
                                     </div>
                                 </div>
                             </div>
@@ -55,7 +120,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">星期二</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm" />
+                                        <input type="text" name="syllabusEr" v-model="list.syllabusEr" class="form-control form-control-sm" />
                                     </div>
                                 </div>
                             </div>
@@ -65,7 +130,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">星期三</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm"/>
+                                        <input type="text" name="syllabusSan" v-model="list.syllabusSan" class="form-control form-control-sm" />
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +138,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">星期四</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm"/>
+                                        <input type="text" name="syllabusSi" v-model="list.syllabusSi" class="form-control form-control-sm" />
                                     </div>
                                 </div>
                             </div>
@@ -83,7 +148,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">星期五</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm"/>
+                                        <input type="text" name="syllabusWu" v-model="list.syllabusWu" class="form-control form-control-sm" />
                                     </div>
                                 </div>
                             </div>
@@ -91,7 +156,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">星期六</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm"/>
+                                        <input type="text" name="syllabusLiu" v-model="list.syllabusLiu" class="form-control form-control-sm" />
                                     </div>
                                 </div>
                             </div>
@@ -101,16 +166,15 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">星期天</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm"/>
+                                        <input type="text" name="syllabusQi" v-model="list.syllabusQi" class="form-control form-control-sm" />
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12" align="center">
-                                <button type="submit" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">保存</button>
-                                <button type="button" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">重置</button>
-                            </div>
+                                <button type="button" @click="submit" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">保存</button>
+                                <button type="button" name="backToDisplay" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">取消</button>                            </div>
                         </div>
                     </form>
                 </div>

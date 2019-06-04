@@ -17,7 +17,7 @@
         <result column="class_desc" property="classDesc" />
         <result column="class_major" property="classMajor" />
 
-        <!--        syllabus_id 课程编号 关联21课程表  syllabus_info 主键-->
+        <!--        syllabus_id 课程表编号 关联21课程表  syllabus_info 主键-->
         <association property="syllabusInfo" javaType="syllabusInfo">
             <id column="syllabus_id" property="syllabusId" />
             <result column="syllabus_yi" property="syllabusYi" />
@@ -75,4 +75,26 @@
         </association>
     </resultMap>
 
+    <select id="selectLinkList" resultMap="BaseResultMap">
+        select * from
+        class_info class,syllabus_info lessontable,classroom_info classroom,staff_info teacher
+        where
+        class.syllabus_id = lessontable.syllabus_id and class.classroom_id = classroom.classroom_id and class.staff_id = teacher.staff_id
+    </select>
+
+    <select id="selectListLike" resultMap="BaseResultMap">
+        select * from
+        class_info class,syllabus_info lessontable,classroom_info classroom,staff_info teacher
+        where
+        class.syllabus_id = lessontable.syllabus_id and class.classroom_id = classroom.classroom_id and class.staff_id = teacher.staff_id
+        and class_name like '%${className}%'
+    </select>
+
+    <select id="selectLinkById" resultMap="BaseResultMap">
+        select * from
+        class_info class,syllabus_info lessontable,classroom_info classroom,staff_info teacher
+        where
+        class.syllabus_id = lessontable.syllabus_id and class.classroom_id = classroom.classroom_id and class.staff_id = teacher.staff_id
+        and class.class_id=#{classId}
+    </select>
 </mapper>

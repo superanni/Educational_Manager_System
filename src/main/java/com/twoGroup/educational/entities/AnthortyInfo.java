@@ -26,15 +26,15 @@ public class AnthortyInfo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "anthorty_id", type = IdType.AUTO)
-    private Integer anthortyId;
+    private Integer anthortyId;             //权限编号
     @TableField("anthorty_pid")
-    private Integer anthortyPid;
+    private Integer anthortyPid;            //权限菜单编号
     @TableField("anthorty_name")
-    private String anthortyName;
+    private String anthortyName;            //权限名称
     @TableField("anthorty_desc")
-    private String anthortyDesc;
+    private String anthortyDesc;            //权限描述
     @TableField("anthorty_url")
-    private String anthortyUrl;
+    private String anthortyUrl;             //权限url
 
 
 }

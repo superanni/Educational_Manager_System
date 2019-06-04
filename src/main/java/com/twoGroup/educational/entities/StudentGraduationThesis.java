@@ -28,40 +28,30 @@ public class StudentGraduationThesis implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "student_paper_id", type = IdType.AUTO)
-    private Integer studentPaperId;
+    private Integer studentPaperId;         //毕业论文科研训练编号
     @TableField("student_id")
-    private Integer studentId;
+    private Integer studentId;              //学生编号
     @TableField("staff_id")
-    private Integer staffId;
+    private Integer staffId;                //员工编号
     @TableField("paper_title")
-    private String paperTitle;
-    /**
-     * 称谓
-     */
+    private String paperTitle;              //论文标题
     @TableField("paper_teacher")
-    private String paperTeacher;
+    private String paperTeacher;            //论文指导老师
     @TableField("paper_start")
-    private String paperStart;
-    /**
-     * 政治面貌
-     */
+    private String paperStart;              //起止时间
     @TableField("paper_time")
-    private Date paperTime;
-    /**
-     * 何处工作任职
-     */
+    private Date paperTime;                 //答辩时间
     @TableField("paper_score")
-    private String paperScore;
+    private String paperScore;              //成绩
     @TableField("paper_comments")
-    private String paperComments;
+    private String paperComments;           //评语
     @TableField("reg_time")
-    private Date regTime;
+    private Date regTime;                   //登记时间
     @TableField("paper_note")
-    private String paperNote;
-
+    private String paperNote;               //备注
     @TableField(exist = false)
-    private StaffInfo staffInfo;  //对应员工
+    private StaffInfo staffInfo;             //对应员工
     @TableField(exist = false)
-    private StudentInfo studentInfo;  //对应学生
+    private StudentInfo studentInfo;        //对应学生
 
 }

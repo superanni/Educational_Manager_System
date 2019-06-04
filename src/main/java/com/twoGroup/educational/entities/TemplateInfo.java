@@ -27,12 +27,12 @@ public class TemplateInfo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "template_id", type = IdType.AUTO)
-    private Integer templateId;
+    private Integer templateId;             //模板编号
     @TableField("template_title")
-    private String templateTitle;
+    private String templateTitle;           //标题
     @TableField("template_content")
-    private String templateContent;
+    private String templateContent;         //内容
     @TableField("template_type")
-    private String templateType;
+    private String templateType;            //类别
 
 }
