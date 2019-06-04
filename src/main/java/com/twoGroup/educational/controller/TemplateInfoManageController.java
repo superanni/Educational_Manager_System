@@ -1,7 +1,6 @@
 package com.twoGroup.educational.controller;
 
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.github.pagehelper.PageHelper;
@@ -27,13 +26,13 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("InforManager")
-public class TemplateInfoController {
-    private Logger logger = LoggerFactory.getLogger(TemplateInfoController.class);
+public class TemplateInfoManageController {
+    private Logger logger = LoggerFactory.getLogger(TemplateInfoManageController.class);
 
     @Autowired
     TemplateInfoService templateInfoService;
 
-    private String locationURI = "manager/InformManager";      //跳转路径前缀
+    private String locationURI = "manager/InformManager/saveOrUpdate";      //跳转路径前缀
 
     private Wrapper<TemplateInfo> wrapper;                      //查询条件
     private List<TemplateInfo> templateInfos;
@@ -51,7 +50,6 @@ public class TemplateInfoController {
         PageHelper.startPage(currentPage, 5);        //获取当前页记录,每页5条
         templateInfos = templateInfoService.selectList(wrapper);
         if (templateInfos != null && templateInfos.size() != 0) {
-            logger.info(templateInfos.get(2).getTemplateTitle());
            return DataTransUtil.dataUtil(map, templateInfos);
         } else
             logger.info("查询数据失败");
