@@ -36,5 +36,18 @@
             <result column="staff_image" property="staffImage" />
         </association>
     </resultMap>
+    <sql id="baseSelect">
+        select a.*,b.staff_name from messafe_info a join staff_info b ON a.staff_id= b.staff_id
+
+    </sql>
+
+    <select id="selectAllMessage" resultMap="BaseResultMap" >
+      <include refid="baseSelect"></include>
+
+    </select>
+    <select id="selectLikeMessage" resultMap="BaseResultMap" parameterType="String">
+        <include refid="baseSelect"></include>
+        where  a.messafe_phone like '%${telephone}%'
+    </select>
 
 </mapper>
