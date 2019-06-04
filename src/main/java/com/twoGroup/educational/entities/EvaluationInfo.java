@@ -30,40 +30,40 @@ public class EvaluationInfo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "evaluation_id", type = IdType.AUTO)
-    private Integer evaluationId;
+    private Integer evaluationId;              //编号
     @TableField("student_id")
-    private Integer studentId;
+    private Integer studentId;                 //学生编号
     @TableField("discipline_id")
-    private Integer disciplineId;
+    private Integer disciplineId;              //课程信息
     @TableField("staff_id")
-    private Integer staffId;
+    private Integer staffId;                   //教师编号
     @TableField("class_id")
-    private Integer classId;
+    private Integer classId;                   //班级编号
     @TableField("evaluation_xueqi")
-    private String evaluationXueqi;
+    private String evaluationXueqi;            //学期
     @TableField("evaluation_month")
-    private String evaluationMonth;
+    private String evaluationMonth;            //月份
     @TableField("evaluation_major")
-    private String evaluationMajor;
-    private Integer score1;
+    private String evaluationMajor;            //专业
+    private Integer score1;                    //评分1-6
     private Integer score2;
     private Integer score3;
     private Integer score4;
     private Integer score5;
     private Integer score6;
-    private Integer sum;
+    private Integer sum;                       //总分
     @TableField("evaluation_time")
-    private Date evaluationTime;
+    private Date evaluationTime;               //评价时间
     @TableField("evaluation_note")
-    private String evaluationNote;
+    private String evaluationNote;             //备注
 
     @TableField(exist = false)
-    private StudentInfo studentInfo;
+    private StudentInfo studentInfo;            //对应学生编号
     @TableField(exist = false)
-    private DisciplineInfo disciplineInfo;
+    private DisciplineInfo disciplineInfo;      //对应学科编号
     @TableField(exist = false)
-    private StaffInfo staffInfo;
+    private StaffInfo staffInfo;                //对应员工编号
     @TableField(exist = false)
-    private ClassInfo classInfo;
+    private ClassInfo classInfo;                //对应班级编号
 
 }

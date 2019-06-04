@@ -12,7 +12,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ *   新增学生 履历档案表 track_record_info -TrackRecordInfo
  * </p>
  *
  * @author GroupTwo
@@ -26,16 +26,16 @@ public class TrackRecordInfo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "track_record_id", type = IdType.AUTO)
-    private Integer trackRecordId;
+    private Integer trackRecordId;       //履历档案编号
     @TableField("student_id")
-    private Integer studentId;
+    private Integer studentId;           //学生编号
     @TableField("track_record_title")
-    private String trackRecordTitle;
+    private String trackRecordTitle;      //履历档案标题
     @TableField("track_record_content")
-    private String trackRecordContent;
+    private String trackRecordContent;     //履历档案内容
     @TableField("track_record_time")
-    private Date trackRecordTime;
+    private Date trackRecordTime;          //履历密封时间
     private Integer enrollment;
     @TableField("next_record_time")
-    private Date nextRecordTime;
+    private Date nextRecordTime;           //履历更新时间
 }

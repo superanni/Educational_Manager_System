@@ -133,8 +133,8 @@
                                 <td>{{item.className}}</td>
                                 <td>{{item.classNumber}}</td>
                                 <td>{{item.classMajor}}</td>
-                                <td>{{item.classStartTime}}</td>
-                                <td>{{item.classEndTime}}</td>
+                                <td>{{dateFormat(item.classStartTime)}}</td>
+                                <td>{{dateFormat(item.classEndTime)}}</td>
                                 <td>{{item.staffInfo.staffName}}</td>
                                 <td @click="update()"><router-link tag="button" name="update" class="btn btn-gradient-warning btn-sm" :to="{path: 'update', query: { classId: item.classId }}">修改</router-link></td>
                                 <td><button type="button" class="btn btn-gradient-danger btn-sm" @click="del(item.classId)">删除</button></td>

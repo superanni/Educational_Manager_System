@@ -28,29 +28,28 @@ public class AttendanceInfo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "attendance_id", type = IdType.AUTO)
-    private Integer attendanceId;
+    private Integer attendanceId;           //学生编号
     @TableField("student_id")
-    private Integer studentId;
+    private Integer studentId;              //员工编号
     @TableField("staff_id")
-    private Integer staffId;
+    private Integer staffId;                //员工编号
     @TableField("attendance_desc")
-    private String attendanceDesc;
+    private String attendanceDesc;          //考勤描述
     @TableField("attendance_state")
-    private String attendanceState;
+    private String attendanceState;         //考勤状态
     @TableField("attendance_time")
-    private Date attendanceTime;
+    private Date attendanceTime;            //考勤时间
     @TableField("attendance_remark")
-    private String attendanceRemark;
+    private String attendanceRemark;        //考勤备注
     @TableField("attendance_xuenian")
-    private String attendanceXuenian;
+    private String attendanceXuenian;       //学年
     @TableField("attendance_xueqi")
-    private String attendanceXueqi;
+    private String attendanceXueqi;         //学期
     @TableField("attendance_month")
-    private String attendanceMonth;
+    private String attendanceMonth;         //月份
 
     @TableField(exist = false)
-    private StaffInfo staffInfo;  //对应员工
+    private StaffInfo staffInfo;            //对应员工
     @TableField(exist = false)
-    private StudentInfo studentInfo;  //对应学生
-
+    private StudentInfo studentInfo;        //对应学生
 }

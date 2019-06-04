@@ -22,7 +22,7 @@
 					//判断是否添加或修改
 					if(activeId==null){
 					}else{
-						this.$http.get("disciplineInfo/saveOrUpdate/condition/"+activeId).then(result => {
+						this.$http.get("marketActive/saveOrUpdate/condition/"+activeId).then(result => {
 							this.common(result);
 						})
 					}
@@ -40,11 +40,12 @@
 						toastr.error("获取数据失败");
 					}
 				},
+				
 				/*更新或保存*/
 				submit(){
 					if(this.list.activeId == undefined){
 						//添加操作
-						$.post("disciplineInfo/saveLesson",$("#activeForm").serialize(),function(result) {
+						$.post("marketActive/saveMarkeActive",$("#activeForm").serialize(),function(result) {
 							if(result=="true"){
 								toastr.success("添加成功");
 								$('#content-change-main').load("teachActiviti/activitiManage.html",function(){});
@@ -54,7 +55,7 @@
 						})
 					}else{
 						//修改操作
-						$.post("disciplineInfo/updateLesson/"+this.list.activeId,$("#activeForm").serialize(),function (result) {
+						$.post("marketActive/updateMarkeActive/"+this.list.activeId,$("#activeForm").serialize(),function (result) {
 							if(result=="true"){
 								toastr.success("修改成功");
 								$('#content-change-main').load("teachActiviti/activitiManage.html",function(){});

@@ -9,7 +9,7 @@
         <result column="class_transaction_title" property="classTransactionTitle" />
         <result column="class_transaction_content" property="classTransactionContent" />
         <result column="class_transaction_person" property="classTransactionPerson" />
-        <result column="class_transaction_time" property="classTransactionTime" />
+        <result column="class_transaction_time" property="classTransactionTime"/>
         <result column="class_transaction_remark" property="classTransactionRemark" />
 
 
@@ -30,4 +30,20 @@
         </association>
     </resultMap>
 
+    <select id="selectLinkList" resultMap="BaseResultMap">
+        select * from class_transaction_info trans,class_info class
+        where trans.class_id=class.class_id
+    </select>
+
+    <select id="selectListLike" resultMap="BaseResultMap">
+        select * from class_transaction_info trans,class_info class
+        where trans.class_id=class.class_id
+        and class_transaction_title like '%${classTransactionTitle}%'
+    </select>
+
+    <select id="selectLinkById" resultMap="BaseResultMap">
+        select * from class_transaction_info trans,class_info class
+        where trans.class_id=class.class_id
+        and class_transaction_id=#{classTransactionId}
+    </select>
 </mapper>

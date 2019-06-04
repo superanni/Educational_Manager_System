@@ -1,10 +1,13 @@
 package com.twoGroup.educational.controller;
 
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.github.pagehelper.PageHelper;
 import com.twoGroup.educational.commonUtils.DataTransUtil;
+import com.twoGroup.educational.commonUtils.RedisUtils;
+import com.twoGroup.educational.entities.ClassInfo;
 import com.twoGroup.educational.entities.ClassroomInfo;
 import com.twoGroup.educational.entities.DisciplineInfo;
 import com.twoGroup.educational.service.ClassroomInfoService;
@@ -33,6 +36,9 @@ public class ClassroomInfoManageController {
     @Autowired
     /*课程信息业务接口*/
     ClassroomInfoService classroomInfoService;
+    //redis
+    @Autowired
+    RedisUtils redisUtils;
 
     //所有教室信息
     private List<ClassroomInfo> classroomInfos;
@@ -46,13 +52,36 @@ public class ClassroomInfoManageController {
      */
     @GetMapping("info/listClassroomManage/{currentPage}")
     public @ResponseBody String listClassroomManage(Map map, @PathVariable int currentPage) {
-        //每页显示五行数据
-        PageHelper.startPage(currentPage, 5);
-        //获取数据
-        classroomInfos = classroomInfoService.selectList(null);
-        if (classroomInfos != null) {
-            //数据绑定
-            return DataTransUtil.dataUtil(map, classroomInfos);
+        try {
+            classroomInfos = (List<ClassroomInfo>) redisUtils.get("classroomInfos");
+            //在redis缓存中查询是否有数据
+            if (null==classroomInfos){
+                //线程锁定只让第一位用户在数据库中访问数据
+                synchronized (this){
+                    classroomInfos = (List<ClassroomInfo>) redisUtils.get("classroomInfos");
+                    if (null==classroomInfos){
+                        classroomInfos = classroomInfoService.selectList(null);
+                        redisUtils.set("classroomInfos",classroomInfos);
+                    }
+                }
+            }
+            //封装的总页数、总记录数、当前页数
+            DataTransUtil.redisDataUtil(map,classroomInfos,currentPage,5);
+            //如果redis有缓存数据则分页查询出数据
+            classroomInfos= (List<ClassroomInfo>) redisUtils.selectByPage("classroomInfos",currentPage,5);
+            if (classroomInfos != null) {
+                //数据绑定
+                map.put("list", classroomInfos);
+                return JSON.toJSONString(map);
+            }
+        }catch (Exception e){
+            PageHelper.startPage(currentPage,5);
+            classroomInfos = classroomInfoService.selectList(null);
+            if (classroomInfos != null) {
+                //数据绑定
+                return DataTransUtil.dataUtil(map,classroomInfos);
+            }
+            return "false";
         }
         return "false";
     }
@@ -66,14 +95,16 @@ public class ClassroomInfoManageController {
         Wrapper<ClassroomInfo> classroomInfoWrapper = null;
         if (!"".equals(classroomInfo.getClassroomName())) {
             classroomInfoWrapper = new EntityWrapper<ClassroomInfo>().like("classroom_name", classroomInfo.getClassroomName().trim());
-        }
-        //每页显示五行数据
-        PageHelper.startPage(currentPage, 5);
-        //获取数据
-        classroomInfos = classroomInfoService.selectList(classroomInfoWrapper); //也可以用匿名类
-        if (classroomInfos != null) {
-            //数据绑定
-            return DataTransUtil.dataUtil(map, classroomInfos);
+            //每页显示五行数据
+            PageHelper.startPage(currentPage, 5);
+            //获取数据
+            classroomInfos = classroomInfoService.selectList(classroomInfoWrapper); //也可以用匿名类
+            if (classroomInfos != null) {
+                //数据绑定
+                return DataTransUtil.dataUtil(map, classroomInfos);
+            }
+        }else {
+            return listClassroomManage(map,currentPage);
         }
         return "false";
     }
@@ -105,6 +136,7 @@ public class ClassroomInfoManageController {
             try {
                 boolean b = classroomInfoService.insert(classroomInfo);
                 if (b==true){
+                    redisUtils.delete("classroomInfos");
                     return "true";
                 }else {
                     return "false";
@@ -126,6 +158,7 @@ public class ClassroomInfoManageController {
         try {
             boolean b = classroomInfoService.updateById(classroomInfo);
             if (b==true){
+                redisUtils.delete("classroomInfos");
                 return "true";
             }else {
                 return "false";
@@ -142,10 +175,12 @@ public class ClassroomInfoManageController {
     public @ResponseBody String deleteDiscipline(@PathVariable String classroomId) {
         try {
             boolean b = classroomInfoService.deleteById(Integer.parseInt(classroomId));
-            if (b == false) {
+            if (b==true){
+                redisUtils.delete("classroomInfos");
+                return "true";
+            }else {
                 return "false";
             }
-            return "true";
         } catch (Exception e) {
             return "false";
         }

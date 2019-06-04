@@ -4,16 +4,117 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<title>首页</title>
 	
-	<script th:src="@{js/highcharts.js}" type="text/javascript"></script>
-	<script th:src="@{js/jquery.highchartTable.js}" type="text/javascript"></script>
+	<script src="js/highcharts.js" type="text/javascript"></script>
+	<script src="js/jquery.highchartTable.js" type="text/javascript"></script>
 	<script language="javascript">
 		$(document).ready(function() {
 			$('table.highchart').highchartTable();
 		});
 	</script>
+	<script>
+		new Vue({
+			router:router,
+			el:"#showStudent_bootm",
+			//在页面加载的时候就被created()添加了数据
+			data:{
+				className:'',
+				currentPage:1,
+				total:'',
+				totalPage:'',
+				list:[]
+			},
+			/*方法执行前*/
+			created(){
+				this.getAllList();
+			},
+			methods:{
+				/*分页处理*/
+				changePage(data){
+					if(data === "pre"){
+						this.currentPage-=1;
+					}else if(data === "next"){
+						this.currentPage+=1;
+					}
+					if(this.className.trim() === '')
+						this.getAllList();
+					else
+						this.showStudent_bootm(this.currentPage);
+				},
+
+				//根据选择框的页数查询数据
+				selectPage(){
+					this.currentPage=$("[name='currentPage']").val();
+					this.showStudent_bootm(this.currentPage);
+				},
+
+				/*查询所有班级信息*/
+				getAllList(){
+					this.$http.get("classInfo/info/listClassManage/"+this.currentPage).then(result => {
+						this.common(result);
+					})
+				},
+
+				/*根据课程名称查询课程信息*/
+				showStudent_bootm(currentPage){
+					this.className=$("[name='className']").val();
+					this.$http.post("classInfo/info/listClassManageLike",{className:this.className , currentPage:currentPage}).then(result => {
+						this.common(result);
+					})
+				},
+
+				//删除班级信息
+				del(id){
+					this.$http.delete("classInfo/info/deleteClassInfo/"+id).then(result => {
+						var result=result.body;
+						if (result==true){
+							toastr.success("删除成功");
+							this.getAllList();
+						} else{
+							toastr.warning("删除失败");
+						}
+					})
+				},
+
+				//更新加载页面
+				update(){
+					$('#content-change-main').load("developmentManage/saveOrUpdate/saveOrUpdateGradeClass.html",function(){});
+				},
+
+				//通用的数据绑定
+				common(result){
+					var result=result.body;
+					if(result.status === 0){
+						this.list = result.list;
+						this.total = result.total;
+						this.currentPage = result.currentPage;
+						this.totalPage = result.totalPage;
+					}else{
+						toastr.error("获取数据失败");
+					}
+				}
+			}
+		})
+	</script>
 </head>
 <body>
 
+
+<div class="col-xs-6 col-lg-4">
+	<div class="small-chart-wrapper">
+		<div class="small-chart" id="sparklineLine"><canvas style="display: inline-block; width: 80px; height: 30px; vertical-align: top;" width="80" height="30"></canvas></div>
+		<div class="small-chart-info">
+			<label>Average</label>
+			<strong>1567.89</strong>
+		</div>
+		<script type="text/javascript">
+			var sparklineLineData = [15, 16, 17, 19, 10, 15, 13, 12, 12, 14, 16, 17];
+		</script>
+	</div>
+</div>
+
+
+
+<div id="showStudent_bootm">
 <div align="center">
 	<div class="alert alert-info"
 	     style="margin: 0px; padding: 5px; width: 100%;">
@@ -108,7 +209,6 @@
 		</div>
 	</div>
 	
-	
 	<!-- 加入其它信息 -->
 	<div class="row" >
 		<div class="col-sm-8">
@@ -170,10 +270,9 @@
 			</div>
 		</div>
 	</div>
-	
-	
-</div>
+  </div>
 	</div>
+</div>
 </div>
 </body>
 </html>

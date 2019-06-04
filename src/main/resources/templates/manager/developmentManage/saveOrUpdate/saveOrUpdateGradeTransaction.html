@@ -1,35 +1,120 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>添加、修改班级事务</title>
+    <!--bootstrap的时间控件-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap-datetimepicker.css}">
+    <script th:src="@{/js/bootstrap-datetimepicker.js}"></script>
+    <script th:src="@{/js/bootstrap-datetimepicker.zh-CN.js}"></script>
+    <script>
+        new Vue({
+            el:"#classTransactionForm",
+            //在页面加载的时候就被created()添加了数据
+            data:{
+                list:[],
+                classes:[]
+            },
+            /*方法执行前*/
+            created(){
+                this.condition();
+            },
+            methods:{
+                /*查询班级事务信息*/
+                condition(){
+                    var classTransactionId=this.getUrlKey("classTransactionId");
+                    //判断是否添加或修改
+
+                    if(classTransactionId==null){
+                        this.$http.get("classTransaction/saveOrUpdate/saveCondition").then(result => {
+                            this.common(result);
+                        })
+                    }else{
+                        this.$http.get("classTransaction/saveOrUpdate/condition/"+classTransactionId).then(result => {
+                            this.common(result);
+                        })
+                    }
+                },
+                //解析前端路由的url
+                getUrlKey(name){
+                    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null
+                },
+                /*通用的数据绑定*/
+                common(result){
+                    var result=result.body;
+                    if(result.status === 0){
+                        this.classes=result.classInfos;
+                        if(result.classTransactionInfo!=undefined)
+                            this.list=result.classTransactionInfo;
+                        this.dateFormat(this.list);
+                    }else{
+                        toastr.error("获取数据失败");
+                    }
+                },
+                /*更新或保存*/
+                submit(){
+                    if(this.list.classTransactionId == undefined){
+                        //添加操作
+                        $.post("classTransaction/saveClassTransaction",$("#classTransactionForm").serialize(),function(result) {
+                            if(result=="true"){
+                                toastr.success("添加成功");
+                                $('#content-change-main').load("developmentManage/gradeclassTransaction.html",function(){});
+                            }else{
+                                toastr.error("添加失败");
+                            }
+                        })
+                    }else{
+                        //修改操作
+                        $.post("classTransaction/updateClassTransaction/"+this.list.classTransactionId,$("#classTransactionForm").serialize(),function (result) {
+                            if(result=="true"){
+                                toastr.success("修改成功");
+                                $('#content-change-main').load("developmentManage/gradeclassTransaction.html",function(){});
+                            }else{
+                                toastr.error("修改失败");
+                            }
+                        })
+                    }
+                },
+                //解析时间
+                dateFormat(list){
+                    list.classTransactionTime=dateFormat(list.classTransactionTime);
+                }
+            }
+        })
+    </script>
 </head>
 <body>
 <script>
     $(function () {
         $("[name='backToDisplay']").click(function () {
-            $('#content-change-main').load("developmentManage/gradeclassTransaction",function(){});
+            $('#content-change-main').load("developmentManage/gradeclassTransaction.html",function(){});
         })
-    })
+    });
+    $("#activeTime").datetimepicker({
+        format: 'yyyy-mm-dd hh:ii:ss',
+        language: 'zh-CN',
+        autoclose:true,
+    });
 </script>
     <div class="row">
         <div class="col-12 grid-margin">
             <div class="card">
                 <div class="card-body">
                     <div class="modal-header">
-                        <h3 class="card-title">Horizontal Two column</h3>
+                        <h3 class="card-title">developmentManage / saveOrUpdateGradeTransaction</h3>
                         <button type="button" name="backToDisplay" class="btn btn-gradient-info btn-sm">返回</button>
                     </div>
-                    <form class="form-sample">
+                    <form class="form-sample" id="classTransactionForm">
+                        <input v-if="list.classTransactionId!=undefined" name="_method" value="put" hidden="hidden">
                         <p class="card-description">
                             班级事务
                         </p>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">班级</label>
+                                    <label class="col-sm-3 col-form-label">编号</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm" />
+                                        <input readonly="readonly" v-model="list.classTransactionId" type="text" class="form-control form-control-sm" />
                                     </div>
                                 </div>
                             </div>
@@ -37,7 +122,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">主题</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm" />
+                                        <input type="text" name="classTransactionTitle" v-model="list.classTransactionTitle" class="form-control form-control-sm" />
                                     </div>
                                 </div>
                             </div>
@@ -47,7 +132,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">组织人</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm" />
+                                        <input type="text" name="classTransactionPerson" v-model="list.classTransactionPerson" class="form-control form-control-sm" />
                                     </div>
                                 </div>
                             </div>
@@ -55,7 +140,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">活动日期</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm" />
+                                        <input type="text" id="activeTime" name="classTransactionTime" v-model="list.classTransactionTime" class="form-control form-control-sm" readonly  data-date-format="yyyy-mm-dd hh:ii:ss"/>
                                     </div>
                                 </div>
                             </div>
@@ -65,7 +150,15 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">组班级</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm" />
+                                        <select v-if="list.classTransactionId!=undefined" name="classId" v-model="list.classId" class="form-control">
+                                            <template v-for="c in classes">
+                                                <option v-if="list.classId==c.classId" selected="selected" :value="c.classId">{{c.className}}</option>
+                                                <option v-else :value="c.classId">{{c.className}}</option>
+                                            </template>
+                                        </select>
+                                        <select v-else name="classId" class="form-control">
+                                            <option v-for="c in classes" :value="c.classId">{{c.className}}</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -75,19 +168,19 @@
                         </p>
                         <div class="form-group">
                             <label>内容</label>
-                            <textarea class="form-control" rows="4"></textarea>
+                            <textarea name="classTransactionContent" v-model="list.classTransactionContent" class="form-control" rows="4"></textarea>
                         </div>
                         <p class="card-description">
                             备注信息
                         </p>
                         <div class="form-group">
                             <label>备注信息</label>
-                            <textarea class="form-control" rows="4"></textarea>
+                            <textarea name="classTransactionRemark" v-model="list.classTransactionRemark" class="form-control" rows="4"></textarea>
                         </div>
                         <div class="row">
                             <div class="col-md-12" align="center">
-                                <button type="submit" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">保存</button>
-                                <button type="button" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">重置</button>
+                                <button type="button" @click="submit" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">保存</button>
+                                <button type="button" name="backToDisplay" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">取消</button>
                             </div>
                         </div>
                     </form>

@@ -61,6 +61,20 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
                 registry.addViewController("studentManager/studentWriteGradeInfo.html").setViewName("manager/studentManager/studentWriteGradeInfo");
                 registry.addViewController("studentManager/saveOrUpdate/saveOrUpdateStudentWriteGrade.html").setViewName("manager/studentManager/saveOrUpdate/saveOrUpdateStudentWriteGrade");
 
+	            /* 图表分析*/
+
+
+	            /*文件上传下载*/
+	            registry.addViewController("fileUpload/saveOrUpdate/saveOrUpdateFileUpload.html").setViewName("manager/fileUpload/saveOrUpdate/saveOrUpdateFileUpload");
+
+	            registry.addViewController("fileUpload/fileUploadManage.html").setViewName("manager/fileUpload/fileUploadManage");
+
+                /*
+                 * 信息通知管理
+                 * */
+                registry.addViewController("InforManager/templateManage").setViewName("manager/InformManager/templateManage");
+                registry.addViewController("InforManager/messafeinfoManage").setViewName("manager/InformManager/messafeinfoManage");
+
             }
 
             //注册拦截器

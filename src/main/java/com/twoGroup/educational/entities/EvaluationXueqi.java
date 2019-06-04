@@ -27,26 +27,26 @@ public class EvaluationXueqi implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "evaluation_id", type = IdType.AUTO)
-    private Integer evaluationId;
+    private Integer evaluationId;               //编号
     @TableField("student_id")
-    private Integer studentId;
+    private Integer studentId;                  //学生编号
     @TableField("discipline_id")
-    private Integer disciplineId;
+    private Integer disciplineId;               //课程编号
     @TableField("staff_id")
-    private Integer staffId;
+    private Integer staffId;                    //教师编号
     @TableField("class_id")
-    private Integer classId;
+    private Integer classId;                    //班级编号
     @TableField("evaluation_xueqi")
-    private String evaluationXueqi;
+    private String evaluationXueqi;             //学期
     @TableField("evaluation_month")
-    private String evaluationMonth;
+    private String evaluationMonth;             //月份
     @TableField("evaluation_major")
-    private String evaluationMajor;
+    private String evaluationMajor;             //专业
     @TableField("evaluation_content")
-    private String evaluationContent;
+    private String evaluationContent;           //评价内容
     @TableField("evaluation_time")
-    private Date evaluationTime;
+    private Date evaluationTime;                //评价时间
     @TableField("evaluation_note")
-    private String evaluationNote;
+    private String evaluationNote;              //备注
 
 }
