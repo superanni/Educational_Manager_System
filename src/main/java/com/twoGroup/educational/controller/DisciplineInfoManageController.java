@@ -138,7 +138,7 @@ public class DisciplineInfoManageController {
     public @ResponseBody String deleteDiscipline(@PathVariable String disciplineId) {
         try {
             boolean b = lessonInfoService.deleteById(Integer.parseInt(disciplineId));
-            if (b == false) {
+            if (!b) {
                 return "false";
             }
             return "true";

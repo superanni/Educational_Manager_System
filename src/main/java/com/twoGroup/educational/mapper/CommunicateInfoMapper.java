@@ -2,6 +2,9 @@ package com.twoGroup.educational.mapper;
 
 import com.twoGroup.educational.entities.CommunicateInfo;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.twoGroup.educational.entities.StudentInfo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  */
 public interface CommunicateInfoMapper extends BaseMapper<CommunicateInfo> {
 
+    List<CommunicateInfo> listCommunicateLike(StudentInfo studentInfo);
 }

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>添加、修改课程信息</title>
+    <script>
+        new Vue({
+            el:"#studentWriteGradeForm",
+            //在页面加载的时候就被created()添加了数据
+            data:{
+                list:[],
+                class_info:'',
+                discipline_info:'',
+                student_info:''
+            },
+            /*方法执行前*/
+            created(){
+                this.condition();
+            },
+            methods:{
+                /*查询课程信息*/
+                condition(){
+                    var writeGradeId=this.getUrlKey("writeGradeId");
+                    //判断是否添加或修改
+                    if(writeGradeId==null){ //添加 --> 查询所有条件
+                        this.$http.get("studentWriteGradeInfo/listAllStudentInfo").then(result =>{
+                            this.student_info = result.body.list;
+                        });
+                        this.$http.get("studentWriteGradeInfo/selectAllDisciplineInfo").then(result =>{
+                            this.discipline_info = result.body.list;
+                        });
+                        this.$http.get("studentWriteGradeInfo/selectAllClassInfo").then(result =>{
+                            this.class_info = result.body.list;
+                        })
+                    }else{
+                        this.$http.get("studentWriteGradeInfo/saveOrUpdate/condition/"+writeGradeId).then(result => {
+                            this.common(result);
+                        })
+                    }
+                },
+                //解析前端路由的url
+                getUrlKey(name){
+                    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null
+                },
+                /*通用的数据绑定*/
+                common(result){
+                    var result=result.body;
+                    if(result.status === 0){
+                        this.list=result.studentWriteGradeInfo;
+                    }else{
+                        toastr.error("获取数据失败");
+                    }
+                },
+                /*更新或保存*/
+                submit(){
+                    if(this.list.writeGradeId == undefined){
+                        //添加操作
+                        $.post("studentWriteGradeInfo/saveStudentWriteGradeInfo",$("#studentWriteGradeForm").serialize(),function(result) {
+                            if(result=="true"){
+                                toastr.success("添加成功");
+                                $('#content-change-main').load("studentManager/studentWriteGradeInfo.html",function(){});
+                            }else{
+                                toastr.error("添加失败");
+                            }
+                        })
+                    }
+                    else{
+                        //修改操作 -- .put
+                        $.post("studentWriteGradeInfo/updateStudentWriteGradeInfo",$("#studentWriteGradeForm").serialize(),function (result) {
+                            if(result =="true"){
+                                toastr.success("修改成功");
+                                $('#content-change-main').load("studentManager/studentWriteGradeInfo.html",function(){});
+                            }else{
+                                toastr.error("修改失败");
+                            }
+                        })
+                    }
+                }
+            }
+        })
+    </script>
+</head>
+<body>
+    <script>
+        //回退
+        $(function () {
+            $("[name='backToDisplay']").click(function () {
+                $('#content-change-main').load("studentManager/studentWriteGradeInfo.html",function(){});
+            })
+        })
+    </script>
+    <div class="row">
+        <div class="col-12 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <div class="modal-header">
+                    <h3 class="card-title">studentManager / saveOrUpdateStudentWriteGrade</h3>
+                    <button type="button" name="backToDisplay" class="btn btn-gradient-info btn-sm">返回</button>
+                </div>
+                <form class="form-sample" id="studentWriteGradeForm">
+                    <input v-if="list.writeGradeId!=undefined" name="_method" value="put" hidden="hidden">
+                    <input v-if="list.writeGradeId!=undefined" name="writeGradeId" v-model="list.writeGradeId" hidden="hidden">
+                    <input v-if="list.writeGradeId!=undefined" name="classId" v-model="list.classInfo.classId" hidden="hidden">
+                    <input v-if="list.writeGradeId!=undefined" name="disciplineId" v-model="list.disciplineInfo.disciplineId" hidden="hidden">
+                    <input v-if="list.writeGradeId!=undefined" name="studentId" v-model="list.studentInfo.studentId" hidden="hidden">
+
+                    <p class="card-description">
+                        期末成绩
+                    </p>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">班级</label>
+                                <div class="col-sm-9">
+                                    <input v-if="list.writeGradeId!=undefined"  readonly name="className" v-model="list.classInfo.className" type="text" class="form-control form-control-sm" />
+                                    <select v-else name="classId" class="form-control">
+                                        <option v-for="item in class_info" :value="item.classId">{{item.className}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">学生</label>
+                                <div class="col-sm-9">
+                                    <input v-if="list.writeGradeId!=undefined"  readonly name="studentName" v-model="list.studentInfo.studentName" type="text" class="form-control form-control-sm" />
+                                    <select v-else name="studentId" class="form-control">
+                                        <option v-for="item in student_info" :value="item.studentId">{{item.studentName}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">课程名</label>
+                                <div class="col-sm-9">
+                                    <input v-if="list.writeGradeId!=undefined"  readonly name="disciplineName" v-model="list.disciplineInfo.disciplineName" type="text" class="form-control form-control-sm" />
+                                    <select v-else name="disciplineId" class="form-control">
+                                        <option v-for="item in discipline_info" :value="item.disciplineId">{{item.disciplineName}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">成绩</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="writeGrade" v-model="list.writeGrade" class="form-control form-control-sm" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">登分日期</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="writeGradeTime" v-model="list.writeGradeTime" class="form-control form-control-sm" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">学年</label>
+                                <div class="col-sm-9">
+                                    <select v-if="list.writeGradeId!=undefined" name="writeGradeXuenian" v-model="list.writeGradeXuenian" class="form-control">
+                                        <option value="2017-2018学年">2017-2018学年</option>
+                                        <option value="2018-2019学年">2018-2019学年</option>
+                                    </select>
+                                    <select v-else name="writeGradeXuenian" class="form-control">
+                                        <option value="2017-2018学年">2017-2018学年</option>
+                                        <option value="2018-2019学年">2018-2019学年</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">学期</label>
+                                <div class="col-sm-9">
+                                    <select v-if="list.writeGradeId!=undefined" name="writeGradeXueqi" v-model="list.writeGradeXueqi" class="form-control">
+                                        <option value="第一学期">第一学期</option>
+                                        <option value="第二学期">第二学期</option>
+                                    </select>
+                                    <select v-else name="writeGradeXueqi" class="form-control">
+                                        <option value="第一学期">第一学期</option>
+                                        <option value="第二学期">第二学期</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">考试类型</label>
+                                <div class="col-sm-9">
+                                    <select v-if="list.writeGradeId!=undefined" name="writeGradeType" v-model="list.writeGradeType" class="form-control">
+                                        <option value="考试">考试</option>
+                                        <option value="考查">考查</option>
+                                        <option value="报考">报考</option>
+                                    </select>
+                                    <select v-else name="writeGradeType" class="form-control">
+                                        <option value="考试">考试</option>
+                                        <option value="考查">考查</option>
+                                        <option value="报考">报考</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="card-description">
+                        评价内容
+                    </p>
+                    <div class="form-group">
+                        <label>备注信息</label>
+                        <textarea class="form-control" name="writeGradeNote" v-model="list.writeGradeNote" rows="4"></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" align="center">
+                            <button type="button" @click="submit" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">保存</button>
+                            <button type="button" name="backToDisplay" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">取消</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>
