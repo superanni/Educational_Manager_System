@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.github.pagehelper.PageHelper;
 import com.twoGroup.educational.commonUtils.DataTransUtil;
+import com.twoGroup.educational.commonUtils.RedisUtils;
 import com.twoGroup.educational.entities.*;
 import com.twoGroup.educational.service.ClassInfoService;
 import com.twoGroup.educational.service.ClassTransactionInfoService;
@@ -31,6 +32,9 @@ public class ClassTransactionInfoController {
     @Autowired
     /*班级事务业务接口*/
     ClassTransactionInfoService classTransactionInfoService;
+    //redis
+    @Autowired
+    RedisUtils redisUtils;
 
     //所有班级事务信息
     private List<ClassTransactionInfo> classTransactionInfos;
@@ -44,13 +48,36 @@ public class ClassTransactionInfoController {
      */
     @GetMapping("info/listClassTransaction/{currentPage}")
     public @ResponseBody String listClassTransaction(Map map, @PathVariable int currentPage) {
-        //每页显示五行数据
-        PageHelper.startPage(currentPage, 5);
-        //获取数据
-        classTransactionInfos = classTransactionInfoService.selectList();
-        if (classTransactionInfos != null) {
-            //数据绑定
-            return DataTransUtil.dataUtil(map, classTransactionInfos);
+        try {
+            classTransactionInfos = (List<ClassTransactionInfo>) redisUtils.get("classTransactionInfos");
+            //在redis缓存中查询是否有数据
+            if (null==classTransactionInfos){
+                //线程锁定只让第一位用户在数据库中访问数据
+                synchronized (this){
+                    classTransactionInfos = (List<ClassTransactionInfo>) redisUtils.get("classTransactionInfos");
+                    if (null==classTransactionInfos){
+                        classTransactionInfos = classTransactionInfoService.selectList();
+                        redisUtils.set("classTransactionInfos",classTransactionInfos);
+                    }
+                }
+            }
+            //封装的总页数、总记录数、当前页数
+            DataTransUtil.redisDataUtil(map,classTransactionInfos,currentPage,5);
+            //如果redis有缓存数据则分页查询出数据
+            classTransactionInfos= (List<ClassTransactionInfo>) redisUtils.selectByPage("classTransactionInfos",currentPage,5);
+            if (classTransactionInfos != null) {
+                //数据绑定
+                map.put("list", classTransactionInfos);
+                return JSON.toJSONString(map);
+            }
+        }catch (Exception e){
+            PageHelper.startPage(currentPage,5);
+            classTransactionInfos = classTransactionInfoService.selectList(null);
+            if (classTransactionInfos != null) {
+                //数据绑定
+                return DataTransUtil.dataUtil(map,classTransactionInfos);
+            }
+            return "false";
         }
         return "false";
     }
@@ -65,13 +92,14 @@ public class ClassTransactionInfoController {
         //判断有无条件
         if (!"".equals(classTransactionInfo.getClassTransactionTitle())) {
             classTransactionInfos=classTransactionInfoService.selectListLike(classTransactionInfo.getClassTransactionTitle());
+            if (classTransactionInfos != null) {
+                //数据绑定
+                return DataTransUtil.dataUtil(map, classTransactionInfos);
+            }
         }else {
-            classTransactionInfos=classTransactionInfoService.selectList();
+            return listClassTransaction(map,currentPage);
         }
-        if (classTransactionInfos != null) {
-            //数据绑定
-            return DataTransUtil.dataUtil(map, classTransactionInfos);
-        }
+
         return "false";
     }
 
@@ -125,6 +153,7 @@ public class ClassTransactionInfoController {
             try {
                 boolean b = classTransactionInfoService.insert(classTransactionInfo);
                 if (b==true){
+                    redisUtils.delete("classTransactionInfos");
                     return "true";
                 }else {
                     return "false";
@@ -146,6 +175,7 @@ public class ClassTransactionInfoController {
         try {
             boolean b = classTransactionInfoService.updateById(classTransactionInfo);
             if (b==true){
+                redisUtils.delete("classTransactionInfos");
                 return "true";
             }else {
                 return "false";
@@ -162,10 +192,12 @@ public class ClassTransactionInfoController {
     public @ResponseBody String deleteClass(@PathVariable String classTransactionId) {
         try {
             boolean b = classTransactionInfoService.deleteById(Integer.parseInt(classTransactionId));
-            if (b == false) {
+            if (b==true){
+                redisUtils.delete("classTransactionInfos");
+                return "true";
+            }else {
                 return "false";
             }
-            return "true";
         } catch (Exception e) {
             return "false";
         }

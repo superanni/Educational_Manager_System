@@ -22,6 +22,7 @@
       <!--jquery toastr提示框插件-->
       <link rel="stylesheet" th:href="@{/css/toastr.min.css}" />
       <script th:src="@{/js/toastr.min.js}"></script>
+
       <script>
           //全局配置根域名
           Vue.http.options.root="";
@@ -37,6 +38,24 @@
                 }
             });
         });
+          function dateFormat(time) {
+              if(time!=undefined){
+                  var date=new Date(time);
+                  var year=date.getFullYear();
+                  /* 在日期格式中，月份是从0开始的，因此要加0
+                   * 使用三元表达式在小于10的前面加0，以达到格式统一  如 09:11:05
+                   * */
+                  var month= date.getMonth()+1<10 ? "0"+(date.getMonth()+1) : date.getMonth()+1;
+                  var day=date.getDate()<10 ? "0"+date.getDate() : date.getDate();
+                  var hours=date.getHours()<10 ? "0"+date.getHours() : date.getHours();
+                  var minutes=date.getMinutes()<10 ? "0"+date.getMinutes() : date.getMinutes();
+                  var seconds=date.getSeconds()<10 ? "0"+date.getSeconds() : date.getSeconds();
+                  // 拼接
+                  return year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
+              }else{
+                  return "";
+              }
+          }
       </script>
     </head>
     <body>
@@ -106,7 +125,7 @@
                     <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
                       <h6 class="preview-subject ellipsis mb-1 font-weight-normal">留言信息</h6>
                       <p class="text-gray mb-0">
-                            一分钟前
+                          一分钟前
                       </p>
                     </div>
                   </a>

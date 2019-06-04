@@ -1,9 +1,11 @@
 package com.twoGroup.educational.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.github.pagehelper.PageHelper;
 import com.twoGroup.educational.commonUtils.DataTransUtil;
+import com.twoGroup.educational.commonUtils.RedisUtils;
 import com.twoGroup.educational.entities.DisciplineInfo;
 import com.twoGroup.educational.entities.StaffInfo;
 import com.twoGroup.educational.service.DisciplineInfoService;
@@ -30,6 +32,9 @@ public class StaffInfoManageController {
     @Autowired
     /*教师信息业务接口*/
     StaffInfoService staffInfoService;
+    //redis
+    @Autowired
+    RedisUtils redisUtils;
 
     //所有教师信息
     private List<StaffInfo> staffInfos;
@@ -43,13 +48,36 @@ public class StaffInfoManageController {
      */
     @GetMapping("info/listTeacherManage/{currentPage}")
     public @ResponseBody String listTeacherManage(Map map, @PathVariable int currentPage) {
-        //每页显示五行数据
-        PageHelper.startPage(currentPage, 5);
-        //获取数据
-        staffInfos = staffInfoService.selectList(null);
-        if (staffInfos != null) {
-            //数据绑定
-            return DataTransUtil.dataUtil(map, staffInfos);
+        try {
+            staffInfos = (List<StaffInfo>) redisUtils.get("staffInfos");
+            //在redis缓存中查询是否有数据
+            if (null==staffInfos){
+                //线程锁定只让第一位用户在数据库中访问数据
+                synchronized (this){
+                    staffInfos = (List<StaffInfo>) redisUtils.get("staffInfos");
+                    if (null==staffInfos){
+                        staffInfos = staffInfoService.selectList(null);
+                        redisUtils.set("staffInfos",staffInfos);
+                    }
+                }
+            }
+            //封装的总页数、总记录数、当前页数
+            DataTransUtil.redisDataUtil(map,staffInfos,currentPage,5);
+            //如果redis有缓存数据则分页查询出数据
+            staffInfos= (List<StaffInfo>) redisUtils.selectByPage("staffInfos",currentPage,5);
+            if (staffInfos != null) {
+                //数据绑定
+                map.put("list", staffInfos);
+                return JSON.toJSONString(map);
+            }
+        }catch (Exception e){
+            PageHelper.startPage(currentPage,5);
+            staffInfos = staffInfoService.selectList(null);
+            if (staffInfos != null) {
+                //数据绑定
+                return DataTransUtil.dataUtil(map,staffInfos);
+            }
+            return "false";
         }
         return "false";
     }
@@ -63,14 +91,16 @@ public class StaffInfoManageController {
         Wrapper<StaffInfo> staffInfoWrapper = null;
         if (!"".equals(conditionValue)) {
             staffInfoWrapper = new EntityWrapper<StaffInfo>().like(selectCondition, conditionValue);
-        }
-        //每页显示五行数据
-        PageHelper.startPage(currentPage, 5);
-        //获取数据
-        staffInfos = staffInfoService.selectList(staffInfoWrapper); //也可以用匿名类
-        if (staffInfos != null) {
-            //数据绑定
-            return DataTransUtil.dataUtil(map, staffInfos);
+            //每页显示五行数据
+            PageHelper.startPage(currentPage, 5);
+            //获取数据
+            staffInfos = staffInfoService.selectList(staffInfoWrapper); //也可以用匿名类
+            if (staffInfos != null) {
+                //数据绑定
+                return DataTransUtil.dataUtil(map, staffInfos);
+            }
+        }else {
+            return listTeacherManage(map,currentPage);
         }
         return "false";
     }
@@ -102,6 +132,7 @@ public class StaffInfoManageController {
             try {
                 boolean b = staffInfoService.insert(staffInfo);
                 if (b==true){
+                    redisUtils.delete("staffInfos");
                     return "true";
                 }else {
                     return "false";
@@ -123,6 +154,7 @@ public class StaffInfoManageController {
         try {
             boolean b = staffInfoService.updateById(staffInfo);
             if (b==true){
+                redisUtils.delete("staffInfos");
                 return "true";
             }else {
                 return "false";
@@ -139,10 +171,12 @@ public class StaffInfoManageController {
     public @ResponseBody String deleteTeacher(@PathVariable String staffId) {
         try {
             boolean b = staffInfoService.deleteById(Integer.parseInt(staffId));
-            if (b == false) {
+            if (b==true){
+                redisUtils.delete("staffInfos");
+                return "true";
+            }else {
                 return "false";
             }
-            return "true";
         } catch (Exception e) {
             return "false";
         }

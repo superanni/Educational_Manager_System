@@ -7,7 +7,8 @@ spring:
   aop:
     auto: true
   redis:
-    host: 192.168.1.107
+#    host: 192.168.1.107
+    host: 192.168.43.217
     port: 6379
     password:
     pool:
