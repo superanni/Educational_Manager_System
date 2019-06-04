@@ -1,8 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>添加、修改班级事务</title>
+    <!--bootstrap的时间控件-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap-datetimepicker.css}">
+    <script th:src="@{/js/bootstrap-datetimepicker.js}"></script>
+    <script th:src="@{/js/bootstrap-datetimepicker.zh-CN.js}"></script>
     <script>
         new Vue({
             el:"#classTransactionForm",
@@ -42,6 +46,7 @@
                         this.classes=result.classInfos;
                         if(result.classTransactionInfo!=undefined)
                             this.list=result.classTransactionInfo;
+                        this.dateFormat(this.list);
                     }else{
                         toastr.error("获取数据失败");
                     }
@@ -69,6 +74,10 @@
                             }
                         })
                     }
+                },
+                //解析时间
+                dateFormat(list){
+                    list.classTransactionTime=dateFormat(list.classTransactionTime);
                 }
             }
         })
@@ -80,7 +89,12 @@
         $("[name='backToDisplay']").click(function () {
             $('#content-change-main').load("developmentManage/gradeclassTransaction.html",function(){});
         })
-    })
+    });
+    $("#activeTime").datetimepicker({
+        format: 'yyyy-mm-dd hh:ii:ss',
+        language: 'zh-CN',
+        autoclose:true,
+    });
 </script>
     <div class="row">
         <div class="col-12 grid-margin">
@@ -126,7 +140,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">活动日期</label>
                                     <div class="col-sm-9">
-                                        <input type="text" name="classTransactionTime" v-model="list.classTransactionTime" class="form-control form-control-sm" />
+                                        <input type="text" id="activeTime" name="classTransactionTime" v-model="list.classTransactionTime" class="form-control form-control-sm" readonly  data-date-format="yyyy-mm-dd hh:ii:ss"/>
                                     </div>
                                 </div>
                             </div>

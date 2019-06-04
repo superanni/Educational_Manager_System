@@ -1,8 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>添加、修改教师信息</title>
+    <!--bootstrap的时间控件-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap-datetimepicker.css}">
+    <script th:src="@{/js/bootstrap-datetimepicker.js}"></script>
+    <script th:src="@{/js/bootstrap-datetimepicker.zh-CN.js}"></script>
     <script>
         new Vue({
             el:"#teacherForm",
@@ -35,6 +39,7 @@
                     var result=result.body;
                     if(result.status === 0){
                         this.list=result.staffInfo;
+                        this.dateFormat(this.list);
                     }else{
                         toastr.error("获取数据失败");
                     }
@@ -62,6 +67,11 @@
                             }
                         })
                     }
+                },
+                //解析时间
+                dateFormat(list){
+                    list.staffEntryTime=dateFormat(list.staffEntryTime);
+                    list.staffBrithday=dateFormat(list.staffBrithday);
                 }
             }
         })
@@ -73,7 +83,17 @@
             $("[name='backToDisplay']").click(function () {
                 $('#content-change-main').load("developmentManage/teacherManage.html",function(){});
             })
-        })
+        });
+        $("#birthTime").datetimepicker({
+            format: 'yyyy-mm-dd hh:ii:ss',
+            language: 'zh-CN',
+            autoclose:true,
+        });
+        $("#entryTime").datetimepicker({
+            format: 'yyyy-mm-dd hh:ii:ss',
+            language: 'zh-CN',
+            autoclose:true,
+        });
     </script>
     <div class="row">
         <div class="col-12 grid-margin">
@@ -192,7 +212,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">出生日期</label>
                                     <div class="col-sm-9">
-                                        <input type="text" name="staffBrithday" v-model="list.staffBrithday" class="form-control form-control-sm" />
+                                        <input id="birthTime" type="text" readonly name="staffBrithday" v-model="list.staffBrithday" class="form-control form-control-sm"  data-date-format="yyyy-mm-dd hh:ii:ss"/>
                                     </div>
                                 </div>
                             </div>
@@ -246,7 +266,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">入职时间</label>
                                     <div class="col-sm-9">
-                                        <input type="text" name="staffEntryTime" v-model="list.staffEntryTime" class="form-control form-control-sm" />
+                                        <input type="text" id="entryTime" readonly name="staffEntryTime" v-model="list.staffEntryTime" class="form-control form-control-sm"  data-date-format="yyyy-mm-dd hh:ii:ss"/>
                                     </div>
                                 </div>
                             </div>
