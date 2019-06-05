@@ -15,8 +15,8 @@ import java.util.List;
  */
 public interface MarketActiveService extends IService<MarketActive> {
 
-	public List<MarketActive> selectList();
+	List<MarketActive> selectList();
 
-	public  List<MarketActive> selectListLike(String activeName);
+	List<MarketActive> selectListLike(MarketActive marketActive);
 
 }

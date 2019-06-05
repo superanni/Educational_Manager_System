@@ -21,9 +21,9 @@ import java.util.List;
 public class MarketActiveServiceImpl extends ServiceImpl<MarketActiveMapper, MarketActive> implements MarketActiveService {
 	@Autowired
 	MarketActiveMapper marketActiveMapper;
-
 	//all markactives list
-  private List<MarketActive> marketActives;
+	private List<MarketActive> marketActives;
+
 
 	@Override
 	public List<MarketActive> selectList() {
@@ -31,8 +31,8 @@ public class MarketActiveServiceImpl extends ServiceImpl<MarketActiveMapper, Mar
 	}
 
 	@Override
-	public List<MarketActive> selectListLike(String activeName) {
-		marketActives= marketActiveMapper.selectListLikeName(activeName);
-		return marketActives;
+	public List<MarketActive> selectListLike(MarketActive marketActive) {
+		return marketActiveMapper.selectListLikeName(
+				marketActive.getActiveName(),marketActive.getActiveState());
 	}
 }

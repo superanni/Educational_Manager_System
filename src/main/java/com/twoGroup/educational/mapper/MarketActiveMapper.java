@@ -17,6 +17,7 @@ import java.util.List;
 public interface MarketActiveMapper extends BaseMapper<MarketActive> {
 	 List<MarketActive> selectList();
 	//根据文件标题查询文件信息
-	List<MarketActive> selectListLikeName
-	(@Param("activeName") String activeName);
+	List<MarketActive> selectListLikeName(
+			@Param("activeName") String activeName,@Param("activeState")int activeState);
+
 }

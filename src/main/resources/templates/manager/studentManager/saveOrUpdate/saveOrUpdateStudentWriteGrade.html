@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>添加、修改课程信息</title>
+	<!--bootstrap的时间控件-->
+	<link rel="stylesheet" th:href="@{/css/bootstrap-datetimepicker.css}">
+	<script th:src="@{/js/bootstrap-datetimepicker.js}"></script>
+	<script th:src="@{/js/bootstrap-datetimepicker.zh-CN.js}"></script>
     <script>
         new Vue({
             el:"#studentWriteGradeForm",
@@ -12,7 +16,7 @@
                 class_info:'',
                 discipline_info:'',
                 student_info:''
-            },
+             },
             /*方法执行前*/
             created(){
                 this.condition();
@@ -88,6 +92,22 @@
                 $('#content-change-main').load("studentManager/studentWriteGradeInfo.html",function(){});
             })
         })
+        //回退
+        $(function () {
+	        $("[name='backToDisplay']").click(function () {
+		        $('#content-change-main').load("teachActiviti/activitiManage.html",function(){});
+	        })
+        })
+        $("#beginTime").datetimepicker({
+	        format: 'yyyy-mm-dd hh:ii:ss',
+	        language: 'zh-CN',
+	        autoclose:true,
+        });
+        $("#endTime").datetimepicker({
+	        format: 'yyyy-mm-dd hh:ii:ss',
+	        language: 'zh-CN',
+	        autoclose:true,
+        });
     </script>
     <div class="row">
         <div class="col-12 grid-margin">
@@ -161,8 +181,9 @@
                         <div class="col-md-6">
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">登分日期</label>
-                                <div class="col-sm-9">
-                                    <input type="text" name="writeGradeTime" v-model="list.writeGradeTime" class="form-control form-control-sm" />
+	               <div class="col-sm-9">
+                                    <input type="text" name="writeGradeTime" v-model="list.writeGradeTime"id="beginTime" readonly="readonly"
+                                           class="form-control form-control-sm" data-date-format="yyyy-mm-dd hh:ii:ss" />
                                 </div>
                             </div>
                         </div>

@@ -191,7 +191,7 @@
                                 <td>{{item.writeGrade}}</td>
                                 <td>{{item.writeGradeType}}</td>
                                 <td>{{item.staffInfo.staffName}}</td>
-                                <td>{{item.writeGradeTime}}</td>
+                                <td>{{dateFormat(item.writeGradeTime)}}</td>
                                 <td @click="update()"><router-link tag="button" name="update" class="btn btn-gradient-warning btn-sm" :to="{path: 'update', query: { writeGradeId: item.writeGradeId }}">修改</router-link></td>
                                 <td><button type="button" class="btn btn-gradient-danger btn-sm" @click="del(item.writeGradeId)">删除</button></td>
                             </tr>

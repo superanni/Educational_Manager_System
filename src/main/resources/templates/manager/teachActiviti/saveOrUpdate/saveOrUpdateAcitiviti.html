@@ -1,23 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>添加、活动信息</title>
+	<meta charset="UTF-8">
+	<title>添加、活动信息</title>
 	<!--bootstrap的时间控件-->
 	<link rel="stylesheet" th:href="@{/css/bootstrap-datetimepicker.css}">
 	<script th:src="@{/js/bootstrap-datetimepicker.js}"></script>
 	<script th:src="@{/js/bootstrap-datetimepicker.zh-CN.js}"></script>
 	<script>
-		Vue.http.options.emulateJSON = true;
-		var vm = new Vue({
+		new Vue({
 			el:"#activeForm",
 			//在页面加载的时候就被created()添加了数据
 			data:{
-				list:[]
-			},
-			/*方法执行前*/
-			created(){
-				this.condition();
+				list:[],
+				marketActives:''
 			},
 			methods:{
 				/*查询所有活动信息*/
@@ -35,16 +31,15 @@
 				getUrlKey(name){
 					return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null
 				},
-				/*通用的数据绑定*/
-				common(result){
-					var result=result.body;
-					if(result.status === 0){
-						this.list=result.lessonInfo;
-					}else{
-						toastr.error("获取数据失败");
-					}
-				},
-				
+					/*通用的数据绑定*/
+					common(result){
+						var result=result.body;
+						if(result.status === 0){
+							this.list=result.teachActiviti;
+						}else{
+							toastr.error("获取数据失败");
+						}
+					},
 				/*更新或保存*/
 				submit(){
 					if(this.list.activeId == undefined){
@@ -68,8 +63,7 @@
 							}
 						})
 					}
-				}
-			}
+				}}
 		})
 	</script>
 </head>
@@ -92,145 +86,146 @@
 		autoclose:true,
 	});
 </script>
-    <div class="row">
-        <div class="col-12 grid-margin">
-            <div class="card">
-                <div class="card-body">
-	                <div class="modal-header">
-	                <h3 class="card-title">Horizontal Two column</h3>
-		                <button type="button" name="backToDisplay" class="btn btn-gradient-info btn-sm">返回</button>
-	                </div>
-		                <form class="form-sample" id="activeForm" @submit.prevent="submit">
-                        <p class="card-description">
-	                        教务活动/活动添加
-                        </p>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">编号</label>
-                                    <div class="col-sm-9">
-	                                    <input disabled="disabled" v-model="list.activeId" type="text" class="form-control form-control-sm" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">活动名称:</label>
-	                                <div class="col-sm-9">
-		                                <input type="text" name="activeName" v-model="list.activeName" class="form-control form-control-sm" />
-	                                </div>
-                                </div>
-                            </div>
-                        </div>
-	
-	                    <div class="row">
-		                    <div class="col-md-6">
-			                    <div class="form-group row">
-				                    <label class="col-sm-3 col-form-label">开始时间:</label>
-				                    <div class="col-sm-9">
-					                    <input id="beginTime" name="activeStart" v-model="list.activeStart"  readonly="readonly"
-					                           type="text" class="form-control form-control-sm" data-date-format="yyyy-mm-dd hh:ii:ss">
-				                    </div>
-			                    </div>
-		                    </div>
-		                    <div class="col-md-6">
-			                    <div class="form-group row">
-				                    <label class="col-sm-3 col-form-label">活动状态:</label>
-				                    <div class="col-sm-9">
-					                    <select class="form-control form-control-sm">
-						                    <option value="">请选择</option>
-						                    <option value="1">1、策划</option>
-						                    <option value="2">2、进行</option>
-						                    <option value="3">3、结束</option>
-					                    </select>
-				                    </div>
-			                    </div>
-		                    </div>
-	                    </div>
-	                    <div class="row">
-		                    <div class="col-md-6">
-			                    <div class="form-group row">
-				                    <label class="col-sm-3 col-form-label">结束时间：</label>
-				                 
-				                    <div class="col-sm-9">
-					                    <input id="endTime"  name="activeEnd" v-model="list.activeEnd"  readonly="readonly"
-					                           type="text" class="form-control form-control-sm" data-date-format="yyyy-mm-dd hh:ii:ss">
-				                    </div>
-			                    </div>
-		                    </div>
-		                    <div class="col-md-6">
-			                    <div class="form-group row">
-				                    <label class="col-sm-3 col-form-label">活动类型:</label>
-				                    <div class="col-sm-9">
-					                    <select class="form-control form-control-sm">
-						                    <option value="">请选择</option>
-						                    <option value="电子竞技">电子竞技</option>
-						                    <option value="编程大赛">编程大赛</option>
-					                    </select>
-				                    </div>
-			                    </div>
-		                    </div>
-	                    </div>
-	                    
-	                    <div class="row">
-		                    <div class="col-md-6">
-			                    <div class="form-group row">
-				                    <label class="col-sm-3 col-form-label">预算成本</label>
-				                    <div class="col-sm-9">
-					                    <input type="text" name="activeCosteEmtimate" v-model="list.activeCosteEmtimate"
-					                           class="form-control form-control-sm" />
-				                    </div>
-			                    </div>
-		                    </div>
-		                    <div class="col-md-6">
-			                    <div class="form-group row">
-				                    <label class="col-sm-3 col-form-label">实际成本:</label>
-				                    <div class="col-sm-9">
-					                    <input type="text" name="activeCoste" v-model="list.activeCoste"
-					                           class="form-control form-control-sm" />
-				                    </div>
-			                    </div>
-		                    </div>
-	                    </div>
-	                    <div class="row">
-		                    <div class="col-md-6">
-			                    <div class="form-group row">
-				                    <label class="col-sm-3 col-form-label">预期反应：</label>
-				                    <div class="col-sm-9">
-					                    <select class="form-control form-control-sm">
-						                    <option value="1">1、好</option>
-						                    <option value="2">2、中</option>
-						                    <option value="3">3、差</option>
-					                    </select>
-				                    </div>
-			                    </div>
-		                    </div>
-		                    <div class="col-md-6">
-			                    <div class="form-group row">
-				                    <label class="col-sm-3 col-form-label">预期人数:</label>
-				                    <div class="col-sm-9">
-					                    <input type="text" name="activeCoste" v-model="list.activeCoste"
-					                           class="form-control form-control-sm" />
-				                    </div>
-			                    </div>
-		                    </div>
-	                    </div>
-                        <div class="form-group">
-	         <label for="exampleTextarea1">备注</label>
-	                        <textarea class="form-control" id="exampleTextarea1"    name="disciplineDesc"
-	                                  v-model="list.disciplineDesc" rows="4"></textarea>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12" align="center">
-                                <button type="submit" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">保存</button>
-                                <button type="button" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">重置</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+
+<div class="row">
+	<div class="col-12 grid-margin">
+		<div class="card">
+			<div class="card-body">
+				<div class="modal-header">
+					<h3 class="card-title">Horizontal Two column</h3>
+					<button type="button" name="backToDisplay" class="btn btn-gradient-info btn-sm">返回</button>
+				</div>
+				
+				 <form class="form-sample" id="activeForm">
+					<input v-if="list.activeId!=undefined" name="_method" value="put" hidden="hidden">
+					<p class="card-description">
+						教务活动/活动添加
+					</p>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group row">
+								<label class="col-sm-3 col-form-label">编号</label>
+								<div class="col-sm-9">
+									<input disabled="disabled" v-model="list.activeId" type="text" class="form-control form-control-sm" />
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group row">
+								<label class="col-sm-3 col-form-label">活动名称:</label>
+								<div class="col-sm-9">
+									<input type="text" name="activeName" v-model="list.activeName" class="form-control form-control-sm" />
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group row">
+								<label class="col-sm-3 col-form-label">开始时间:</label>
+								<div class="col-sm-9">
+									<input id="beginTime"  v-model="list.activeStart"  readonly="readonly"name="activeStart"
+									       type="text" class="form-control form-control-sm" data-date-format="yyyy-mm-dd hh:ii:ss">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group row">
+								<label class="col-sm-3 col-form-label">活动状态:</label>
+								<div class="col-sm-9">
+									<select class="form-control form-control-sm" name="activeState">
+										<option value="1">1、策划</option>
+										<option value="2">2、进行</option>
+										<option value="3">3、结束</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group row">
+								<label class="col-sm-3 col-form-label">结束时间：</label>
+								<div class="col-sm-9">
+									<input id="endTime"v-model="list.activeEnd" readonly="readonly" name="activeEnd"
+									       type="text" class="form-control form-control-sm" data-date-format="yyyy-mm-dd hh:ii:ss">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group row">
+								<label class="col-sm-3 col-form-label">活动类型:</label>
+								<div class="col-sm-9">
+									<select class="form-control form-control-sm" name="activeType">
+										<option value="1">1、电子竞技</option>
+										<option value="2">2、编程大赛</option>
+										<option value="3">3、编程大赛</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group row">
+								<label class="col-sm-3 col-form-label">预算成本</label>
+								<div class="col-sm-9">
+									<input type="text"  v-model="list.activeCosteEmtimate" name="activeCosteEmtimate"
+									       class="form-control form-control-sm" />
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group row">
+								<label class="col-sm-3 col-form-label">实际成本:</label>
+								<div class="col-sm-9">
+									<input type="text"  v-model="list.activeCoste" name="activeCoste"
+									       class="form-control form-control-sm" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group row">
+								<label class="col-sm-3 col-form-label">预期反应：</label>
+								<div class="col-sm-9">
+									<select class="form-control form-control-sm" name="activeRefectEstimate">
+										<option value="1">1、好</option>
+										<option value="2">2、中</option>
+										<option value="3">3、差</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group row">
+								<label class="col-sm-3 col-form-label">预期人数:</label>
+								<div class="col-sm-9">
+									<input type="text"  v-model="list.activeStudent" name="activeStudent"
+									       class="form-control form-control-sm" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="exampleTextarea1">备注</label>
+						<textarea class="form-control" id="exampleTextarea1"name="activeContent"
+						          v-model="list.activeContent" rows="4"></textarea>
+					</div>
+					<div class="row">
+						<div class="col-md-12" align="center">
+							<button type="button" @click="submit()" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">保存</button>
+							<button type="button" name="backToDisplay" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">取消</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 </body>
 <script>
 	$(function () {

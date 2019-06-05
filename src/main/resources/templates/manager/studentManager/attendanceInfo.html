@@ -64,7 +64,7 @@
                     this.attendanceMonth=$("[name='attendanceMonth']").val();
                     this.attendanceState=$("[name='attendanceState']").val();
                     this.$http.post("attendanceInfo/listAttendanceLike",
-                        {studentName:this.student_name ,
+                        {   studentName:this.student_name ,
                             attendanceXuenian:this.attendanceXuenian,
                             attendanceXueqi:this.attendanceXueqi,
                             attendanceMonth:this.attendanceMonth,

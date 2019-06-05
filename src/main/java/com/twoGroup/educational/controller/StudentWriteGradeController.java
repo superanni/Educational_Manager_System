@@ -118,7 +118,7 @@ public class StudentWriteGradeController {
     @PostMapping("saveStudentWriteGradeInfo")
     public  String saveStudentWriteGradeInfo(StudentWriteGrade studentWriteGrade){
         System.out.println("studentWriteGrade = " + studentWriteGrade);
-        studentWriteGrade.setStaffId(83);
+        studentWriteGrade.setStaffId(80);
         boolean insert = service.insert(studentWriteGrade);
         if (!insert) {
             return "false";
@@ -133,7 +133,7 @@ public class StudentWriteGradeController {
      */
     @PutMapping("updateStudentWriteGradeInfo")
     public  String updateStudentWriteGradeInfo(StudentWriteGrade studentWriteGrade){
-        studentWriteGrade.setStaffId(83);
+        studentWriteGrade.setStaffId(80);
         boolean b = service.updateById(studentWriteGrade);
         if (!b) {
             return "false";
