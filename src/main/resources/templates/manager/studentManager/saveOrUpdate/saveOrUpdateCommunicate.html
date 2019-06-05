@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>添加、修改课程信息</title>
+    <script>
+        new Vue({
+            el:"#communicateForm",
+            //在页面加载的时候就被created()添加了数据
+            data:{
+                list:[]
+            },
+            /*方法执行前*/
+            created(){
+                this.condition();
+            },
+            methods:{
+                /*查询课程信息*/
+                condition(){
+                    var communicateId=this.getUrlKey("communicateId");
+                    //判断是否添加或修改
+                    if(communicateId==null){ //添加
+                        this.$http.get("communicateInfo/saveOrUpdate/condition").then(result =>{
+                            this.list = result.body.list;
+                        })
+                    }else{
+                        this.$http.get("communicateInfo/saveOrUpdate/condition/"+communicateId).then(result => {
+                            this.common(result);
+                        })
+                    }
+                },
+                //解析前端路由的url
+                getUrlKey(name){
+                    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null
+                },
+                /*通用的数据绑定*/
+                common(result){
+                    var result=result.body;
+                    if(result.status === 0){
+                        this.list=result.communicateInfo;
+                    }else{
+                        toastr.error("获取数据失败");
+                    }
+                },
+                /*更新或保存*/
+                submit(){
+                    if(this.list.communicateId == undefined){
+                        //添加操作
+                        $.post("communicateInfo/saveCommunicate",$("#communicateForm").serialize(),function(result) {
+                            if(result=="true"){
+                                toastr.success("添加成功");
+                                $('#content-change-main').load("studentManager/communicateInfo.html",function(){});
+                            }else{
+                                toastr.error("添加失败");
+                            }
+                        })
+                    }else{
+                        //修改操作
+                        $.post("communicateInfo/updateCommunicate",$("#communicateForm").serialize(),function (result) {
+                            if(result =="true"){
+                                toastr.success("修改成功");
+                                $('#content-change-main').load("studentManager/communicateInfo.html",function(){});
+                            }else{
+                                toastr.error("修改失败");
+                            }
+                        })
+                    }
+                }
+            }
+        })
+    </script>
+</head>
+<body>
+    <script>
+        //回退
+        $(function () {
+            $("[name='backToDisplay']").click(function () {
+                $('#content-change-main').load("studentManager/communicateInfo.html",function(){});
+            })
+        })
+    </script>
+    <div class="row">
+        <div class="col-12 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <div class="modal-header">
+                    <h3 class="card-title">studentManager / saveOrUpdateCommunicate</h3>
+                    <button type="button" name="backToDisplay" class="btn btn-gradient-info btn-sm">返回</button>
+                </div>
+                <form class="form-sample" id="communicateForm">
+                    <input v-if="list.communicateId!=undefined" name="_method" value="put" hidden="hidden">
+                    <input v-if="list.communicateId!=undefined" name="studentId" v-model="list.studentInfo.studentId" type="hidden" />
+
+                    <p class="card-description">
+                        班主任评价
+                    </p>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">编号</label>
+                                <div class="col-sm-9">
+                                    <input readonly name="communicateId" v-model="list.communicateId" type="text" class="form-control form-control-sm" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">学生</label>
+                                <div class="col-sm-9">
+                                    <input v-if="list.communicateId!=undefined"  readonly name="studentName" v-model="list.studentInfo.studentName" type="text" class="form-control form-control-sm" />
+                                    <select v-else name="studentId" class="form-control">
+                                        <option v-for="item in list" :value="item.studentId">{{item.studentName}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">评价时间</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="communicateTime" v-model="list.communicateTime" class="form-control form-control-sm" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">学年</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="communicateXuenian" v-model="list.communicateXuenian" class="form-control form-control-sm" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">学期</label>
+                                <div class="col-sm-9">
+                                    <select v-if="list.communicateId!=undefined" name="communicateXueqi" v-model="list.communicateXueqi" class="form-control">
+                                        <option value="第一学期">第一学期</option>
+                                        <option value="第二学期">第二学期</option>
+                                    </select>
+                                    <select v-else name="communicateXueqi" class="form-control">
+                                        <option value="第一学期">第一学期</option>
+                                        <option value="第二学期">第二学期</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">病事假统计</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="leaveCount" v-model="list.leaveCount" class="form-control form-control-sm" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">旷课统计</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="truancyCount" v-model="list.truancyCount" class="form-control form-control-sm" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">奖惩记载</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="rewardPunish" v-model="list.rewardPunish" class="form-control form-control-sm" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="card-description">
+                        评价内容
+                    </p>
+                    <div class="form-group">
+                        <label>品行评语</label>
+                        <textarea class="form-control" name="communicateContent" v-model="list.communicateContent" rows="4"></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" align="center">
+                            <button type="button" @click="submit" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">保存</button>
+                            <button type="button" name="backToDisplay" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">取消</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>

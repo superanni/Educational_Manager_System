@@ -1,7 +1,10 @@
 package com.twoGroup.educational.service;
 
+import com.twoGroup.educational.entities.StudentInfo;
 import com.twoGroup.educational.entities.StudentWriteGrade;
 import com.baomidou.mybatisplus.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.service.IService;
  */
 public interface StudentWriteGradeService extends IService<StudentWriteGrade> {
 
+    List<StudentWriteGrade> listStudentWriteGradeLike(StudentWriteGrade studentWriteGrade, StudentInfo studentInfo);
 }

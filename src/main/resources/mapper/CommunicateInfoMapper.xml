@@ -84,4 +84,12 @@
 
     </resultMap>
 
+    <select id="listCommunicateLike" resultMap="BaseResultMap">
+        select * from communicate_info c , student_info s , staff_info sf
+        where c.student_id = s.student_id and c.staff_id = sf.staff_id
+        <if test="studentName !='' and studentName !=null ">
+            and c.student_id in (select student_id from student_info where student_info.student_name like concat(concat('%',#{studentName}),'%'))
+        </if>
+    </select>
+
 </mapper>
