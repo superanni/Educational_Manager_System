@@ -61,6 +61,11 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
                 registry.addViewController("studentManager/studentWriteGradeInfo.html").setViewName("manager/studentManager/studentWriteGradeInfo");
                 registry.addViewController("studentManager/saveOrUpdate/saveOrUpdateStudentWriteGrade.html").setViewName("manager/studentManager/saveOrUpdate/saveOrUpdateStudentWriteGrade");
 
+                //     -->考勤管理
+                registry.addViewController("studentManager/attendanceInfo.html").setViewName("manager/studentManager/attendanceInfo");
+                registry.addViewController("studentManager/saveOrUpdate/saveOrUpdateAttendance.html").setViewName("manager/studentManager/saveOrUpdate/saveOrUpdateAttendance");
+
+
 	            /* 图表分析*/
 
 
