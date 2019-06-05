@@ -73,8 +73,6 @@ public class MarketActiveController {
 		return "false";
 	}
 
-
-
 	/**
 	 * 添加活动信息
 	 */

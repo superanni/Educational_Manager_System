@@ -55,6 +55,9 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
 
 	            /* 图表分析*/
 
+	            registry.addViewController("dataAndStatistics/student_bootm.html").setViewName("manager/dataAndStatistics/student_bootm");
+
+	            registry.addViewController("dataAndStatistics/teacher_bootm.html").setViewName("manager/dataAndStatistics/teacher_bootm");
 
 	            /*文件上传下载*/
 	            registry.addViewController("fileUpload/saveOrUpdate/saveOrUpdateFileUpload.html").setViewName("manager/fileUpload/saveOrUpdate/saveOrUpdateFileUpload");

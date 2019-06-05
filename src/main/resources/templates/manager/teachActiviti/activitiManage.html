@@ -106,7 +106,7 @@
 						<div class="input-group-prepend" style="margin-top: 5px">
 							<div class="input-group-text" style="height:31px">活动状态</div>
 							<select class="form-control form-control-sm">
-								<option value="">请选择</option>
+								<option value="0">请选择</option>
 								<option value="1">1、策划</option>
 								<option value="2">2、进行</option>
 								<option value="3">3、结束</option>
@@ -148,8 +148,8 @@
 								<td><input type="checkbox"></td>
 								<td><i class="mdi mdi-arrow-down text-info">{{item.activeName}}</i></td>
 								<td>{{item.staffInfo.staffName}}</td>
-								<td class="text-danger ">{{item.activeStart}}</td>
-								<td class="text-danger">{{item.activeEnd}}</td>
+								<td class="text-danger ">{{dateFormat(item.activeStart)}}</td>
+								<td class="text-danger">{{dateFormat(item.activeEnd)}}</td>
 								<td class="text-info">{{item.activeType}}</td>
 								<td @click="update()"><router-link tag="button" name="update" class="btn btn-gradient-warning btn-sm" :to="{path: 'update', query: { disciplineId: item.disciplineId }}">修改</router-link></td>
 								<td><button type="button" class="btn btn-gradient-danger btn-sm" @click="del(item.activeId)">删除</button></td>

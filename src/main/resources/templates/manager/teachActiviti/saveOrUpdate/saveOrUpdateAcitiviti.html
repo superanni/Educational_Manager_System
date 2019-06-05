@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>添加、活动信息</title>
+	<!--bootstrap的时间控件-->
+	<link rel="stylesheet" th:href="@{/css/bootstrap-datetimepicker.css}">
+	<script th:src="@{/js/bootstrap-datetimepicker.js}"></script>
+	<script th:src="@{/js/bootstrap-datetimepicker.zh-CN.js}"></script>
 	<script>
 		Vue.http.options.emulateJSON = true;
 		var vm = new Vue({
@@ -77,6 +81,16 @@
 			$('#content-change-main').load("teachActiviti/activitiManage.html",function(){});
 		})
 	})
+	$("#beginTime").datetimepicker({
+		format: 'yyyy-mm-dd hh:ii:ss',
+		language: 'zh-CN',
+		autoclose:true,
+	});
+	$("#endTime").datetimepicker({
+		format: 'yyyy-mm-dd hh:ii:ss',
+		language: 'zh-CN',
+		autoclose:true,
+	});
 </script>
     <div class="row">
         <div class="col-12 grid-margin">
@@ -114,7 +128,8 @@
 			                    <div class="form-group row">
 				                    <label class="col-sm-3 col-form-label">开始时间:</label>
 				                    <div class="col-sm-9">
-					                    <input type="text" name="activeStart" v-model="list.activeStart" class="form-control form-control-sm" />
+					                    <input id="beginTime" name="activeStart" v-model="list.activeStart"  readonly="readonly"
+					                           type="text" class="form-control form-control-sm" data-date-format="yyyy-mm-dd hh:ii:ss">
 				                    </div>
 			                    </div>
 		                    </div>
@@ -136,8 +151,10 @@
 		                    <div class="col-md-6">
 			                    <div class="form-group row">
 				                    <label class="col-sm-3 col-form-label">结束时间：</label>
+				                 
 				                    <div class="col-sm-9">
-					                    <input type="text" name="activeEnd" v-model="list.activeEnd" class="form-control form-control-sm" />
+					                    <input id="endTime"  name="activeEnd" v-model="list.activeEnd"  readonly="readonly"
+					                           type="text" class="form-control form-control-sm" data-date-format="yyyy-mm-dd hh:ii:ss">
 				                    </div>
 			                    </div>
 		                    </div>
