@@ -46,7 +46,6 @@
 	<select id="selectList" resultMap="BaseResultMap">
 		SELECT *,si.* FROM market_active AS ma
 		JOIN  staff_info AS si ON  ma.staff_id=si.staff_id
-		WHERE 1=1
 	</select>
 
 	<select id="selectListLikeName" resultMap="BaseResultMap">

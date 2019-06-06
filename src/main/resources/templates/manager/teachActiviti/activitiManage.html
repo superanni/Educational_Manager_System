@@ -3,7 +3,6 @@
 <head>
 	<meta charset="UTF-8">
 	<title>活动管理</title>
-	
 	<script>
 		var vm = new Vue({
 			router:router,
@@ -59,11 +58,6 @@
 						this.common(result);
 					})
 				},
-				
-				//更新加载页面
-				update(){
-					$('#content-change-main').load("teachActiviti/saveOrUpdate/saveOrUpdateAcitiviti.html",function(){});
-				},
 				//删除课程信息
 				del(id){
 					this.$http.delete("marketActive/deleteMarkeActive/"+id).then(result => {
@@ -76,8 +70,10 @@
 						}
 					})
 				},
-				
-		
+				//更新加载页面
+				update(){
+					$('#content-change-main').load("teachActiviti/saveOrUpdate/saveOrUpdateAcitiviti.html",function(){});
+				},
 				//通用的数据绑定
 				common(result){
 					var result=result.body;
@@ -153,7 +149,8 @@
 								<td class="text-info">{{item.activeType}}</td>
 								<td @click="update()"><router-link tag="button" name="update" class="btn btn-gradient-warning btn-sm" :to="{path: 'update', query: { activeId: item.activeId }}">修改</router-link></td>
 								<td><button type="button" class="btn btn-gradient-danger btn-sm" @click="del(item.activeId)">删除</button></td>
-							</tr>
+						
+								</tr>
 							<tr>
 								<td colspan="10" align="center">
                                <span class="card-description">

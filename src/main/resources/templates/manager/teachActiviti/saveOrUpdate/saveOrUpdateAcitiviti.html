@@ -13,7 +13,11 @@
 			//在页面加载的时候就被created()添加了数据
 			data:{
 				list:[],
-				marketActives:''
+				marketActive:''
+			},
+			/*方法执行前*/
+			created(){
+				this.condition();
 			},
 			methods:{
 				/*查询所有活动信息*/
@@ -34,8 +38,9 @@
 					/*通用的数据绑定*/
 					common(result){
 						var result=result.body;
-						if(result.status === 0){
-							this.list=result.teachActiviti;
+						if(result.marketActive!=undefined){
+							this.list=result.marketActive;
+						this.dateFormat(this.list);
 						}else{
 							toastr.error("获取数据失败");
 						}
@@ -63,7 +68,13 @@
 							}
 						})
 					}
-				}}
+				},
+				//解析时间
+				dateFormat(list){
+					list.activeStart=dateFormat(list.activeStart);
+					list.activeEnd=dateFormat(list.activeEnd);
+				}
+			}
 		})
 	</script>
 </head>
@@ -125,7 +136,7 @@
 							<div class="form-group row">
 								<label class="col-sm-3 col-form-label">开始时间:</label>
 								<div class="col-sm-9">
-									<input id="beginTime"  v-model="list.activeStart"  readonly="readonly"name="activeStart"
+									<input id="beginTime" name="activeStart" v-model="list.activeStart"  readonly="readonly"
 									       type="text" class="form-control form-control-sm" data-date-format="yyyy-mm-dd hh:ii:ss">
 								</div>
 							</div>
@@ -148,7 +159,7 @@
 							<div class="form-group row">
 								<label class="col-sm-3 col-form-label">结束时间：</label>
 								<div class="col-sm-9">
-									<input id="endTime"v-model="list.activeEnd" readonly="readonly" name="activeEnd"
+									<input id="endTime" name="activeEnd"v-model="list.activeEnd" readonly="readonly"
 									       type="text" class="form-control form-control-sm" data-date-format="yyyy-mm-dd hh:ii:ss">
 								</div>
 							</div>

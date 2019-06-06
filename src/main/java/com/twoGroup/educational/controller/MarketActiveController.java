@@ -92,34 +92,11 @@ public class MarketActiveController {
 		marketActives = marketActiveService.selectListLike(marketActive);
 		return DataTransUtil.dataUtil(map, marketActives);
 	}
+	/**
+	 * 查询添加活动信息
+	 */
 
 
-//	/**
-//	 * 添加班级信息查询条件
-//	 */
-//	@GetMapping("saveOrUpdate/saveCondition")
-//	public @ResponseBody String saveCondition(Map map) {
-//		//修改操作、有disciplineId参数
-//		try {
-//			//查询所有教师信息
-//			List<StaffInfo> teachers=classInfoService.selectTeacherList();
-//
-//			//查询所有课程表信息
-//			List<SyllabusInfo> lessonTables=classInfoService.selectLessonTableList();
-//
-//			//查询所有教室信息
-//			List<ClassroomInfo> classrooms=classInfoService.selectClassroomList();
-//
-//			map.put("teachers",teachers);
-//			map.put("lessonTables",lessonTables);
-//			map.put("classrooms",classrooms);
-//			map.put("status",0);
-//
-//			return JSON.toJSONString(map);
-//		} catch (Exception e) {
-//			return "false";
-//		}
-//	}
 	/**
 	 * 添加活动信息
 	 */
@@ -141,8 +118,9 @@ public class MarketActiveController {
 	public @ResponseBody String condition(@PathVariable String activeId,Map map) {
 		//修改操作、有disciplineId参数
 		try {
-			marketActives = marketActiveService.selectListLike(marketActive);
-			return DataTransUtil.oneObjDataUtil(map,"marketActives",marketActives);
+			marketActive = marketActiveService.selectById(activeId);
+			System.out.println("获取更新数据"+activeId+marketActive);
+			return DataTransUtil.oneObjDataUtil(map,"marketActive",marketActive);
 		} catch (Exception e) {
 			return "false";
 		}
