@@ -14,8 +14,8 @@ import org.springframework.stereotype.Controller;
  * @since 2019-05-26
  */
 @Controller
-@RequestMapping("/evaluationInfo")
-public class EvaluationInfoController {
+@RequestMapping("/evaluationXueqi")
+public class EvaluationTermController {
 
 }
 
