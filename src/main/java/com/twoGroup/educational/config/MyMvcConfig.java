@@ -48,24 +48,37 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
                 registry.addViewController("developmentManage/studentEvaluateByTerm.html").setViewName("manager/developmentManage/studentEvaluateByTerm");
                 registry.addViewController("developmentManage/listenClassWriteDown.html").setViewName("manager/developmentManage/listenClassWriteDown");
 
-                /* 教务活动*/
+
+	            //学生管理 --> 班主任评价
+	            registry.addViewController("studentManager/communicateInfo.html").setViewName("manager/studentManager/communicateInfo");
+	            registry.addViewController("studentManager/saveOrUpdate/saveOrUpdateCommunicate.html").setViewName("manager/studentManager/saveOrUpdate/saveOrUpdateCommunicate");
+
+                //      --> 期末成绩
+                registry.addViewController("studentManager/studentWriteGradeInfo.html").setViewName("manager/studentManager/studentWriteGradeInfo");
+                registry.addViewController("studentManager/saveOrUpdate/saveOrUpdateStudentWriteGrade.html").setViewName("manager/studentManager/saveOrUpdate/saveOrUpdateStudentWriteGrade");
+
+                //     -->考勤管理
+                registry.addViewController("studentManager/attendanceInfo.html").setViewName("manager/studentManager/attendanceInfo");
+                registry.addViewController("studentManager/saveOrUpdate/saveOrUpdateAttendance.html").setViewName("manager/studentManager/saveOrUpdate/saveOrUpdateAttendance");
+
+
+
+	               /* 教务活动*/
 	            registry.addViewController("teachActiviti/saveOrUpdate/saveOrUpdateAcitiviti.html").setViewName("manager/teachActiviti/saveOrUpdate/saveOrUpdateAcitiviti");
 
 	            registry.addViewController("teachActiviti/activitiManage.html").setViewName("manager/teachActiviti/activitiManage");
 
 	            /* 图表分析*/
 
+	            registry.addViewController("dataAndStatistics/student_bootm.html").setViewName("manager/dataAndStatistics/student_bootm");
+
+	            registry.addViewController("dataAndStatistics/teacher_bootm.html").setViewName("manager/dataAndStatistics/teacher_bootm");
 
 	            /*文件上传下载*/
 	            registry.addViewController("fileUpload/saveOrUpdate/saveOrUpdateFileUpload.html").setViewName("manager/fileUpload/saveOrUpdate/saveOrUpdateFileUpload");
 
 	            registry.addViewController("fileUpload/fileUploadManage.html").setViewName("manager/fileUpload/fileUploadManage");
 
-                /*
-                 * 信息通知管理
-                 * */
-                registry.addViewController("InforManager/templateManage").setViewName("manager/InformManager/templateManage");
-                registry.addViewController("InforManager/messafeinfoManage").setViewName("manager/InformManager/messafeinfoManage");
 
             }
 

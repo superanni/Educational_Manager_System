@@ -49,7 +49,6 @@ public class ClassInfoController {
      */
     @GetMapping("info/listClassManage/{currentPage}")
     public @ResponseBody String listClassManage(Map map, @PathVariable int currentPage) {
-
         try {
             classInfos = (List<ClassInfo>) redisUtils.get("classInfos");
             //在redis缓存中查询是否有数据
