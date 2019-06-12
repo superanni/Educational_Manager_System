@@ -3,28 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <title>添加、短信信息</title>
+    <script>
+        new Vue({
+            router: router,
+            el: "#saveOrUpdateMessageInfo",
+            data: {
+                messafeId: "",
+                messafeMan: "",
+                messafeContent: "",
+                messafePhone: "",
+                list: []
+            },
+            created() {
+                this.getTemplateList();
+            },
+            methods: {
+                /* 获取模板list*/
+                getTemplateList() {
+                    this.$http.get("messafeInfo/getTemplateList").then(result => {
+                        var result = result.body;
+                        this.list = result.list;
+                    })
+                },
+                //改变模板时修改短信内容
+                changeTemplate() {
+                    this.messafeContent = $("[name='templateName']").val();
+                },
+                submit() {
+                    if (this.messafeId == "") {
+                        $.post("messafeInfo/saveMessage",$("#messageInfo").serialize()).then(result=> {
+                            if (result == "true") {
+                                toastr.success("添加成功");
+                               $('#content-change-main').load("InforManager/messafeinfoManage", function () {
+                                });
+                            } else {
+                                toastr.fail("添加失败");
+                            }
+                        })
+                    } else {
+                      alert("更新操作!")
+                    }
+                },
+
+
+                common(result) {
+
+                }
+
+            }
+
+
+        })
+
+    </script>
+
+
 </head>
 <body>
-<div class="row">
+<div class="row" id="saveOrUpdateMessageInfo">
     <div class="col-12 grid-margin">
         <div class="card">
             <div class="card-body">
                 <div class="modal-header">
-                    <h3 class="card-title">Horizontal Two column</h3>
+                    <h3 class="card-title">通知管理/短信添加</h3>
                     <button type="button" name="backToDisplay" class="btn btn-gradient-info btn-sm">返回</button>
                 </div>
-                <form class="form-sample">
+                <form class="form-sample" id="messageInfo">
                     <p class="card-description">
-                        通知管理/短信添加
+                        <!--通知管理/短信添加-->
                     </p>
-
+                    <input name="messafeId"  v-model="messafeId" type="hidden">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">接收人:</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control form-control-sm"
-                                           value="2019-5-5"/>
+                                    <input type="text" class="form-control form-control-sm" name="messafeMan"
+                                           placeholder="请输入收信人..."/>
                                 </div>
                             </div>
                         </div>
@@ -32,10 +87,12 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">模板名称:</label>
                                 <div class="col-sm-9">
-                                    <select class="form-control form-control-sm">
+                                    <select class="form-control form-control-sm" name="templateName"
+                                            @change="changeTemplate()">
                                         <option value="">请选择</option>
-                                        <option value="staffName">生日提示</option>
-                                        <option value="staffMobilePhone">春节祝福</option>
+                                        <template v-for="item in list">
+                                            <option :value="item.templateContent">{{item.templateTitle}}</option>
+                                        </template>
                                     </select>
                                 </div>
                             </div>
@@ -46,8 +103,8 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">电话：</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control form-control-sm"
-                                           value="2019-6-9"/>
+                                    <input type="text" class="form-control form-control-sm" name="messafePhone"
+                                           placeholder="请输入电话..."/>
                                 </div>
                             </div>
                         </div>
@@ -55,12 +112,13 @@
 
                     <div class="form-group">
                         <label for="exampleTextarea1">短信内容</label>
-                        <textarea class="form-control" id="exampleTextarea1" rows="4"></textarea>
+                        <textarea class="form-control" id="exampleTextarea1" name="messafeContent" rows="4"
+                                  v-model="messafeContent"></textarea>
                     </div>
 
                     <div class="row">
                         <div class="col-md-12" align="center">
-                            <button type="submit" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">保存
+                            <button type="button" style="margin-left: 40px" class="btn btn-gradient-success btn-sm" @click="submit()">发送
                             </button>
                             <button type="button" style="margin-left: 40px" class="btn btn-gradient-success btn-sm">重置
                             </button>

@@ -43,11 +43,13 @@
 
     <select id="selectAllMessage" resultMap="BaseResultMap" >
       <include refid="baseSelect"></include>
+      where a.staff_id = 10 or a.messafe_phone='13872051811'
 
     </select>
     <select id="selectLikeMessage" resultMap="BaseResultMap" parameterType="String">
         <include refid="baseSelect"></include>
         where  a.messafe_phone like '%${telephone}%'
+        and a.staff_id = 10 or a.messafe_phone='13872051811'
     </select>
 
 </mapper>
