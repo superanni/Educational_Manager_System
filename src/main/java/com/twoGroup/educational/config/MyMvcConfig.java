@@ -79,6 +79,11 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
 
 	            registry.addViewController("fileUpload/fileUploadManage.html").setViewName("manager/fileUpload/fileUploadManage");
 
+            //	            信息通知
+                registry.addViewController("InforManager/templateManage").setViewName("manager/InformManager/templateManage");
+                registry.addViewController("InforManager/messafeinfoManage").setViewName("manager/InformManager/messafeinfoManage");
+                registry.addViewController("InformManager/saveOrUpdate").setViewName("manager/InformManager/saveOrUpdate/saveOrUpdateMessafeinfo.html");
+
 
             }
 
