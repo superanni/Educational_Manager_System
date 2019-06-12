@@ -1,8 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>添加、修改班级信息</title>
+    <!--bootstrap的时间控件-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap-datetimepicker.css}">
+    <script th:src="@{/js/bootstrap-datetimepicker.js}"></script>
+    <script th:src="@{/js/bootstrap-datetimepicker.zh-CN.js}"></script>
     <script>
         new Vue({
             el:"#gradeClassForm",
@@ -22,7 +26,6 @@
                 condition(){
                     var classId=this.getUrlKey("classId");
                     //判断是否添加或修改
-
                     if(classId==null){
                         this.$http.get("classInfo/saveOrUpdate/saveCondition").then(result => {
                             this.common(result);
@@ -46,6 +49,7 @@
                         this.classrooms=result.classrooms;
                         if(result.classInfo!=undefined)
                             this.list=result.classInfo;
+                        this.dateFormat(this.list);
                     }else{
                         toastr.error("获取数据失败");
                     }
@@ -74,6 +78,11 @@
                             }
                         })
                     }
+                },
+                //解析时间
+                dateFormat(list){
+                    list.classStartTime=dateFormat(list.classStartTime);
+                    list.classEndTime=dateFormat(list.classEndTime);
                 }
             }
         })
@@ -85,8 +94,18 @@
         $(function () {
             $("[name='backToDisplay']").click(function () {
                 $('#content-change-main').load("developmentManage/gradeclassManage.html",function(){});
-            })
-        })
+            });
+        });
+        $("#beginTime").datetimepicker({
+            format: 'yyyy-mm-dd hh:ii:ss',
+            language: 'zh-CN',
+            autoclose:true,
+        });
+        $("#endTime").datetimepicker({
+            format: 'yyyy-mm-dd hh:ii:ss',
+            language: 'zh-CN',
+            autoclose:true,
+        });
     </script>
     <div class="row">
         <div class="col-12 grid-margin">
@@ -124,7 +143,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">开班日期</label>
                                     <div class="col-sm-9">
-                                        <input type="text" name="classStartTime" v-model="list.classStartTime" class="form-control form-control-sm" />
+                                        <input id="beginTime" name="classStartTime" v-model="list.classStartTime" readonly type="text" class="form-control form-control-sm" data-date-format="yyyy-mm-dd hh:ii:ss">
                                     </div>
                                 </div>
                             </div>
@@ -132,7 +151,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">结束日期</label>
                                     <div class="col-sm-9">
-                                        <input type="text" name="classEndTime" v-model="list.classEndTime" class="form-control form-control-sm" />
+                                        <input id="endTime" type="text" name="classEndTime" v-model="list.classEndTime" readonly class="form-control form-control-sm" data-date-format="yyyy-mm-dd hh:ii:ss"/>
                                     </div>
                                 </div>
                             </div>

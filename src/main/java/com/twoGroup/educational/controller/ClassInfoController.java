@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.github.pagehelper.PageHelper;
 import com.twoGroup.educational.commonUtils.DataTransUtil;
+import com.twoGroup.educational.commonUtils.RedisUtils;
 import com.twoGroup.educational.entities.*;
 import com.twoGroup.educational.service.ClassInfoService;
 import com.twoGroup.educational.service.DisciplineInfoService;
@@ -32,6 +33,9 @@ public class ClassInfoController {
     @Autowired
     /*班级信息业务接口*/
     ClassInfoService classInfoService;
+    //redis
+    @Autowired
+    RedisUtils redisUtils;
 
     //所有班级信息
     private List<ClassInfo> classInfos;
@@ -45,13 +49,36 @@ public class ClassInfoController {
      */
     @GetMapping("info/listClassManage/{currentPage}")
     public @ResponseBody String listClassManage(Map map, @PathVariable int currentPage) {
-        //每页显示五行数据
-        PageHelper.startPage(currentPage, 5);
-        //获取数据
-        classInfos = classInfoService.selectList();
-        if (classInfos != null) {
-            //数据绑定
-            return DataTransUtil.dataUtil(map, classInfos);
+        try {
+            classInfos = (List<ClassInfo>) redisUtils.get("classInfos");
+            //在redis缓存中查询是否有数据
+            if (null==classInfos){
+                //线程锁定只让第一位用户在数据库中访问数据
+                synchronized (this){
+                    classInfos = (List<ClassInfo>) redisUtils.get("classInfos");
+                    if (null==classInfos){
+                        classInfos = classInfoService.selectList();
+                        redisUtils.set("classInfos",classInfos);
+                    }
+                }
+            }
+            //封装的总页数、总记录数、当前页数
+            DataTransUtil.redisDataUtil(map,classInfos,currentPage,5);
+            //如果redis有缓存数据则分页查询出数据
+            classInfos= (List<ClassInfo>) redisUtils.selectByPage("classInfos",currentPage,5);
+            if (classInfos != null) {
+                //数据绑定
+                map.put("list", classInfos);
+                return JSON.toJSONString(map);
+            }
+        }catch (Exception e){
+            PageHelper.startPage(currentPage,5);
+            classInfos = classInfoService.selectList(null);
+            if (classInfos != null) {
+                //数据绑定
+                return DataTransUtil.dataUtil(map,classInfos);
+            }
+            return "false";
         }
         return "false";
     }
@@ -61,18 +88,19 @@ public class ClassInfoController {
      */
     @PostMapping("info/listClassManageLike")
     public @ResponseBody String listClassManageLike(Map<String,Object> map,int currentPage , ClassInfo classInfo){
-        //每页显示五行数据
-        PageHelper.startPage(currentPage, 5);
         //判断有无条件
         if (!"".equals(classInfo.getClassName())) {
+            //每页显示五行数据
+            PageHelper.startPage(currentPage, 5);
             classInfos=classInfoService.selectListLike(classInfo.getClassName());
+            if (classInfos != null) {
+                //数据绑定
+                return DataTransUtil.dataUtil(map, classInfos);
+            }
         }else {
-            classInfos=classInfoService.selectList();
+            return listClassManage(map,currentPage);
         }
-        if (classInfos != null) {
-            //数据绑定
-            return DataTransUtil.dataUtil(map, classInfos);
-        }
+
         return "false";
     }
 
@@ -141,6 +169,7 @@ public class ClassInfoController {
             try {
                 boolean b = classInfoService.insert(classInfo);
                 if (b==true){
+                    redisUtils.delete("classInfos");
                     return "true";
                 }else {
                     return "false";
@@ -162,6 +191,7 @@ public class ClassInfoController {
         try {
             boolean b = classInfoService.updateById(classInfo);
             if (b==true){
+                redisUtils.delete("classInfos");
                 return "true";
             }else {
                 return "false";
@@ -178,10 +208,12 @@ public class ClassInfoController {
     public @ResponseBody String deleteClass(@PathVariable String classId) {
         try {
             boolean b = classInfoService.deleteById(Integer.parseInt(classId));
-            if (b == false) {
+            if (b==true){
+                redisUtils.delete("classInfos");
+                return "true";
+            }else {
                 return "false";
             }
-            return "true";
         } catch (Exception e) {
             return "false";
         }

@@ -87,16 +87,21 @@
                         toastr.error("获取数据失败");
                     }
                 },
-
                 showTeacherMessage(staffId) {
                     this.$http.get("staffInfo/saveOrUpdate/condition/"+staffId).then(result => {
                         var result=result.body;
                         if(result.status === 0){
                             this.teacherInfo = result.staffInfo;
+                            this.dateFormat_showMessage(this.teacherInfo);
                         }else{
                             toastr.error("获取数据失败");
                         }
                     })
+                },
+                //解析时间
+                dateFormat_showMessage(teacherInfo){
+                    teacherInfo.staffEntryTime=dateFormat(teacherInfo.staffEntryTime);
+                    teacherInfo.staffBrithday=dateFormat(teacherInfo.staffBrithday);
                 }
             }
         })
@@ -157,7 +162,7 @@
                                 <td>{{item.staffAge}}</td>
                                 <td>{{item.staffMobilePhone}}</td>
                                 <td>{{item.staffEamil}}</td>
-                                <td>{{item.staffEntryTime}}</td>
+                                <td>{{dateFormat(item.staffEntryTime)}}</td>
                                 <td>{{item.staffEductionLevel}}</td>
                                 <td @click="update()"><router-link tag="button" name="update" class="btn btn-gradient-warning btn-sm" :to="{path: 'update', query: { staffId: item.staffId }}">修改</router-link></td>
                                 <td><button type="button" class="btn btn-gradient-danger btn-sm" @click="del(item.staffId)">删除</button></td>

@@ -43,8 +43,20 @@
 	    </association>
     </resultMap>
 
-	<select id="selectlistMarketActive" resultMap="BaseResultMap">
-		SELECT *,si.* FROM market_active AS ma,staff_info AS si
-		WHERE  ma.staff_id=si.staff_id
+	<select id="selectList" resultMap="BaseResultMap">
+		SELECT *,si.* FROM market_active AS ma
+		JOIN  staff_info AS si ON  ma.staff_id=si.staff_id
+	</select>
+
+	<select id="selectListLikeName" resultMap="BaseResultMap">
+		SELECT *,si.* FROM market_active AS ma
+		JOIN  staff_info AS si ON  ma.staff_id=si.staff_id
+		WHERE 1=1
+		<if test="activeState!=null and activeState!=0">
+			AND active_state =#{activeState}
+		</if>
+		<if test="activeName!=null  and activeName!=''">
+			AND active_name like '%${activeName}%'
+		</if>
 	</select>
 </mapper>

@@ -84,6 +84,8 @@
                     <h3 class="card-title">developmentManage / saveOrUpdateLesson</h3>
                     <button type="button" name="backToDisplay" class="btn btn-gradient-info btn-sm">返回</button>
                 </div>
+
+
                 <form class="form-sample" id="lessonForm">
                     <input v-if="list.disciplineId!=undefined" name="_method" value="put" hidden="hidden">
                     <p class="card-description">
@@ -139,9 +141,9 @@
                                 <label class="col-sm-3 col-form-label">课程类型</label>
                                 <div class="col-sm-9">
                                     <select v-if="list.disciplineId!=undefined" name="disciplineType" v-model="list.disciplineType" class="form-control">
-                                        <option value="必修">必修</option>
-                                        <option value="选修">选修</option>
-                                    </select>
+                                    <option value="必修">必修</option>
+                                    <option value="选修">选修</option>
+                                </select>
                                     <select v-else name="disciplineType" class="form-control">
                                         <option value="必修">必修</option>
                                         <option value="选修">选修</option>

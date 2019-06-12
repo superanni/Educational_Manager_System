@@ -4,6 +4,7 @@ import com.twoGroup.educational.entities.MarketActive;
 import com.twoGroup.educational.mapper.MarketActiveMapper;
 import com.twoGroup.educational.service.MarketActiveService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,9 +19,20 @@ import java.util.List;
  */
 @Service
 public class MarketActiveServiceImpl extends ServiceImpl<MarketActiveMapper, MarketActive> implements MarketActiveService {
+	@Autowired
+	MarketActiveMapper marketActiveMapper;
+	//all markactives list
+	private List<MarketActive> marketActives;
+
 
 	@Override
-	public List<MarketActive> selectlistMarketActive() {
-		return this.baseMapper.selectlistMarketActive();
+	public List<MarketActive> selectList() {
+		return  marketActiveMapper.selectList();
+	}
+
+	@Override
+	public List<MarketActive> selectListLike(MarketActive marketActive) {
+		return marketActiveMapper.selectListLikeName(
+				marketActive.getActiveName(),marketActive.getActiveState());
 	}
 }

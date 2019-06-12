@@ -113,4 +113,27 @@
         </association>
     </resultMap>
 
+    <select id="listStudentWriteGradeLike" resultMap="BaseResultMap">
+        select * from student_write_grade swg
+        join staff_info sf on swg.staff_id = sf.staff_id
+        join student_info si on swg.student_id = si.student_id
+        join discipline_info di on swg.discipline_id = di.discipline_id
+        join class_info ci on swg.class_id = ci.class_id
+        where 1 = 1
+        <if test="writeGradeXuenian!=null and writeGradeXuenian!=''">
+            and write_grade_xuenian = #{writeGradeXuenian}
+        </if>
+        <if test="writeGradeXueqi!=null and writeGradeXueqi!=''">
+            and write_grade_xueqi = #{writeGradeXueqi}
+        </if>
+        <if test="classId!=null and classId!=0">
+            and swg.class_id = #{classId}
+        </if>
+        <if test="disciplineId!=null and disciplineId!=0">
+            and swg.discipline_id = #{disciplineId}
+        </if>
+        <if test="studentName!=null  and studentName!=''">
+            and student_name like '%${studentName}%'
+        </if>
+    </select>
 </mapper>

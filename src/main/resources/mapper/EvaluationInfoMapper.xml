@@ -100,16 +100,27 @@
         </association>
 <!--        class_if 班级编号 关联class_info主键-->
         <association property="classInfo" javaType="classInfo">
-            <id column="discipline_id" property="disciplineId" />
-            <result column="discipline_no" property="disciplineNo" />
-            <result column="discipline_name" property="disciplineName" />
-            <result column="discipline_tuition" property="disciplineTuition" />
-            <result column="discipline_bring" property="disciplineBring" />
-            <result column="discipline_type" property="disciplineType" />
-            <result column="discipline_desc" property="disciplineDesc" />
-            <result column="discipline_isuesd" property="disciplineIsuesd" />
+            <id column="class_id" property="classId" />
+            <result column="syllabus_id" property="syllabusId" />
+            <result column="classroom_id" property="classroomId" />
+            <result column="staff_id" property="staffId" />
+            <result column="class_name" property="className" />
+            <result column="class_number" property="classNumber" />
+            <result column="class_start_time" property="classStartTime" />
+            <result column="class_end_time" property="classEndTime" />
+            <result column="class_isuesd" property="classIsuesd" />
+            <result column="class_state" property="classState" />
+            <result column="class_desc" property="classDesc" />
+            <result column="class_major" property="classMajor" />
         </association>
 
     </resultMap>
+
+    <select id="selectLinkList" resultMap="BaseResultMap">
+        select * from
+        evaluation_info evaluation,student_info student,discipline_info lessonTable,staff_info teacher,class_info class
+        where
+        evaluation.student_id=student.student_id and evaluation.discipline_id=lessonTable.discipline_id and evaluation.staff_id=teacher.staff_id and evaluation.class_id=class.class_id
+    </select>
 
 </mapper>

@@ -84,4 +84,25 @@
 
     </resultMap>
 
+    <select id="listAttendanceLike" resultMap="BaseResultMap" >
+        select * from attendance_info a
+        join staff_info si on a.staff_id = si.staff_id
+        join student_info s on a.student_id = s.student_id
+        where 1=1
+        <if test="attendanceXuenian!=null and attendanceXuenian!=''">
+           and attendance_xuenian = #{attendanceXuenian}
+        </if>
+        <if test="attendanceXueqi!=null and attendanceXueqi!=''">
+           and attendance_xueqi = #{attendanceXueqi}
+        </if>
+        <if test="attendanceMonth!=null and attendanceMonth!=''">
+           and attendance_month = #{attendanceMonth}
+        </if>
+        <if test="attendanceState!=null and attendanceState!=''">
+           and attendance_state = #{attendanceState}
+        </if>
+        <if test="studentName!=null  and studentName!=''">
+            and s.student_name like '%${studentName}%'
+        </if>
+    </select>
 </mapper>

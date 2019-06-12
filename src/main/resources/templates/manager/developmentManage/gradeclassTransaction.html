@@ -133,7 +133,7 @@
                                 <td>{{item.classTransactionTitle}}</td>
                                 <td>{{item.classTransactionContent}}</td>
                                 <td>{{item.classTransactionPerson}}</td>
-                                <td>{{item.classTransactionTime}}</td>
+                                <td>{{dateFormat(item.classTransactionTime)}}</td>
                                 <td @click="update()"><router-link tag="button" name="update" class="btn btn-gradient-warning btn-sm" :to="{path: 'update', query: { classTransactionId: item.classTransactionId }}">修改</router-link></td>
                                 <td><button type="button" class="btn btn-gradient-danger btn-sm" @click="del(item.classTransactionId)">删除</button></td>
                             </tr>

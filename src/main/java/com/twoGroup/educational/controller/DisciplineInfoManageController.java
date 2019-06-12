@@ -48,7 +48,9 @@ public class DisciplineInfoManageController {
     public @ResponseBody String listLessonManage(Map map,@PathVariable int currentPage) {
         try {
             lessonInfos = (List<DisciplineInfo>) redisUtils.get("lessonInfos");
+            //在redis缓存中查询是否有数据
             if (null==lessonInfos){
+                //线程锁定只让第一位用户在数据库中访问数据
                 synchronized (this){
                     lessonInfos = (List<DisciplineInfo>) redisUtils.get("lessonInfos");
                     if (null==lessonInfos){
@@ -57,7 +59,9 @@ public class DisciplineInfoManageController {
                     }
                 }
             }
+            //封装的总页数、总记录数、当前页数
             DataTransUtil.redisDataUtil(map,lessonInfos,currentPage,5);
+            //如果redis有缓存数据则分页查询出数据
             lessonInfos= (List<DisciplineInfo>) redisUtils.selectByPage("lessonInfos",currentPage,5);
             if (lessonInfos != null) {
                 //数据绑定
@@ -65,6 +69,12 @@ public class DisciplineInfoManageController {
                 return JSON.toJSONString(map);
             }
         }catch (Exception e){
+            PageHelper.startPage(currentPage,5);
+            lessonInfos = lessonInfoService.selectList(null);
+            if (lessonInfos != null) {
+                //数据绑定
+                return DataTransUtil.dataUtil(map,lessonInfos);
+            }
             return "false";
         }
         return "false";
